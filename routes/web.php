@@ -9,8 +9,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
 // ---- Authentication (was index.php / logout.php) ----
-Route::get('/', [AuthController::class, 'showLogin'])->name('login');
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login/user', [AuthController::class, 'userLogin'])->name('login.user');
 Route::post('/login/employee', [AuthController::class, 'empLogin'])->name('login.employee');
 Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
