@@ -9,6 +9,17 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
+// ---- User Panel Layout Area ----
+Route::view('/user-panel', 'user.user_panel')->name('user_panel');
+
+// ---- Internal iframe views ----
+Route::view('/user-panel/dashboard', 'user.dashboard')->name('user.dashboard');
+Route::view('/user-panel/roombook', 'user.roombook')->name('user.roombook');
+Route::view('/user-panel/payment', 'user.payment')->name('user.payment');
+Route::view('/user-panel/room', 'user.room')->name('user.room');
+Route::view('/user-panel/invoice', 'user.invoice')->name('user.invoice');
+
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // ---- Authentication (was index.php / logout.php) ----
@@ -23,6 +34,7 @@ Route::middleware('auth.user')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::post('/home/book', [HomeController::class, 'book'])->name('home.book');
 });
+
 
 // ---- Admin area (was admin/*.php) ----
 Route::middleware('auth.admin')->prefix('admin')->name('admin.')->group(function () {

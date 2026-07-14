@@ -166,20 +166,9 @@
       <div class="box"><h2>Heli service</h2></div>
     </div>
   </section>
-
-  <section id="contactus">
-    <div class="social">
-      <i class="fa-brands fa-instagram"></i>
-      <i class="fa-brands fa-facebook"></i>
-      <i class="fa-solid fa-envelope"></i>
-    </div>
-    <div class="createdby">
-      <h5>Created by @tushar</h5>
-    </div>
-  </section>
 </div>
+@include('extend.footer')
 @endsection
-
 <script>
     var bookbox = document.getElementById("guestdetailpanel");
     openbookbox = () => { bookbox.style.display = "flex"; }
