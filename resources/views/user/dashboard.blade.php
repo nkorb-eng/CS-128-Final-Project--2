@@ -14,18 +14,14 @@
 </head>
 <body>
    <div class="databox">
-        <div class="box roombookbox">
+      <div class="box roombookbox">
           <h2>My Active Bookings</h2>
-          <h1>1 / 1</h1>
-        </div>
-        <div class="box guestbox">
-          <h2>Hotel Staff Active</h2>
-          <h1>12</h1>
-        </div>
-        <div class="box profitbox">
+          <h1>{{ $activeBookingsCount }} / {{ $totalBookingsCount }}</h1>
+      </div>
+      <div class="box profitbox">
           <h2>Total Spent</h2>
-          <h1>3,500 <span>$</span></h1>
-        </div>
+          <h1>{{ number_format($totalSpent, 2) }} <span>$</span></h1>
+      </div>
     </div>
     <div class="chartbox">
         <div class="bookroomchart">
@@ -40,39 +36,52 @@
 </body>
 
 <script>
-        const labels = ['Superior Room', 'Deluxe Room', 'Guest House', 'Single Room'];
-        const data = {
-          labels: labels,
-          datasets: [{
-            label: 'My Rooms',
-            backgroundColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(255, 159, 64, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(153, 102, 255, 1)',
-            ],
-            borderColor: 'black',
-            data: [0, 1, 0, 0],
-          }]
-        };
+    // 1. DYNAMIC DOUGHNUT CHART (Fixed hardcoded numbers)
+    const labels = ['Superior Room', 'Deluxe Room', 'Guest House', 'Single Room'];
+    const data = {
+        labels: labels,
+        datasets: [{
+        label: 'My Rooms',
+        backgroundColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(153, 102, 255, 1)',
+        ],
+        borderColor: 'black',
+        // Injects the real data from the controller, defaulting to 0 if empty
+        data: [
+            {{ $chart['Superior Room'] ?? 0 }}, 
+            {{ $chart['Deluxe Room'] ?? 0 }}, 
+            {{ $chart['Guest House'] ?? 0 }}, 
+            {{ $chart['Single Room'] ?? 0 }}
+        ],
+        }]
+    };
 
-        const doughnutchart = { type: 'doughnut', data: data, options: {} };
-        const myChart = new Chart(document.getElementById('bookroomchart'), doughnutchart);
+    const doughnutchart = { type: 'doughnut', data: data, options: {} };
+    const myChart = new Chart(document.getElementById('bookroomchart'), doughnutchart);
 </script>
 
 <script>
-Morris.Bar({
- element : 'profitchart',
- data: [
-    {date: '2026-07-10', profit: 1500},
-    {date: '2026-07-15', profit: 2000}
- ],
- xkey:'date',
- ykeys:['profit'],
- labels:['Spent'],
- hideHover:'auto',
- stacked:true,
- barColors:['rgba(153, 102, 255, 1)']
-});
+    // 2. MORRIS BAR CHART (Fixed the empty data crash)
+    const expenseData = @json($expenseData);
+
+    // Only try to draw the chart if the user actually has payment data
+    if (expenseData && expenseData.length > 0) {
+        Morris.Bar({
+            element : 'profitchart',
+            data: expenseData,
+            xkey:'date',
+            ykeys:['spent'],
+            labels:['Spent ($)'],
+            hideHover:'auto',
+            stacked:true,
+            barColors:['rgba(153, 102, 255, 1)']
+        });
+    } else {
+        document.getElementById('profitchart').innerHTML = 
+            "<div style='display: flex; justify-content: center; align-items: center; height: 100%; color: #6c757d; font-weight: bold;'>No expenses recorded yet.</div>";
+    }
 </script>
 </html>

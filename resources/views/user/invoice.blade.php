@@ -57,16 +57,16 @@
                 <tr>
                     <td><span>Deluxe Room</span></td>
                     <td><span>5</span></td>
-                    <td><span>₹600</span></td>
+                    <td><span>600</span></td>
                     <td><span>1</span></td>
-                    <td><span>₹3000</span></td>
+                    <td><span>3000</span></td>
                 </tr>
                 <tr>
                     <td><span>Breakfast Meal Included</span></td>
                     <td><span>5</span></td>
-                    <td><span>₹100</span></td>
+                    <td><span>100</span></td>
                     <td><span>1</span></td>
-                    <td><span>₹500</span></td>
+                    <td><span>500</span></td>
                 </tr>
             </tbody>
         </table>
@@ -74,15 +74,15 @@
         <table class="balance">
             <tr>
                 <th><span>Total</span></th>
-                <td><span>₹3500</span></td>
+                <td><span>3500</span></td>
             </tr>
             <tr>
                 <th><span>Amount Paid</span></th>
-                <td><span>₹3500</span></td>
+                <td><span>3500</span></td>
             </tr>
             <tr>
                 <th><span>Balance Due</span></th>
-                <td><span>₹0.00</span></td>
+                <td><span>0.00</span></td>
             </tr>
         </table>
     </article>

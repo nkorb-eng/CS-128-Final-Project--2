@@ -24,7 +24,7 @@
 
     <div class="roombooktable table-responsive-xl">
         <table class="table table-bordered table-hover" id="table-data">
-            <thead class="table-#0a0d2d">
+            <thead>
                 <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Name</th>
@@ -33,7 +33,7 @@
                     <th scope="col">Phone</th>
                     <th scope="col">Type of Room</th>
                     <th scope="col">Type of Bed</th>
-                    <th scope="col">No of Room</th>
+                    <th scope="col">Room Number</th>
                     <th scope="col">Meal</th>
                     <th scope="col">Check-In</th>
                     <th scope="col">Check-Out</th>

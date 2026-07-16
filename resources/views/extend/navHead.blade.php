@@ -1,11 +1,11 @@
 <nav class="d-flex flex-row glassnav">
-  <a class="navbar-brand d-flex align-items-center text-decoration-none text-dark user-select-none" href="#firstsection">
+  <a class="navbar-brand d-flex align-items-center text-decoration-none text-dark user-select-none" href="{{ route('home') }}">
     <img class="bluebirdlogo" src="{{ asset('image/bluebirdlogo.png') }}" alt="logo" style="height: 40px; width: auto;">
     <span class="ms-2 fw-bold">BLUEBIRD</span>
   </a>
 
   <ul class="d-flex align-items-center list-unstyled mb-0 gap-2 gap-md-3">
-    <li><a href="#firstsection" class="text-dark text-decoration-none px-1 text-nowrap">Home</a></li>
+    <li><a href="{{ route('home') }}" class="text-dark text-decoration-none px-1 text-nowrap">Home</a></li>
     <li><a href="#secondsection" class="text-dark text-decoration-none px-1 text-nowrap">Rooms</a></li>
     <li><a href="#thirdsection" class="text-dark text-decoration-none px-1 text-nowrap">Facilities</a></li>
     <li><a href="#contactus" class="text-dark text-decoration-none px-1 text-nowrap">Contact Us</a></li>

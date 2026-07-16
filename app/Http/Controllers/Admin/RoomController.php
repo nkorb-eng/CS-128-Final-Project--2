@@ -10,10 +10,8 @@ class RoomController extends Controller
 {
     public function index(Request $request)
     {
-        // Get the requested sort order (defaults to room_no)
         $sort = $request->query('sort', 'room_no');
 
-        // Fetch the rooms from the database in the requested order
         if ($sort === 'room_no') {
             $rooms = Room::orderByRaw('CAST(room_no AS UNSIGNED) ASC')->get();
         } elseif (in_array($sort, ['type', 'bedding', 'price'])) {
@@ -22,7 +20,6 @@ class RoomController extends Controller
             $rooms = Room::all();
         }
 
-        // Build price map for the live frontend preview
         $types = ['Superior Room', 'Deluxe Room', 'Guest House', 'Single Room'];
         $beddings = ['Single', 'Double', 'Triple', 'Quad', 'None'];
 
@@ -33,7 +30,6 @@ class RoomController extends Controller
             }
         }
 
-        // Overwrite with actual database prices
         foreach ($rooms as $room) {
             $key = $room->type . '_' . $room->bedding;
             $priceMap[$key] = $room->price;
@@ -44,7 +40,6 @@ class RoomController extends Controller
 
     public function store(Request $request)
     {
-        // Validate inputs
         $request->validate([
             'room_no' => 'required|integer|min:1|unique:room,room_no',
             'type'    => 'required',
@@ -54,13 +49,11 @@ class RoomController extends Controller
             'room_no.integer' => 'The Room Number must be a valid whole number!'
         ]);
 
-        // auto pricing
         $calculatedPrice = Room::calculatePrice(
             $request->input('type'), 
             $request->input('bedding')
         );
 
-        // Save to database
         Room::create([
             'room_no' => $request->input('room_no'),
             'type'    => $request->input('type'),

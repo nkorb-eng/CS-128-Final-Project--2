@@ -26,7 +26,7 @@
         </div>
         <div class="box profitbox">
           <h2>Profit</h2>
-          <h1>{{ $tot }} <span>&#8377</span></h1>
+          <h1>{{ $tot }} <span>$</span></h1>
         </div>
     </div>
     <div class="chartbox">

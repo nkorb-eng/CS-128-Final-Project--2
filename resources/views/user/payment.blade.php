@@ -14,37 +14,39 @@
         <input type="text" name="search_bar" id="search_bar" placeholder="search...">
     </div>
 
-    <div class="roombooktable" class="table-responsive-xl">
-        <table class="table table-bordered" id="table-data">
+    <div class="roombooktable table-responsive-xl">
+        <table class="table table-bordered table-hover" id="table-data">
             <thead>
                 <tr>
                     <th scope="col">Invoice Id</th>
                     <th scope="col">Name</th>
                     <th scope="col">Room Type</th>
+                    <th scope="col">Beds</th>
+                    <th scope="col">Meal Plan</th>
                     <th scope="col">Check In</th>
                     <th scope="col">Check Out</th>
-                    <th scope="col">Room Rent</th>
-                    <th scope="col">Meals Bill</th>
-                    <th scope="col">Total Bill</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">Bill</th>
+                    <th scope="col" class="text-center">Action</th>
                 </tr>
             </thead>
             <tbody>
+            @foreach ($payments as $res)
                 <tr>
-                    <td>INV-9982</td>
-                    <td>Guest User</td>
-                    <td>Deluxe Room</td>
-                    <td>2026-07-15</td>
-                    <td>2026-07-20</td>
-                    <td>₹3000</td>
-                    <td>₹500</td>
-                    <td>₹3500</td>
-                    <td class="action">
-                        <a href="{{ route('user.invoice') }}" target="_blank" class="btn btn-primary btn-sm text-white text-decoration-none">
+                    <td>{{ $res->id }}</td>
+                    <td>{{ $res->Name }}</td>
+                    <td>{{ $res->RoomType }}</td>
+                    <td>{{ $res->Bed }}</td>
+                    <td>{{ $res->meal }}</td>
+                    <td>{{ $res->cin }}</td>
+                    <td>{{ $res->cout }}</td>
+                    <td class="fw-bold text-success">${{ number_format($res->finaltotal, 2) }}</td>
+                    <td class="action text-center">
+                        <a href="{{ route('user.invoice', $res->id) }}" target="_blank" class="btn btn-primary btn-sm text-white text-decoration-none">
                             <i class="fa-solid fa-print"></i> View Invoice
                         </a>
                     </td>
                 </tr>
+            @endforeach
             </tbody>
         </table>
     </div>

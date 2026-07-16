@@ -10,6 +10,43 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" href="{{ asset('adminassets/css/room.css') }}">
+    
+    <!-- RESTORED STYLES -->
+    <style>
+        .overlay-panel {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+        }
+        .room-form-card {
+            background-color: #fff;
+            width: 500px;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .top-action-bar {
+            padding: 20px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 15px;
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+    </style>
 </head>
 
 <body>
@@ -96,7 +133,6 @@
     </div>
 
     <div class="top-action-bar">
-        
         <form action="{{ route('admin.room') }}" method="GET" class="me-auto mb-0 d-flex align-items-center">
             <label for="sort" class="fw-bold me-2 text-nowrap">Sort By:</label>
             <select name="sort" id="sort" class="form-select border-secondary w-auto" onchange="this.form.submit()">

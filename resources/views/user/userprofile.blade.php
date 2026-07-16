@@ -24,8 +24,11 @@
                         <div class="avatar-circle">
                             <i class="fa-solid fa-user"></i>
                         </div>
-                        <h3 class="fw-bold text-dark">Guest User</h3>
-                        <span class="badge bg-success px-3 py-2 rounded-pill">Active Member</span>
+                        <h3 class="fw-bold text-dark">{{ $user->Username ?? 'Guest' }}</h3>
+                        <div class="col-md-6">
+                            <label class="text-muted small fw-bold mb-1">Email Address</label>
+                            <div class="p-2 border rounded bg-light">{{ $user->Email }}</div>
+                        </div>
                     </div>
 
                     <hr class="text-muted mb-4">
