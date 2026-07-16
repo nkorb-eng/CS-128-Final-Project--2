@@ -43,7 +43,6 @@ Route::middleware('auth.admin')->prefix('admin')->name('admin.')->group(function
 
     // Room booking
     Route::get('/roombook', [RoombookController::class, 'index'])->name('roombook');
-    Route::post('/roombook', [RoombookController::class, 'store'])->name('roombook.store');
     Route::get('/roombook/{id}/edit', [RoombookController::class, 'edit'])->name('roombook.edit');
     Route::post('/roombook/{id}/edit', [RoombookController::class, 'update'])->name('roombook.update');
     Route::get('/roombook/{id}/confirm', [RoombookController::class, 'confirm'])->name('roombook.confirm');
@@ -58,6 +57,7 @@ Route::middleware('auth.admin')->prefix('admin')->name('admin.')->group(function
     // Rooms
     Route::get('/room', [RoomController::class, 'index'])->name('room');
     Route::post('/room', [RoomController::class, 'store'])->name('room.store');
+    Route::post('/room/bulk-update', [RoomController::class, 'bulkUpdate'])->name('room.bulk_update');
     Route::get('/room/{id}/delete', [RoomController::class, 'destroy'])->name('room.delete');
 
     // Staff
