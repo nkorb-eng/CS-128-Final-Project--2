@@ -1,14 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Anton&family=Cookie&family=Poppins:wght@600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Anton&family=Cookie&family=Poppins:wght@600&display=swap");
 
 :root {
-    --bg-text-shadow: 0 2px 4px rgb(13 0 77 / 8%), 0 3px 6px rgb(13 0 77 / 8%), 0 8px 16px rgb(13 0 77 / 8%);
+    --bg-text-shadow:
+        0 2px 4px rgb(13 0 77 / 8%), 0 3px 6px rgb(13 0 77 / 8%),
+        0 8px 16px rgb(13 0 77 / 8%);
     --bg-box-shadow: 0px 0px 20px 6px rgb(0 0 0 / 34%);
 }
-
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     /* text-shadow: var(--bg-text-shadow); */
 }
 
@@ -18,7 +19,7 @@ body {
     /* overflow: hidden; */
 }
 
-.carousel_section{
+.carousel_section {
     box-shadow: var(--bg-box-shadow);
 }
 /* side photo css */
@@ -45,7 +46,7 @@ section {
     height: 60px;
     display: flex;
     justify-content: center;
-    margin:20px 0;
+    margin: 20px 0;
 }
 
 .logo .bluebirdlogo {
@@ -95,14 +96,22 @@ section {
     font-weight: 700;
 }
 
-.role_btn .btns:hover{
-    background-image: linear-gradient(90deg, rgba(76, 185, 236, 0.527), rgba(0, 30, 255, 0.456));
+.role_btn .btns:hover {
+    background-image: linear-gradient(
+        90deg,
+        rgba(76, 185, 236, 0.527),
+        rgba(0, 30, 255, 0.456)
+    );
     transition: ease-in-out;
     color: white;
 }
 
-.btns.active{
-    background-image: linear-gradient(90deg, rgba(76, 185, 236, 0.527), rgba(0, 30, 255, 0.456));
+.btns.active {
+    background-image: linear-gradient(
+        90deg,
+        rgba(76, 185, 236, 0.527),
+        rgba(0, 30, 255, 0.456)
+    );
     color: white;
 }
 
@@ -111,20 +120,20 @@ section {
     margin: 10px;
     display: none;
     text-align: center;
-    animation: screen_animation .4s;
+    animation: screen_animation 0.4s;
 }
 /* toggle display */
-.user_login.active{
+.user_login.active {
     display: block;
 }
 
-.employee_login.active{
+.employee_login.active {
     display: block;
 }
 
 .form-floating {
     margin: 15px 0;
-} 
+}
 
 .auth_btn {
     padding: 15px 30px;
@@ -147,8 +156,12 @@ section {
     width: 0;
     z-index: -1;
     border-radius: 10px;
-    background-image: linear-gradient(90deg, rgba(76, 185, 236, 0.527), rgba(0, 30, 255, 0.456));
-    transition: all 250ms
+    background-image: linear-gradient(
+        90deg,
+        rgba(76, 185, 236, 0.527),
+        rgba(0, 30, 255, 0.456)
+    );
+    transition: all 250ms;
 }
 
 .auth_btn:hover {
@@ -159,20 +172,20 @@ section {
     width: 100%;
 }
 
-.footer_line{
+.footer_line {
     margin: 20px 0;
 }
 
-.page_move_btn{
+.page_move_btn {
     color: rgba(0, 0, 255, 0.599);
     cursor: pointer;
 }
-.page_move_btn:hover{
+.page_move_btn:hover {
     color: blue;
 }
 
 /* signup */
-#sign_up{
+#sign_up {
     height: 100%;
     width: 100%;
     display: none;
@@ -180,37 +193,34 @@ section {
     align-items: center;
 }
 
-.user_signup{
+.user_signup {
     width: 70%;
     text-align: center;
-    animation: screen_animation .4s;
+    animation: screen_animation 0.4s;
 }
 
 /* animation frame */
 @keyframes screen_animation {
-    0%{
+    0% {
         transform: translateX(50px);
     }
 }
 
-
-
 /* responsive stuff */
 
-@media(max-width: 30rem){
-    .carousel_section{
+@media (max-width: 30rem) {
+    .carousel_section {
         display: none;
     }
-    #auth_section{
+    #auth_section {
         width: 100%;
     }
-    .auth_container
-    {
+    .auth_container {
         width: 100%;
         padding: 0;
         margin: 0;
     }
-    #Log_in .role_btn .btns{
+    #Log_in .role_btn .btns {
         width: 90px;
     }
 }

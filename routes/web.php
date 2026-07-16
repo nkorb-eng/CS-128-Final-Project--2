@@ -16,7 +16,7 @@ Route::view('/user-panel', 'user.user_panel')->name('user_panel');
 Route::view('/user-panel/dashboard', 'user.dashboard')->name('user.dashboard');
 Route::view('/user-panel/roombook', 'user.roombook')->name('user.roombook');
 Route::view('/user-panel/payment', 'user.payment')->name('user.payment');
-Route::view('/user-panel/room', 'user.room')->name('user.room');
+Route::view('/user-panel/profile', 'user.userprofile')->name('user.userprofile');
 Route::view('/user-panel/invoice', 'user.invoice')->name('user.invoice');
 
 

@@ -24,7 +24,7 @@
         </div>
         <div class="box profitbox">
           <h2>Total Spent</h2>
-          <h1>3,500 <span>&#8377</span></h1>
+          <h1>3,500 <span>$</span></h1>
         </div>
     </div>
     <div class="chartbox">

@@ -32,9 +32,8 @@
         <ul>
             <li class="user-pagebtn active" onclick="switchUserFrame(0)"><i class="fa-solid fa-gauge"></i>&nbsp&nbsp&nbsp Dashboard</li>
             <li class="user-pagebtn" onclick="switchUserFrame(1)"><i class="fa-solid fa-bed"></i>&nbsp&nbsp&nbsp Room Booking</li>
-            <li class="user-pagebtn" onclick="switchUserFrame(2)"><i class="fa-solid fa-wallet"></i>&nbsp&nbsp&nbsp Payment</li>
-            <li class="user-pagebtn" onclick="switchUserFrame(3)"><i class="fa-solid fa-door-open"></i>&nbsp&nbsp&nbsp Rooms</li>
-            <li class="user-pagebtn" onclick="switchUserFrame(4)"><i class="fa-solid fa-file-invoice-dollar"></i>&nbsp&nbsp&nbsp Invoice</li>
+            <li class="user-pagebtn" onclick="switchUserFrame(2)"><i class="fa-solid fa-wallet"></i>&nbsp&nbsp&nbsp Payment History</li>
+            <li class="user-pagebtn" onclick="switchUserFrame(3)"><i class="fa-solid fa-user"></i>&nbsp&nbsp&nbsp User Profile</li>
         </ul>
     </nav>
 
@@ -42,8 +41,7 @@
         <iframe class="frames frame1 active" src="{{ route('user.dashboard') }}" frameborder="0"></iframe>
         <iframe class="frames frame2" src="{{ route('user.roombook') }}" frameborder="0"></iframe>
         <iframe class="frames frame3" src="{{ route('user.payment') }}" frameborder="0"></iframe>
-        <iframe class="frames frame4" src="{{ route('user.room') }}" frameborder="0"></iframe>
-        <iframe class="frames frame5" src="{{ route('user.invoice') }}" frameborder="0"></iframe>
+        <iframe class="frames frame4" src="{{ route('user.userprofile') }}" frameborder="0"></iframe>
     </div>
 </body>
 

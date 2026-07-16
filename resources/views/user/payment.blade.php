@@ -40,7 +40,9 @@
                     <td>₹500</td>
                     <td>₹3500</td>
                     <td class="action">
-                        <button class="btn btn-primary btn-sm"><i class="fa-solid fa-print"></i> View Invoice</button>
+                        <a href="{{ route('user.invoice') }}" target="_blank" class="btn btn-primary btn-sm text-white text-decoration-none">
+                            <i class="fa-solid fa-print"></i> View Invoice
+                        </a>
                     </td>
                 </tr>
             </tbody>
