@@ -53,17 +53,15 @@ class RoombookController extends Controller
         return back()->with('success', 'Reservation successful');
     }
 
-    /** ✅ UPDATED: Find valid, vacant rooms matching this exact reservation spec */
-/** ✅ FIXED: Scans full inventory to build a real-time reactive availability map */
     public function edit($id)
     {
         $booking = Roombook::where('id', $id)->firstOrFail();
         $countries = HomeController::countries();
 
-        // 1. Fetch all rooms registered in the system
+        // Fetch all rooms registered in the system
         $allRooms = Room::all();
         
-        // 2. Build a mapped dictionary grouped by "RoomType_Bedding"
+        // Build a mapped dictionary grouped by "RoomType_Bedding"
         $roomsMap = [];
         
         foreach ($allRooms as $room) {
@@ -92,7 +90,7 @@ class RoombookController extends Controller
         return view('admin.roombookedit', compact('booking', 'countries', 'roomsMap'));
     }
 
-    /** ✅ UPDATED: Save edits with strict server-side fallback validation checks */
+    // Save edits with validation checks 
     public function update(Request $request, $id)
     {
         $booking = Roombook::where('id', $id)->firstOrFail();
@@ -110,17 +108,17 @@ class RoombookController extends Controller
             // Find the room in the inventory database
             $room = Room::where('room_no', $roomNo)->first();
             
-            // Validation Check A: Verify existence
+            // Validation Check existence
             if (!$room) {
                 return back()->with('error', "Room #{$roomNo} does not exist in your inventory!");
             }
 
-            // Validation Check B: Verify that Room Type and Bed layout match the inventory parameters
+            // Validation Check Verify that Room Type and Bed layout match
             if ($room->type !== $roomType || $room->bedding !== $bed) {
                 return back()->with('error', "Invalid configuration! Room #{$roomNo} is registered as a {$room->type} with a {$room->bedding} Bed layout.");
             }
 
-            // Validation Check C: Verify calendar overlap schedule availability
+            // Validation Check calendar overlap schedule availability
             $isOccupied = Roombook::where('id', '!=', $id)
                 ->where('NoofRoom', $roomNo)
                 ->where('stat', 'Confirm')

@@ -11,6 +11,8 @@ use App\Http\Controllers\UserDashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/contact-us', function () {return view('contact');}) ->name('contact');
+
 
 // ---- Authentication ----
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');

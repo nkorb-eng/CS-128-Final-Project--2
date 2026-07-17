@@ -7,7 +7,7 @@ use App\Models\Payment;
 
 class PaymentController extends Controller
 {
-    /** Payments table (was payment.php). */
+    //Payments table (was payment.php)
     public function index()
     {
         return view('admin.payment', ['payments' => Payment::all()]);
@@ -20,12 +20,12 @@ class PaymentController extends Controller
         return redirect()->route('admin.payment');
     }
 
-    /** Printable invoice (was invoiceprint.php). */
+    //Printable invoice
     public function invoice($id)
     {
         $payment = Payment::where('id', $id)->firstOrFail();
 
-        // Display-only rates used by the original invoice's "Rate" column.
+        // Display rates used by the original invoice column.
         $roomRate = match ($payment->RoomType) {
             'Superior Room' => 320,
             'Deluxe Room'   => 220,

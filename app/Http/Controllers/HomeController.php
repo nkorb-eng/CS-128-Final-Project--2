@@ -14,12 +14,11 @@ class HomeController extends Controller
         return view('home');
     }
 
-    /** ✅ NEW: Display the dedicated booking page */
+    /** Display the dedicated booking page */
     public function showBookForm(Request $request)
     {
         return view('book', [
             'countries' => self::countries(),
-            // Captures url parameter ?type=Room+Name to auto-select the dropdown option
             'selectedRoom' => $request->query('type', '') 
         ]);
     }
@@ -49,7 +48,7 @@ class HomeController extends Controller
             'cin' => $cin,
             'cout' => $cout,
             'stat' => 'NotConfirm',
-            'NoofRoom' => '1', // ✅ Automated directly in backend mapping
+            'NoofRoom' => '1',
             'nodays' => $this->dayDiff($cin, $cout),
         ]);
 
