@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -30,6 +30,7 @@
         }
     </style>
     <title>Document</title>
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
 </head>
 <body>
     <div id="editpanel">
@@ -76,6 +77,10 @@
                     <select name="NoofRoom" class="selectinput">
                         <option value selected>No of Room</option>
                         <option value="1" @selected($booking->NoofRoom === '1')>1</option>
+                        <option value="2" @selected($booking->NoofRoom === '2')>2</option>
+                        <option value="3" @selected($booking->NoofRoom === '3')>3</option>
+                        <option value="4" @selected($booking->NoofRoom === '4')>4</option>
+                        <option value="5" @selected($booking->NoofRoom === '5')>5</option>
                     </select>
                     <select name="Meal" class="selectinput">
                         <option value selected>Meal</option>

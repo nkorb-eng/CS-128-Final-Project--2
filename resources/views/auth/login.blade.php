@@ -15,6 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/flash.css') }}">
     <title>Hotel Blue Bird</title>
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
 </head>
 
 <body>

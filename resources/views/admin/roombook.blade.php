@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -11,6 +11,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" href="{{ asset('adminassets/css/roombook.css') }}">
     <title>BlueBird - Admin</title>
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
 </head>
 
 <body>
@@ -59,6 +60,10 @@
                     <select name="NoofRoom" class="selectinput">
                         <option value selected>No of Room</option>
                         <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
                     </select>
                     <select name="Meal" class="selectinput">
                         <option value selected>Meal</option>
