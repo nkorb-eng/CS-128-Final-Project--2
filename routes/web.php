@@ -7,20 +7,23 @@ use App\Http\Controllers\Admin\RoombookController;
 use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-// ---- User Panel Layout Area ----
-Route::view('/user-panel', 'user.user_panel')->name('user_panel');
-
-// ---- Internal iframe views ----
-Route::view('/user-panel/dashboard', 'user.dashboard')->name('user.dashboard');
-Route::view('/user-panel/roombook', 'user.roombook')->name('user.roombook');
-Route::view('/user-panel/payment', 'user.payment')->name('user.payment');
-Route::view('/user-panel/profile', 'user.userprofile')->name('user.userprofile');
-Route::view('/user-panel/invoice', 'user.invoice')->name('user.invoice');
-
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Public reservation request (guests can book without an account; admin confirms it)
+Route::post('/home/book', [HomeController::class, 'book'])->name('home.book');
+
+// ---- Guest panel (wired to the logged-in guest's own data) ----
+Route::middleware('auth.user')->group(function () {
+    Route::get('/user-panel', [UserController::class, 'panel'])->name('user_panel');
+    Route::get('/user-panel/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+    Route::get('/user-panel/roombook', [UserController::class, 'roombook'])->name('user.roombook');
+    Route::get('/user-panel/payment', [UserController::class, 'payment'])->name('user.payment');
+    Route::get('/user-panel/profile', [UserController::class, 'profile'])->name('user.userprofile');
+    Route::get('/user-panel/invoice/{id}', [UserController::class, 'invoice'])->name('user.invoice');
+});
 
 // ---- Authentication (was index.php / logout.php) ----
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -28,13 +31,6 @@ Route::post('/login/user', [AuthController::class, 'userLogin'])->name('login.us
 Route::post('/login/employee', [AuthController::class, 'empLogin'])->name('login.employee');
 Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
 Route::match(['get', 'post'], '/logout', [AuthController::class, 'logout'])->name('logout');
-
-// ---- User area (was home.php) ----
-Route::middleware('auth.user')->group(function () {
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::post('/home/book', [HomeController::class, 'book'])->name('home.book');
-});
-
 
 // ---- Admin area (was admin/*.php) ----
 Route::middleware('auth.admin')->prefix('admin')->name('admin.')->group(function () {
@@ -50,8 +46,10 @@ Route::middleware('auth.admin')->prefix('admin')->name('admin.')->group(function
     Route::get('/roombook/{id}/delete', [RoombookController::class, 'destroy'])->name('roombook.delete');
     Route::post('/roombook/export', [RoombookController::class, 'export'])->name('roombook.export');
 
-    // Payment / invoice
+    // Payment / POS checkout / invoice
     Route::get('/payment', [PaymentController::class, 'index'])->name('payment');
+    Route::get('/payment/{id}/settle', [PaymentController::class, 'settleForm'])->name('payment.settle');
+    Route::post('/payment/{id}/settle', [PaymentController::class, 'settle'])->name('payment.settle.store');
     Route::get('/payment/{id}/delete', [PaymentController::class, 'destroy'])->name('payment.delete');
     Route::get('/payment/{id}/invoice', [PaymentController::class, 'invoice'])->name('payment.invoice');
 

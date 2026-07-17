@@ -47,6 +47,7 @@
 		}
 		@page { margin: 0; }
 	</style>
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
 </head>
 
 <body>
@@ -110,16 +111,32 @@
 
 		<table class="balance">
 			<tr>
-				<th><span>Total</span></th>
-				<td><span data-prefix>₹</span><span>{{ $payment->finaltotal }}</span></td>
+				<th><span>Subtotal</span></th>
+				<td><span data-prefix>₹</span><span>{{ number_format($payment->subtotal, 2) }}</span></td>
 			</tr>
 			<tr>
-				<th><span>Amount Paid</span></th>
-				<td><span data-prefix>₹</span><span>0.00</span></td>
+				<th><span>Service Tax (10%)</span></th>
+				<td><span data-prefix>₹</span><span>{{ number_format($payment->tax_amount, 2) }}</span></td>
+			</tr>
+			<tr>
+				<th><span>Discount</span></th>
+				<td><span data-prefix>₹</span><span>{{ number_format($payment->discount, 2) }}</span></td>
+			</tr>
+			<tr>
+				<th><span>Grand Total</span></th>
+				<td><span data-prefix>₹</span><span>{{ number_format($payment->grand_total, 2) }}</span></td>
+			</tr>
+			<tr>
+				<th><span>Amount Paid ({{ $payment->method ?? '—' }})</span></th>
+				<td><span data-prefix>₹</span><span>{{ number_format($payment->amount_paid, 2) }}</span></td>
 			</tr>
 			<tr>
 				<th><span>Balance Due</span></th>
-				<td><span data-prefix>₹</span><span>{{ $payment->finaltotal }}</span></td>
+				<td><span data-prefix>₹</span><span>{{ number_format(max(0, $payment->balance), 2) }}</span></td>
+			</tr>
+			<tr>
+				<th><span>Status</span></th>
+				<td><span>{{ $payment->status }}</span></td>
 			</tr>
 		</table>
 	</article>

@@ -1,90 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Invoice Prototype</title>
+    <title>Receipt #{{ $payment->id }}</title>
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
     <style>
-        * { border: 0; box-sizing: content-box; color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; list-style: none; margin: 0; padding: 0; text-decoration: none; vertical-align: top; }
-        h1 { font: bold 100% sans-serif; letter-spacing: 0.5em; text-align: center; text-transform: uppercase; }
-        table { font-size: 75%; table-layout: fixed; width: 100%; border-collapse: separate; border-spacing: 2px; }
-        th, td { border-width: 1px; padding: 0.5em; position: relative; text-align: left; border-radius: 0.25em; border-style: solid; }
-        th { background: #EEE; border-color: #BBB; }
-        td { border-color: #DDD; }
-        html { font: 16px/1 'Open Sans', sans-serif; overflow: auto; padding: 0.5in; background: #999; cursor: default; }
-        body { box-sizing: border-box; height: 11in; margin: 0 auto; overflow: hidden; padding: 0.5in; width: 8.5in; background: #FFF; border-radius: 1px; box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5); }
-        header { margin: 0 0 3em; }
-        header:after { clear: both; content: ""; display: table; }
-        header h1 { background: #000; border-radius: 0.25em; color: #FFF; margin: 0 0 1em; padding: 0.5em 0; }
-        header address { float: left; font-size: 75%; font-style: normal; line-height: 1.25; margin: 0 1em 1em 0; }
-        header address p { margin: 0 0 0.25em; }
-        header span, header img { display: block; float: right; }
+        body { background: #eef2f8; padding: 30px; }
+        .receipt { max-width: 480px; margin: 0 auto; background:#fff; border:1px solid var(--bb-border); border-radius: var(--bb-radius); box-shadow: var(--bb-shadow); padding: 32px; }
+        .receipt h1 { text-align:center; font-family: var(--bb-serif); margin-bottom: 4px; }
+        .receipt .sub { text-align:center; color: var(--bb-muted); font-size:.8rem; margin-bottom: 22px; }
+        .r-row { display:flex; justify-content:space-between; padding: 7px 0; font-size:.92rem; }
+        .r-row.dashed { border-top: 1px dashed var(--bb-border-2); margin-top: 6px; padding-top: 12px; }
+        .r-row.grand { font-family: var(--bb-serif); font-size:1.15rem; color: var(--bb-navy); border-top: 2px solid var(--bb-navy); margin-top: 8px; padding-top: 12px; }
+        .r-label { color: var(--bb-muted); }
+        .r-status { text-align:center; margin-top: 20px; }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Invoice</h1>
-        <address>
-            <p>HOTEL BLUE BIRD,</p>
-            <p>(+91) 9313346569</p>
-        </address>
-    </header>
-    <article>
-        <h1>Recipient</h1>
-        <address>
-            <p>Guest User<br></p>
-        </address>
-        <table class="meta">
-            <tr>
-                <th><span>Invoice #</span></th>
-                <td><span>INV-9982</span></td>
-            </tr>
-            <tr>
-                <th><span>Date</span></th>
-                <td><span>2026-07-20</span></td>
-            </tr>
-        </table>
-        <table class="inventory">
-            <thead>
-                <tr>
-                    <th><span>Item</span></th>
-                    <th><span>No of Days</span></th>
-                    <th><span>Rate</span></th>
-                    <th><span>Quantity</span></th>
-                    <th><span>Price</span></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><span>Deluxe Room</span></td>
-                    <td><span>5</span></td>
-                    <td><span>₹600</span></td>
-                    <td><span>1</span></td>
-                    <td><span>₹3000</span></td>
-                </tr>
-                <tr>
-                    <td><span>Breakfast Meal Included</span></td>
-                    <td><span>5</span></td>
-                    <td><span>₹100</span></td>
-                    <td><span>1</span></td>
-                    <td><span>₹500</span></td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="receipt">
+        <h1>Hotel Bluebird</h1>
+        <div class="sub">RECEIPT · #{{ $payment->id }} · {{ optional($payment->paid_at)->format('d M Y') ?? $payment->cout }}</div>
 
-        <table class="balance">
-            <tr>
-                <th><span>Total</span></th>
-                <td><span>₹3500</span></td>
-            </tr>
-            <tr>
-                <th><span>Amount Paid</span></th>
-                <td><span>₹3500</span></td>
-            </tr>
-            <tr>
-                <th><span>Balance Due</span></th>
-                <td><span>₹0.00</span></td>
-            </tr>
-        </table>
-    </article>
+        <div class="r-row"><span class="r-label">Guest</span><span>{{ $payment->Name }}</span></div>
+        <div class="r-row"><span class="r-label">Room</span><span>{{ $payment->RoomType }} · {{ $payment->Bed }}</span></div>
+        <div class="r-row"><span class="r-label">Stay</span><span>{{ $payment->cin }} → {{ $payment->cout }} ({{ $payment->noofdays }}n)</span></div>
+
+        <div class="r-row dashed"><span class="r-label">Room charge</span><span>₹{{ number_format($payment->roomtotal,2) }}</span></div>
+        <div class="r-row"><span class="r-label">Bed</span><span>₹{{ number_format($payment->bedtotal,2) }}</span></div>
+        <div class="r-row"><span class="r-label">Meal ({{ $payment->meal }})</span><span>₹{{ number_format($payment->mealtotal,2) }}</span></div>
+        <div class="r-row"><span class="r-label">Service Tax (10%)</span><span>₹{{ number_format($payment->tax_amount,2) }}</span></div>
+        <div class="r-row"><span class="r-label">Discount</span><span>− ₹{{ number_format($payment->discount,2) }}</span></div>
+
+        <div class="r-row grand"><span>Grand Total</span><span>₹{{ number_format($payment->grand_total,2) }}</span></div>
+        <div class="r-row"><span class="r-label">Paid ({{ $payment->method ?? '—' }})</span><span>₹{{ number_format($payment->amount_paid,2) }}</span></div>
+        <div class="r-row"><span class="r-label">Balance</span><span>₹{{ number_format(max(0,$payment->balance),2) }}</span></div>
+
+        <div class="r-status"><span class="pos-badge pos-badge-{{ $payment->status_color }}">{{ $payment->status }}</span></div>
+    </div>
 </body>
 </html>

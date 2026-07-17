@@ -68,6 +68,10 @@
                     <select name="NoofRoom" class="selectinput">
                         <option value selected>No of Room</option>
                         <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
                     </select>
                     <select name="Meal" class="selectinput">
                         <option value selected>Meal</option>
@@ -168,11 +172,11 @@
   </section>
 </div>
 @include('extend.footer')
-@endsection
+
 <script>
-    var bookbox = document.getElementById("guestdetailpanel");
-    openbookbox = () => { bookbox.style.display = "flex"; }
-    closebox = () => { bookbox.style.display = "none"; }
+    // look the panel up at click-time so ordering never matters
+    function openbookbox() { const p = document.getElementById("guestdetailpanel"); if (p) p.style.display = "flex"; }
+    function closebox()   { const p = document.getElementById("guestdetailpanel"); if (p) p.style.display = "none"; }
 </script>
 @if (session('success'))
     <script>swal({ title: @json(session('success')), icon: 'success' });</script>
@@ -180,4 +184,4 @@
 @if (session('error'))
     <script>swal({ title: @json(session('error')), icon: 'error' });</script>
 @endif
-</html>
+@endsection
