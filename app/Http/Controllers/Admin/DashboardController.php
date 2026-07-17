@@ -30,11 +30,11 @@ class DashboardController extends Controller
             'Single Room'   => Roombook::where('RoomType', 'Single Room')->count(),
         ];
 
-        // Morris profit chart data: 10% of each payment's final total.
+        // Morris chart data
         $profitData = [];
         $tot = 0;
         foreach (Payment::all() as $p) {
-            $profit = $p->finaltotal * 10 / 100;
+            $profit = $p->finaltotal; 
             $profitData[] = ['date' => (string) $p->cout, 'profit' => $profit];
             $tot += $profit;
         }

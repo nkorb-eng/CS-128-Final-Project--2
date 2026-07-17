@@ -14,9 +14,9 @@
         <input type="text" name="search_bar" id="search_bar" placeholder="search...">
     </div>
 
-    <div class="roombooktable table-responsive-xl px-3">
+    <div class="roombooktable table-responsive-xl">
         <table class="table table-bordered table-hover align-middle" id="table-data">
-            <thead class="table-dark">
+            <thead>
                 <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Name</th>
