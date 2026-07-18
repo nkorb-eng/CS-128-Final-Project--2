@@ -12,7 +12,7 @@ class Room extends Model
 
     public static function calculatePrice(string $type, string $bedding): float
     {
-        // 1. Base price for the room type
+        // Base price for the room type
         $basePrice = match ($type) {
             'Single Room'   => 10.00,
             'Guest House'   => 12.00,
@@ -21,7 +21,7 @@ class Room extends Model
             default         => 10.00,
         };
 
-        // 2. Additional cost for extra beds
+        // Additional cost for extra beds
         $bedAdder = match ($bedding) {
             'Single' => 0.00,
             'Double' => 5.00,

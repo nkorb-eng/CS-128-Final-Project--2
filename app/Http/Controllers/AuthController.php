@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    /** Show the combined login / signup page (was index.php). */
+    /** Show the combined login / signup page*/
     public function showLogin()
     {
         return view('auth.login');
@@ -45,7 +45,7 @@ class AuthController extends Controller
         return back()->with('error', 'Something went wrong');
     }
 
-    /** Register a new site user (was the signup block in index.php). */
+    /** Register a new site user */
     public function signup(Request $request)
     {
         $username = $request->input('Username');
@@ -76,7 +76,7 @@ class AuthController extends Controller
         return redirect()->route('home');
     }
 
-    /** Destroy the session (was logout.php). */
+    /** Destroy the session meaning logout */
     public function logout(Request $request)
     {
         $request->session()->flush();

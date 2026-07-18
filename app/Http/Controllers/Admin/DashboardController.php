@@ -16,7 +16,7 @@ class DashboardController extends Controller
         return view('admin.panel');
     }
 
-    /** Dashboard stats + charts (was dashboard.php). */
+    /** Dashboard stats + charts */
     public function index()
     {
         $roombookrow = Roombook::count();

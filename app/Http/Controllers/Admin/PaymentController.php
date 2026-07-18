@@ -7,7 +7,7 @@ use App\Models\Payment;
 
 class PaymentController extends Controller
 {
-    //Payments table (was payment.php)
+    //Payments table
     public function index()
     {
         return view('admin.payment', ['payments' => Payment::all()]);

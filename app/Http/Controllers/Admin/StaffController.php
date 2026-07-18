@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class StaffController extends Controller
 {
-    /** List + add-staff form (was staff.php). */
+    /** List + add-staff form */
     public function index()
     {
         return view('admin.staff', ['staff' => Staff::all()]);
