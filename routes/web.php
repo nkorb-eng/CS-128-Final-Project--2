@@ -36,7 +36,7 @@ Route::middleware('auth.user')->group(function () {
     Route::get('/user-panel/invoice/{id}', [UserDashboardController::class, 'invoice'])->name('user.invoice');
 });
 
-// ---- Admin area (was admin/*.php) ----
+// ---- Admin area ----
 Route::middleware('auth.admin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'panel'])->name('panel');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
