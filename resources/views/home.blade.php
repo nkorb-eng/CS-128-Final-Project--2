@@ -89,7 +89,7 @@
     </div>
   </section>
 
-  <section id="thirdsection">
+  <section id="thirdsection" style="height: 800px;margin-top: 120px; padding-top: 120px;">
     <h1 class="head">≼ Facilities ≽</h1>
     <div class="facility">
       <div class="box"><h2>Swiming pool</h2></div>

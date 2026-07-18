@@ -129,7 +129,7 @@ function calculateLiveEstimate() {
         const checkOutVal = document.getElementById('check_out').value;
         const priceDisplay = document.getElementById('livePriceDisplay');
 
-        // 1. Calculate Days Stayed
+        // Calculate Days Stayed
         let days = 0;
         if (checkInVal && checkOutVal) {
             const dateIn = new Date(checkInVal);
@@ -139,7 +139,7 @@ function calculateLiveEstimate() {
             if (days < 0) days = 0; 
         }
 
-        // 2. Base Room Selection Rates
+        // Base Room Selection Rates
         let basePrice = 0;
         switch (roomType) {
             case 'Single Room':   basePrice = 10.00; break;
@@ -148,7 +148,7 @@ function calculateLiveEstimate() {
             case 'Superior Room': basePrice = 35.00; break;
         }
 
-        // 3. Bedding Cost Additions
+        // Bedding Cost Additions
         let bedAdder = 0;
         switch (bedding) {
             case 'Double': bedAdder = 5.00;  break;
@@ -156,7 +156,7 @@ function calculateLiveEstimate() {
             case 'Quad':   bedAdder = 15.00; break;
         }
 
-        // 4. Meal Plan Cost Additions
+        // Meal Plan Cost Additions
         let mealRate = 0;
         switch (mealPlan) {
             case 'Breakfast':  mealRate = 5.00;  break;
@@ -164,7 +164,7 @@ function calculateLiveEstimate() {
             case 'Full Board': mealRate = 15.00; break;
         }
 
-        // 5. Total Pricing Calculation (Implicitly multiplies by 1 room)
+        // Total Pricing Calculation
         let totalBill = 0;
         if (days > 0 && basePrice > 0) {
             let roomAndBedTotal = (basePrice + bedAdder) * days;
@@ -172,7 +172,7 @@ function calculateLiveEstimate() {
             totalBill = roomAndBedTotal + mealTotal;
         }
 
-        // 6. Display Total
+        // Display Total
         priceDisplay.innerText = '$ ' + totalBill.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 

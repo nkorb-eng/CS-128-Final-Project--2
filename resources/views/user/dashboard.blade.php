@@ -36,7 +36,7 @@
 </body>
 
 <script>
-    // 1. DYNAMIC DOUGHNUT CHART (Fixed hardcoded numbers)
+    // DYNAMIC DOUGHNUT CHART
     const labels = ['Superior Room', 'Deluxe Room', 'Guest House', 'Single Room'];
     const data = {
         labels: labels,
@@ -49,7 +49,7 @@
             'rgba(153, 102, 255, 1)',
         ],
         borderColor: 'black',
-        // Injects the real data from the controller, defaulting to 0 if empty
+        // Injects the data from the controller, defaulting to 0 if empty
         data: [
             {{ $chart['Superior Room'] ?? 0 }}, 
             {{ $chart['Deluxe Room'] ?? 0 }}, 
@@ -64,7 +64,7 @@
 </script>
 
 <script>
-    // 2. MORRIS BAR CHART (Fixed the empty data crash)
+    // MORRIS BAR CHART
     const expenseData = @json($expenseData);
 
     // Only try to draw the chart if the user actually has payment data
