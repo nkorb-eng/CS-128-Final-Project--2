@@ -85,7 +85,11 @@
         let myTable = document.getElementById("table-data");
         let tr = myTable.getElementsByTagName('tr');
         for (var i = 0; i < tr.length; i++) {
+<<<<<<< HEAD
             let td = tr[i].getElementsByTagName('td')[1]; // Search by Name column
+=======
+            let td = tr[i].getElementsByTagName('td')[1];
+>>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
             if (td) {
                 let textvalue = td.textContent || td.innerHTML;
                 tr[i].style.display = textvalue.toUpperCase().indexOf(filter) > -1 ? "" : "none";

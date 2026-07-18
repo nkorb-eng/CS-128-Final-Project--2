@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "content-hash": "5d8ba9636c392f1170d8bdc95f0564d1",
+=======
+    "content-hash": "36793882908b6cbdd344b5a4840231db",
+>>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
     "packages": [
         {
             "name": "brick/math",
@@ -508,6 +512,7 @@
             "time": "2025-03-06T22:45:56+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "firebase/php-jwt",
             "version": "v7.1.0",
             "source": {
@@ -574,6 +579,8 @@
             "time": "2026-06-11T17:54:14+00:00"
         },
         {
+=======
+>>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
             "name": "fruitcake/php-cors",
             "version": "v1.4.0",
             "source": {
@@ -1468,6 +1475,7 @@
             "time": "2026-04-16T14:03:50+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "laravel/socialite",
             "version": "v5.28.0",
             "source": {
@@ -1540,6 +1548,8 @@
             "time": "2026-06-12T03:24:05+00:00"
         },
         {
+=======
+>>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
             "name": "laravel/tinker",
             "version": "v3.0.2",
             "source": {
@@ -1986,6 +1996,7 @@
             "time": "2024-09-21T08:32:55+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "league/oauth1-client",
             "version": "v1.11.0",
             "source": {
@@ -2062,6 +2073,8 @@
             "time": "2024-12-10T19:59:05+00:00"
         },
         {
+=======
+>>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
             "name": "league/uri",
             "version": "7.8.1",
             "source": {
@@ -2754,6 +2767,7 @@
             "time": "2026-02-16T23:10:27+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "paragonie/constant_time_encoding",
             "version": "v3.1.3",
             "source": {
@@ -2873,6 +2887,8 @@
             "time": "2020-10-15T08:29:30+00:00"
         },
         {
+=======
+>>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
             "name": "phpoption/phpoption",
             "version": "1.9.5",
             "source": {
@@ -2948,6 +2964,7 @@
             "time": "2025-12-27T19:41:33+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "phpseclib/phpseclib",
             "version": "3.0.55",
             "source": {
@@ -3058,6 +3075,8 @@
             "time": "2026-06-14T23:24:10+00:00"
         },
         {
+=======
+>>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
             "name": "psr/clock",
             "version": "1.0.0",
             "source": {

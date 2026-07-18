@@ -89,7 +89,11 @@
     </div>
   </section>
 
+<<<<<<< HEAD
   <section id="thirdsection">
+=======
+  <section id="thirdsection" style="height: 800px;margin-top: 120px; padding-top: 120px;">
+>>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
     <h1 class="head">≼ Facilities ≽</h1>
     <div class="facility">
       <div class="box"><h2>Swiming pool</h2></div>

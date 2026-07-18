@@ -14,9 +14,15 @@
         <input type="text" name="search_bar" id="search_bar" placeholder="search...">
     </div>
 
+<<<<<<< HEAD
     <div class="roombooktable table-responsive-xl px-3">
         <table class="table table-bordered table-hover align-middle" id="table-data">
             <thead class="table-dark">
+=======
+    <div class="roombooktable table-responsive-xl">
+        <table class="table table-bordered table-hover align-middle" id="table-data">
+            <thead>
+>>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
                 <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Name</th>

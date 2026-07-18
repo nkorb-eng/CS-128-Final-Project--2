@@ -6,6 +6,7 @@ use App\Models\EmpLogin;
 use App\Models\Signup;
 use Illuminate\Http\Request;
 
+<<<<<<< HEAD
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\InvalidStateException;
@@ -13,6 +14,11 @@ use Laravel\Socialite\Two\InvalidStateException;
 class AuthController extends Controller
 {
     /** Show the combined login / signup page (was index.php). */
+=======
+class AuthController extends Controller
+{
+    /** Show the combined login / signup page*/
+>>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
     public function showLogin()
     {
         return view('auth.login');
@@ -49,7 +55,11 @@ class AuthController extends Controller
         return back()->with('error', 'Something went wrong');
     }
 
+<<<<<<< HEAD
     /** Register a new site user (was the signup block in index.php). */
+=======
+    /** Register a new site user */
+>>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
     public function signup(Request $request)
     {
         $username = $request->input('Username');
@@ -80,13 +90,18 @@ class AuthController extends Controller
         return redirect()->route('home');
     }
 
+<<<<<<< HEAD
     /** Destroy the session (was logout.php). */
+=======
+    /** Destroy the session meaning logout */
+>>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
     public function logout(Request $request)
     {
         $request->session()->flush();
 
         return redirect()->route('login');
     }
+<<<<<<< HEAD
 
     public function redirectToGoogle()
     {
@@ -125,4 +140,6 @@ class AuthController extends Controller
 
         return redirect()->route('home');
     }
+=======
+>>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
 }

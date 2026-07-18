@@ -16,7 +16,11 @@ class DashboardController extends Controller
         return view('admin.panel');
     }
 
+<<<<<<< HEAD
     /** Dashboard stats + charts (was dashboard.php). */
+=======
+    /** Dashboard stats + charts */
+>>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
     public function index()
     {
         $roombookrow = Roombook::count();
@@ -30,11 +34,19 @@ class DashboardController extends Controller
             'Single Room'   => Roombook::where('RoomType', 'Single Room')->count(),
         ];
 
+<<<<<<< HEAD
         // Morris profit chart data: 10% of each payment's final total.
         $profitData = [];
         $tot = 0;
         foreach (Payment::all() as $p) {
             $profit = $p->finaltotal * 10 / 100;
+=======
+        // Morris chart data
+        $profitData = [];
+        $tot = 0;
+        foreach (Payment::all() as $p) {
+            $profit = $p->finaltotal; 
+>>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
             $profitData[] = ['date' => (string) $p->cout, 'profit' => $profit];
             $tot += $profit;
         }
@@ -43,4 +55,8 @@ class DashboardController extends Controller
             'roombookrow', 'staffrow', 'roomrow', 'chart', 'profitData', 'tot'
         ));
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a

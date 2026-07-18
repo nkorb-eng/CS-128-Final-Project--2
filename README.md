@@ -34,6 +34,7 @@ php artisan serve
 
 Then open http://127.0.0.1:8000.
 
+<<<<<<< HEAD
 ### Google sign-in
 
 Create a Google OAuth 2.0 Web application credential and put its client ID
@@ -49,6 +50,8 @@ do not start the login flow on `localhost` and return to `127.0.0.1` (or the
 reverse): browsers keep their session cookies separate, and Socialite will
 reject the callback state.
 
+=======
+>>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
 ## Demo logins (created by the seeder)
 
 | Role  | Email                            | Password |

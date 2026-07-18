@@ -51,6 +51,7 @@
                     <div class="btns">Staff</div>
                 </div>
 
+<<<<<<< HEAD
                                 <!-- User Login -->
                     <form class="user_login authsection active" id="userlogin" action="{{ route('login.user') }}" method="POST">
                         @csrf
@@ -77,6 +78,28 @@
                             <h6>Don't have an account? <span class="page_move_btn" onclick="signuppage()">sign up</span></h6>
                         </div>
                     </form>
+=======
+                <!-- User Login -->
+                <form class="user_login authsection active" id="userlogin" action="{{ route('login.user') }}" method="POST">
+                    @csrf
+                    <div class="form-floating">
+                        <input type="text" class="form-control" name="Username" placeholder=" ">
+                        <label for="Username">Username</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="email" class="form-control" name="Email" placeholder=" ">
+                        <label for="Email">Email</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" class="form-control" name="Password" placeholder=" ">
+                        <label for="Password">Password</label>
+                    </div>
+                    <button type="submit" name="user_login_submit" class="auth_btn">Log in</button>
+                    <div class="footer_line">
+                        <h6>Don't have an account? <span class="page_move_btn" onclick="signuppage()">sign up</span></h6>
+                    </div>
+                </form>
+>>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
 
                 <!-- Employee Login -->
                 <form class="employee_login authsection" id="employeelogin" action="{{ route('login.employee') }}" method="POST">
@@ -90,9 +113,12 @@
                         <label for="floatingPassword">Password</label>
                     </div>
                     <button type="submit" name="Emp_login_submit" class="auth_btn">Log in</button>
+<<<<<<< HEAD
                     <a href="{{ route('google.redirect') }}" class="auth_btn" style="display:block; text-align:center; text-decoration:none;">
                          Continue with Google
                     </a>
+=======
+>>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
                 </form>
             </div>
 
