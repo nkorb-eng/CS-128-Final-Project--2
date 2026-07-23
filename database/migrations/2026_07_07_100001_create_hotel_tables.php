@@ -4,6 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Ported from the original "bluebirdhotel" MySQL dump.
+ * Table and column names are kept identical to the source project so the
+ * behaviour matches the original Hotel Management System one-to-one.
+ */
 return new class extends Migration
 {
     public function up(): void
@@ -12,16 +17,25 @@ return new class extends Migration
         Schema::create('emp_login', function (Blueprint $table) {
             $table->increments('empid');
             $table->string('Emp_Email', 50);
-            $table->string('Emp_Password', 255);
+            $table->string('Emp_Password', 50);
+        });
+
+        // Registered site users
+        Schema::create('signup', function (Blueprint $table) {
+            $table->increments('UserID');
+            $table->string('Username', 50);
+            $table->string('Email', 50);
+            $table->string('Password', 50);
         });
 
         // Room inventory
         Schema::create('room', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('room_no', 20)->unique();
+            $table->string('room_no', 20)->unique(); // Added room_no
             $table->string('type', 50);
             $table->string('bedding', 50);
             $table->decimal('price', 10, 2);
+            $table->string('image')->nullable(); // Added price
         });
 
         // Reservations
@@ -41,7 +55,7 @@ return new class extends Migration
             $table->string('stat', 30);
         });
 
-        // Payments / POS Invoices
+        // Payments / invoices
         Schema::create('payment', function (Blueprint $table) {
             $table->integer('id')->primary();
             $table->string('Name', 30);
@@ -57,13 +71,6 @@ return new class extends Migration
             $table->string('meal', 30);
             $table->double('mealtotal', 8, 2);
             $table->double('finaltotal', 8, 2);
-            
-            // Integrated POS Fields
-            $table->double('discount', 8, 2)->default(0);
-            $table->double('amount_paid', 8, 2)->default(0);
-            $table->string('method', 20)->nullable();
-            $table->string('status', 20)->default('Unpaid');
-            $table->dateTime('paid_at')->nullable();
         });
 
         // Hotel staff
@@ -80,6 +87,7 @@ return new class extends Migration
         Schema::dropIfExists('payment');
         Schema::dropIfExists('roombook');
         Schema::dropIfExists('room');
+        Schema::dropIfExists('signup');
         Schema::dropIfExists('emp_login');
     }
 };

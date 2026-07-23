@@ -9,7 +9,7 @@ return new class extends Migration
     /** Allow bcrypt and Argon password hashes for existing and new accounts. */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('signup', function (Blueprint $table) {
             $table->string('Password', 255)->change();
         });
 
@@ -20,7 +20,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('signup', function (Blueprint $table) {
             $table->string('Password', 50)->change();
         });
 

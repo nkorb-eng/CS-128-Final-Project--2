@@ -8,7 +8,7 @@ class Room extends Model
 {
     protected $table = 'room';
     public $timestamps = false;
-    protected $fillable = ['room_no', 'type', 'bedding', 'price'];
+    protected $fillable = ['room_no', 'type', 'bedding', 'price','image'];
 
     public static function calculatePrice(string $type, string $bedding): float
     {

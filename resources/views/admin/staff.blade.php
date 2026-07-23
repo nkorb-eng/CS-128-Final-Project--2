@@ -5,27 +5,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlueBird - Admin Staff</title>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    
+    <title>BlueBird - Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ asset('adminassets/css/room.css') }}">
     <style>
-        .room {
-            align-items: flex-start;
-        }
-
-        .staff-card { 
-            background-color: #ccdff4; 
-            padding: 25px 20px; 
-            border-radius: 12px; 
-            width: 220px; 
-            height: fit-content;
-            margin: 15px; 
-            text-align: center; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        .roombox{
+            background-color: #d1d7ff;
+            padding: 10px;
         }
     </style>
 </head>
@@ -34,17 +22,17 @@
     <div class="addroomsection">
         <form action="{{ route('admin.staff.store') }}" method="POST">
             @csrf
-            <label for="staffname">Name :</label>
-            <input type="text" name="staffname" class="form-control" required>
+            <label for="troom">Name :</label>
+            <input type="text" name="staffname" class="form-control">
 
-            <label for="staffwork">Work :</label>
-            <select name="staffwork" class="form-control" required>
-                <option value="" selected disabled>Select Role</option>
+            <label for="bed">Work :</label>
+            <select name="staffwork" class="form-control">
+                <option value selected></option>
                 <option value="Manager">Manager</option>
                 <option value="Cook">Cook</option>
                 <option value="Helper">Helper</option>
-                <option value="Cleaner">Cleaner</option>
-                <option value="Waiter">Waiter</option>
+                <option value="cleaner">cleaner</option>
+                <option value="weighter">weighter</option>
             </select>
 
             <button type="submit" class="btn btn-success" name="addstaff">Add Staff</button>
@@ -53,16 +41,17 @@
 
     <div class="room">
         @foreach ($staff as $row)
-            <div class="staff-card">
-                <i class="fa fa-users fa-4x text-primary mb-3"></i>
-                <h4 class="fw-bold text-dark mb-1">{{ $row->name }}</h4>
-                <div class="badge bg-secondary mb-3 fs-6">{{ $row->work }}</div>
-                <div>
-                    <a href="{{ route('admin.staff.delete', $row->id) }}" class="btn btn-danger btn-sm px-4" onclick="return confirm('Remove staff member?')">Delete</a>
+            <div class="roombox">
+                <div class="text-center no-boder">
+                    <i class="fa fa-users fa-5x"></i>
+                    <h3>{{ $row->name }}</h3>
+                    <div class="mb-1">{{ $row->work }}</div>
+                    <a href="{{ route('admin.staff.delete', $row->id) }}"><button class="btn btn-danger">Delete</button></a>
                 </div>
             </div>
         @endforeach
     </div>
 
 </body>
+
 </html>

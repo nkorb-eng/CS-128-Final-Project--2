@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="{{ asset('css/flash.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <title>BlueBird - User Panel</title>
-    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
 </head>
 
 <body>
@@ -24,8 +23,8 @@
             <p>BLUEBIRD</p>
         </div>
         <div class="logout">
-            <a href="{{ route('home') }}"><button class="btn btn-primary" style="background-color: #3a9e00; color: white; border: none; padding: 6px 12px; cursor: pointer; border-radius: 4px;">Home</button></a>
-            <a href="{{ route('logout') }}"><button class="btn btn-primary" style="background-color: #fd0d0d; color: white; border: none; padding: 6px 12px; cursor: pointer; border-radius: 4px;">Logout</button></a>
+            <a href="{{ route('home') }}" style="color: white; text-decoration: none; margin-right: 20px;">Home</a>
+            <a href="{{ route('logout') }}"><button class="btn btn-primary" style="background-color: #0d6efd; color: white; border: none; padding: 6px 12px; cursor: pointer; border-radius: 4px;">Logout</button></a>
         </div>
     </nav>
 

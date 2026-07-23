@@ -4,20 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlueBird - My Bookings</title>
+    <title>BlueBird - User Bookings</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
     <link rel="stylesheet" href="{{ asset('adminassets/css/roombook.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
 </head>
 <body>
-    <div class="searchsection d-flex align-items-center justify-content-between p-3">
-        <input class="form-control w-25" type="text" id="search_bar" placeholder="Search..." onkeyup="searchFun()">
+    <div class="searchsection">
+        <input type="text" name="search_bar" id="search_bar" placeholder="search...">
     </div>
 
-    <div class="roombooktable table-responsive-xl">
+    <div class="roombooktable table-responsive-xl px-3">
         <table class="table table-bordered table-hover align-middle" id="table-data">
-            <thead>
+            <thead class="table-dark">
                 <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Name</th>

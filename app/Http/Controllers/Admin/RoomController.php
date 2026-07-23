@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class RoomController extends Controller
 {
@@ -44,6 +45,7 @@ class RoomController extends Controller
             'room_no' => 'required|integer|min:1|unique:room,room_no',
             'type'    => 'required',
             'bedding' => 'required',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ], [
             'room_no.unique' => 'This Room Number already exists in the system!',
             'room_no.integer' => 'The Room Number must be a valid whole number!'
@@ -53,12 +55,17 @@ class RoomController extends Controller
             $request->input('type'), 
             $request->input('bedding')
         );
+        $imageName = null;
 
+if ($request->hasFile('image')) {
+    $imageName = $request->file('image')->store('rooms', 'public');
+}
         Room::create([
             'room_no' => $request->input('room_no'),
             'type'    => $request->input('type'),
             'bedding' => $request->input('bedding'),
             'price'   => $calculatedPrice,
+             'image' => $imageName,
         ]);
 
         return back()->with('success', 'Room added successfully!');
@@ -82,10 +89,59 @@ class RoomController extends Controller
         return back()->with('success', "Success! Updated pricing for {$affectedRooms} rooms.");
     }
 
-    public function destroy($id)
-    {
-        Room::where('id', $id)->delete();
+  public function destroy($id)
+{
+    $room = Room::findOrFail($id);
 
-        return back()->with('success', 'Room deleted!');
+    if ($room->image && Storage::disk('public')->exists($room->image)) {
+        Storage::disk('public')->delete($room->image);
     }
+
+    $room->delete();
+
+    return back()->with('success', 'Room deleted successfully!');
+}
+    public function edit($id)
+{
+    $room = Room::findOrFail($id);
+
+    return view('admin.room-edit', compact('room'));
+}
+public function update(Request $request, $id)
+{
+    $room = Room::findOrFail($id);
+
+    $request->validate([
+        'room_no' => 'required|integer|min:1|unique:room,room_no,' . $room->id,
+        'type' => 'required',
+        'bedding' => 'required',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+    ]);
+
+    $room->room_no = $request->room_no;
+    $room->type = $request->type;
+    $room->bedding = $request->bedding;
+
+    // Recalculate price
+    $room->price = Room::calculatePrice(
+        $request->type,
+        $request->bedding
+    );
+
+    if ($request->hasFile('image')) {
+
+        // Delete old image
+        if ($room->image && Storage::disk('public')->exists($room->image)) {
+            Storage::disk('public')->delete($room->image);
+        }
+
+        $room->image = $request->file('image')->store('rooms', 'public');
+    }
+
+    $room->save();
+
+    return redirect()
+        ->route('admin.room')
+        ->with('success', 'Room updated successfully!');
+}
 }

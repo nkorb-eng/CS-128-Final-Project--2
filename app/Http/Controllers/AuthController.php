@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EmpLogin;
-use App\Models\User;
+use App\Models\Signup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -26,7 +26,7 @@ class AuthController extends Controller
             'Password' => ['required', 'string'],
         ]);
 
-        $user = User::where('Email', $credentials['Email'])->first();
+        $user = Signup::where('Email', $credentials['Email'])->first();
 
         if ($user && $this->passwordMatches($credentials['Password'], $user->Password)) {
             $this->upgradeLegacyPassword($user, $credentials['Password']);
@@ -40,7 +40,7 @@ class AuthController extends Controller
             ->with('error', 'Invalid email or password.');
     }
 
-    /** Employee/admin login */
+    /** Employee/admin login against the emp_login table. */
     public function empLogin(Request $request)
     {
         $credentials = $request->validate([
@@ -72,15 +72,15 @@ class AuthController extends Controller
         $data = $request->validate([
             'Username' => ['required', 'string', 'max:50'],
             'Email' => ['required', 'email', 'max:50'],
-            'Password' => ['required', 'string', 'min:3', 'confirmed'],
+            'Password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
-        if (User::where('Email', $data['Email'])->exists()) {
+        if (Signup::where('Email', $data['Email'])->exists()) {
             return back()->withInput($request->except(['Password', 'Password_confirmation']))
                 ->with('error', 'Email already exists');
         }
 
-        User::create([
+        Signup::create([
             'Username' => $data['Username'],
             'Email' => $data['Email'],
             'Password' => Hash::make($data['Password']),
@@ -142,12 +142,12 @@ class AuthController extends Controller
                 ->with('error', 'Google did not provide an email address for this account.');
         }
 
-        $user = User::firstOrCreate(
+        $user = Signup::firstOrCreate(
             ['Email' => $email],
             [
                 'Username' => Str::limit($googleUser->getName() ?: Str::before($email, '@'), 50, ''),
+                // A local password is still required by the legacy table.
                 'Password' => Hash::make(Str::random(40)),
-                'avater'   => $googleUser->getAvatar(),
             ],
         );
 
@@ -163,6 +163,20 @@ class AuthController extends Controller
         return (string) config('services.google.redirect');
     }
 
+    private function requestMatchesRedirectUrl(Request $request, string $redirectUrl): bool
+    {
+        $redirect = parse_url($redirectUrl);
+
+        if (! is_array($redirect) || ! isset($redirect['scheme'], $redirect['host'])) {
+            return false;
+        }
+
+        $port = $redirect['port'] ?? ($redirect['scheme'] === 'https' ? 443 : 80);
+
+        return $request->getScheme() === $redirect['scheme']
+            && $request->getHost() === $redirect['host']
+            && $request->getPort() === $port;
+    }
 
     private function passwordMatches(string $plainTextPassword, string $storedPassword): bool
     {
@@ -171,7 +185,7 @@ class AuthController extends Controller
             : hash_equals($storedPassword, $plainTextPassword);
     }
 
-    private function upgradeLegacyPassword(User $user, string $plainTextPassword): void
+    private function upgradeLegacyPassword(Signup $user, string $plainTextPassword): void
     {
         if (! $this->isHashedPassword($user->Password)) {
             $user->update(['Password' => Hash::make($plainTextPassword)]);

@@ -25,23 +25,64 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Room inventory
+        // Room inventory
         $rooms = [
-            ['Superior Room', 'Single'], ['Superior Room', 'Triple'], ['Superior Room', 'Quad'],
-            ['Deluxe Room', 'Single'], ['Deluxe Room', 'Double'], ['Deluxe Room', 'Triple'],
-            ['Guest House', 'Single'], ['Guest House', 'Double'], ['Guest House', 'Triple'],
-            ['Guest House', 'Quad'], ['Superior Room', 'Double'], ['Single Room', 'Single'],
-            ['Superior Room', 'Single'], ['Deluxe Room', 'Single'], ['Deluxe Room', 'Triple'],
-            ['Guest House', 'Double'], ['Deluxe Room', 'Single'],
+
+            // type, bedding, price, image
+
+            ['Superior Room', 'Single', 35, 'rooms/superior.jpg'],
+            ['Guest House', 'Quad', 27, 'rooms/guest.jpg'],
+            ['Deluxe Room', 'Triple', 32, 'rooms/deluxe.jpg'],
+             ['Single Room', 'Single', 10, 'rooms/single.jpg'],
+            ['Superior Room', 'Double', 40, 'rooms/superior.jpg'],
+            ['Superior Room', 'Triple', 45, 'rooms/superior.jpg'],
+            ['Superior Room', 'Quad', 50, 'rooms/superior.jpg'],
+
+
+            ['Deluxe Room', 'Single', 22, 'rooms/deluxe.jpg'],
+            ['Deluxe Room', 'Double', 27, 'rooms/deluxe.jpg'],
+            ['Deluxe Room', 'Triple', 32, 'rooms/deluxe.jpg'],
+
+
+            ['Guest House', 'Single', 12, 'rooms/guest.jpg'],
+            ['Guest House', 'Double', 17, 'rooms/guest.jpg'],
+            ['Guest House', 'Triple', 22, 'rooms/guest.jpg'],
+            ['Guest House', 'Quad', 27, 'rooms/guest.jpg'],
+
+
+            ['Single Room', 'Single', 10, 'rooms/single.jpg'],
+
         ];
-        foreach ($rooms as [$type, $bedding]) {
-            Room::create(['type' => $type, 'bedding' => $bedding]);
+
+
+        $roomIndex = 100;
+
+
+        foreach ($rooms as [$type, $bedding, $price, $image]) {
+
+            $roomIndex++;
+
+            Room::create([
+                'room_no' => $roomIndex,
+                'type' => $type,
+                'bedding' => $bedding,
+                'price' => $price,
+                'image' => $image,
+            ]);
+
         }
 
         // Staff
         $staff = [
-            ['Tushar pankhaniya', 'Manager'], ['rohit patel', 'Cook'], ['Dipak', 'Cook'],
-            ['tirth', 'Helper'], ['mohan', 'Helper'], ['shyam', 'cleaner'],
-            ['rohan', 'weighter'], ['hiren', 'weighter'], ['nikunj', 'weighter'],
+            ['Tushar pankhaniya', 'Manager'],
+            ['rohit patel', 'Cook'],
+            ['Dipak', 'Cook'],
+            ['tirth', 'Helper'],
+            ['mohan', 'Helper'],
+            ['shyam', 'cleaner'],
+            ['rohan', 'weighter'],
+            ['hiren', 'weighter'],
+            ['nikunj', 'weighter'],
             ['rekha', 'Cook'],
         ];
         foreach ($staff as [$name, $work]) {
@@ -80,45 +121,6 @@ class DatabaseSeeder extends Seeder
             'meal' => 'Room only',
             'mealtotal' => 0.00,
             'finaltotal' => 1010.00,
-            'amount_paid' => 0,
-            'status' => 'Unpaid',
-        ]);
-
-        // ---- Demo data for the seeded login user (so their panel is populated) ----
-        $demoEmail = 'tusharpankhaniya2202@gmail.com';
-
-        // A confirmed + fully paid stay
-        Roombook::create([
-            'id' => 42, 'Name' => 'Tushar Pankhaniya', 'Email' => $demoEmail,
-            'Country' => 'India', 'Phone' => '9876543210', 'RoomType' => 'Deluxe Room',
-            'Bed' => 'Double', 'Meal' => 'Breakfast', 'NoofRoom' => '1',
-            'cin' => '2026-07-10', 'cout' => '2026-07-13', 'nodays' => 3, 'stat' => 'Confirm',
-        ]);
-        [$r, $b, $m, $f] = Payment::calculate('Deluxe Room', 'Double', 'Breakfast', 3, 1);
-        $grand = round($f * 1.10, 2);
-        Payment::create([
-            'id' => 42, 'Name' => 'Tushar Pankhaniya', 'Email' => $demoEmail,
-            'RoomType' => 'Deluxe Room', 'Bed' => 'Double', 'NoofRoom' => 1,
-            'cin' => '2026-07-10', 'cout' => '2026-07-13', 'noofdays' => 3,
-            'roomtotal' => $r, 'bedtotal' => $b, 'meal' => 'Breakfast', 'mealtotal' => $m,
-            'finaltotal' => $f, 'amount_paid' => $grand, 'method' => 'Card',
-            'status' => 'Paid', 'paid_at' => '2026-07-10 14:20:00',
-        ]);
-
-        // A confirmed but still-unpaid stay
-        Roombook::create([
-            'id' => 43, 'Name' => 'Tushar Pankhaniya', 'Email' => $demoEmail,
-            'Country' => 'India', 'Phone' => '9876543210', 'RoomType' => 'Superior Room',
-            'Bed' => 'Single', 'Meal' => 'Room only', 'NoofRoom' => '1',
-            'cin' => '2026-07-20', 'cout' => '2026-07-22', 'nodays' => 2, 'stat' => 'Confirm',
-        ]);
-        [$r2, $b2, $m2, $f2] = Payment::calculate('Superior Room', 'Single', 'Room only', 2, 1);
-        Payment::create([
-            'id' => 43, 'Name' => 'Tushar Pankhaniya', 'Email' => $demoEmail,
-            'RoomType' => 'Superior Room', 'Bed' => 'Single', 'NoofRoom' => 1,
-            'cin' => '2026-07-20', 'cout' => '2026-07-22', 'noofdays' => 2,
-            'roomtotal' => $r2, 'bedtotal' => $b2, 'meal' => 'Room only', 'mealtotal' => $m2,
-            'finaltotal' => $f2, 'amount_paid' => 0, 'status' => 'Unpaid',
         ]);
     }
 }

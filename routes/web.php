@@ -11,12 +11,12 @@ use App\Http\Controllers\UserDashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/rooms/{slug}', [HomeController::class, 'showRoomDetail'])->name('room.detail');
-Route::get('/facilities/{slug}', [HomeController::class, 'showFacilityDetail'])->name('facility.detail');
 
 Route::get('/auth/google/redirect', [AuthController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('google.callback');
-Route::get('/contact-us', function () {return view('contact');}) ->name('contact');
+Route::get('/contact-us', function () {
+    return view('contact');
+})->name('contact');
 
 
 // ---- Authentication ----
@@ -28,10 +28,11 @@ Route::match(['get', 'post'], '/logout', [AuthController::class, 'logout'])->nam
 
 // ---- User area ----
 Route::middleware('auth.user')->group(function () {
-    
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+
     Route::get('/book', [HomeController::class, 'showBookForm'])->name('room.book');
     Route::post('/book', [HomeController::class, 'book'])->name('room.book.submit');
-    
+
     Route::get('/user-panel', [UserDashboardController::class, 'panel'])->name('user_panel');
     Route::get('/user-panel/dashboard', [UserDashboardController::class, 'dashboard'])->name('user.dashboard');
     Route::get('/user-panel/roombook', [UserDashboardController::class, 'roombook'])->name('user.roombook');
@@ -57,24 +58,38 @@ Route::middleware('auth.admin')->prefix('admin')->name('admin.')->group(function
     Route::get('/roombook/{id}/delete', [RoombookController::class, 'destroy'])->name('roombook.delete');
     Route::post('/roombook/export', [RoombookController::class, 'export'])->name('roombook.export');
 
-    // Payment / POS checkout / invoice
+    // Payment / invoice
     Route::get('/payment', [PaymentController::class, 'index'])->name('payment');
-    Route::get('/payment/{id}/settle', [PaymentController::class, 'settleForm'])->name('payment.settle');
-    Route::post('/payment/{id}/settle', [PaymentController::class, 'settle'])->name('payment.settle.store');
     Route::get('/payment/{id}/delete', [PaymentController::class, 'destroy'])->name('payment.delete');
     Route::get('/payment/{id}/invoice', [PaymentController::class, 'invoice'])->name('payment.invoice');
 
     // Rooms
+    // Rooms
     Route::get('/room', [RoomController::class, 'index'])->name('room');
     Route::post('/room', [RoomController::class, 'store'])->name('room.store');
+
+    Route::get('/room/{id}/edit', [RoomController::class, 'edit'])->name('room.edit');
+    Route::post('/room/{id}/update', [RoomController::class, 'update'])->name('room.update');
+
     Route::post('/room/bulk-update', [RoomController::class, 'bulkUpdate'])->name('room.bulk_update');
-    Route::get('/room/{id}/delete', [RoomController::class, 'destroy'])->name('room.delete');
+
+    Route::delete('/room/{id}', [RoomController::class, 'destroy'])
+        ->name('room.delete');
+    Route::get('/room-price/{type}', function ($type) {
+
+        return \App\Models\Room::where('type', $type)
+            ->select('type', 'price', 'bedding')
+            ->get();
+
+    });
+    Route::get(
+        '/room-detail/{type}',
+        [HomeController::class, 'roomDetail']
+    )
+        ->name('room.detail');
 
     // Staff
     Route::get('/staff', [StaffController::class, 'index'])->name('staff');
     Route::post('/staff', [StaffController::class, 'store'])->name('staff.store');
     Route::get('/staff/{id}/delete', [StaffController::class, 'destroy'])->name('staff.delete');
-
-
-    Route::post('/details/{id}/update', [HomeController::class, 'updateDetail'])->name('detail.update');
 });

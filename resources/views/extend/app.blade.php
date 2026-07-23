@@ -10,12 +10,53 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" href="{{ asset('adminassets/css/roombook.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+   
     <style>
       #guestdetailpanel{ display: none; }
       #guestdetailpanel .middle{ height: 450px; }
     </style>
-    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
+        
+
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+    <script>
+
+        tailwind.config = {
+
+            theme: {
+
+                extend: {
+
+                    colors: {
+
+                        brand: {
+
+                            50: '#eff6ff',
+
+                            100: '#dbeafe',
+
+                            500: '#3b82f6',
+
+                            600: '#2563eb',
+
+                        },
+
+                    },
+
+                },
+
+            },
+
+        }
+
+    </script>
+
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body>
   

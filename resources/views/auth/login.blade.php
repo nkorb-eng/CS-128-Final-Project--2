@@ -12,7 +12,6 @@
     <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/flash.css') }}">
     <title>Hotel Blue Bird</title>
-    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
 </head>
 
 <body>
@@ -98,11 +97,11 @@
                         <label for="Email">Email</label>
                     </div>
                     <div class="form-floating">
-                        <input type="password" class="form-control" name="Password" placeholder=" " required minlength="3">
+                        <input type="password" class="form-control" name="Password" placeholder=" " required minlength="8">
                         <label for="Password">Password</label>
                     </div>
                     <div class="form-floating">
-                        <input type="password" class="form-control" name="Password_confirmation" placeholder=" " required minlength="3">
+                        <input type="password" class="form-control" name="Password_confirmation" placeholder=" " required minlength="8">
                         <label for="Password_confirmation">Confirm Password</label>
                     </div>
                     <button type="submit" name="user_signup_submit" class="auth_btn">Sign up</button>
