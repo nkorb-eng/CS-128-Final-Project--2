@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('google_id')->nullable()->after('id');
+            $table->string('google_id')->nullable();
             $table->string('avatar')->nullable()->after('google_id');
         });
     }

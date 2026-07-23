@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Payment;
 use App\Models\Roombook;
-use App\Models\Signup;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserDashboardController extends Controller
@@ -67,7 +67,7 @@ class UserDashboardController extends Controller
     public function profile(Request $request)
     {
         $email = $request->session()->get('usermail');
-        $user = Signup::where('Email', $email)->first();
+        $user = User::where('Email', $email)->first();
 
         return view('user.userprofile', compact('user'));
     }
@@ -76,7 +76,7 @@ class UserDashboardController extends Controller
     public function editProfile(Request $request)
     {
         $email = $request->session()->get('usermail');
-        $user = Signup::where('Email', $email)->firstOrFail();
+        $user = User::where('Email', $email)->firstOrFail();
 
         return view('user.editprofile', compact('user'));
     }
@@ -85,11 +85,11 @@ class UserDashboardController extends Controller
     public function updateProfile(Request $request)
     {
         $email = $request->session()->get('usermail');
-        $user = Signup::where('Email', $email)->firstOrFail();
+        $user = User::where('Email', $email)->firstOrFail();
 
         $validated = $request->validate([
             'Username' => 'required|string|max:50',
-            'Email'    => 'required|email|max:50|unique:signup,Email,' . $user->UserID . ',UserID',
+            'Email'    => 'required|email|max:50|unique:users,Email,' . $user->UserID . ',UserID',
             'Phone'    => 'nullable|string|max:30',
             'Country'  => 'nullable|string|max:100',
         ]);
@@ -112,7 +112,7 @@ class UserDashboardController extends Controller
     public function updatePassword(Request $request)
     {
         $email = $request->session()->get('usermail');
-        $user = Signup::where('Email', $email)->firstOrFail();
+        $user = User::where('Email', $email)->firstOrFail();
 
         $request->validate([
             'current_password' => 'required',

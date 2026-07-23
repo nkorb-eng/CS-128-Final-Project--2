@@ -20,14 +20,6 @@ return new class extends Migration
             $table->string('Emp_Password', 50);
         });
 
-        // Registered site users
-        Schema::create('signup', function (Blueprint $table) {
-            $table->increments('UserID');
-            $table->string('Username', 50);
-            $table->string('Email', 50);
-            $table->string('Password', 50);
-        });
-
         // Room inventory
         Schema::create('room', function (Blueprint $table) {
             $table->increments('id');

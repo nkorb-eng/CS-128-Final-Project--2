@@ -31,7 +31,7 @@
 
                     <div class="text-center mb-4">
                         <div class="avatar-circle">
-                            <i class="fa-solid fa-user"></i>
+                            <img src="avatar.png" alt="Avatar" class="avatar">
                         </div>
                         <h3 class="fw-bold text-dark">{{ $user->Username ?? 'Guest' }}</h3>
                         <div class="col-md-6">
@@ -68,15 +68,6 @@
 
                 </div>
             </div>
-            <div class="col-md-6">
-                <label class="pos-label">Account Status</label>
-                <div class="pf-field">Verified</div>
-            </div>
-        </div>
-        <div class="text-center mt-5">
-            <button class="btn btn-primary px-4 me-2"><i class="fa-solid fa-pen-to-square me-2"></i>Edit Profile</button>
-            <button class="btn btn-danger px-4"><i class="fa-solid fa-key me-2"></i>Change Password</button>
-        </div>
     </div>
 </body>
 </html>
