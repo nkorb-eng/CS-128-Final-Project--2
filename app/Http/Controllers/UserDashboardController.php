@@ -116,7 +116,7 @@ class UserDashboardController extends Controller
 
         $request->validate([
             'current_password' => 'required',
-            'new_password'     => 'required|min:6|confirmed',
+            'new_password'     => 'required|min:3|confirmed',
         ]);
 
         if ($request->input('current_password') !== $user->Password) {

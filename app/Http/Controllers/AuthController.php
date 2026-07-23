@@ -72,7 +72,7 @@ class AuthController extends Controller
         $data = $request->validate([
             'Username' => ['required', 'string', 'max:50'],
             'Email' => ['required', 'email', 'max:50'],
-            'Password' => ['required', 'string', 'min:8', 'confirmed'],
+            'Password' => ['required', 'string', 'min:3', 'confirmed'],
         ]);
 
         if (Signup::where('Email', $data['Email'])->exists()) {

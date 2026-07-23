@@ -43,11 +43,11 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-bold">New Password</label>
-                            <input type="password" name="new_password" class="form-control" required minlength="6">
+                            <input type="password" name="new_password" class="form-control" required minlength="3">
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-bold">Confirm New Password</label>
-                            <input type="password" name="new_password_confirmation" class="form-control" required minlength="6">
+                            <input type="password" name="new_password_confirmation" class="form-control" required minlength="3">
                         </div>
 
                         <div class="text-center mt-4">
