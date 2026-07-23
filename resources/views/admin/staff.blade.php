@@ -3,54 +3,387 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlueBird - Admin</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{{ asset('adminassets/css/room.css') }}">
-    <style>
-        .roombox{
-            background-color: #d1d7ff;
-            padding: 10px;
-        }
-    </style>
+    <title>BlueBird - Staff Management</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
 </head>
 
-<body>
-    <div class="addroomsection">
-        <form action="{{ route('admin.staff.store') }}" method="POST">
-            @csrf
-            <label for="troom">Name :</label>
-            <input type="text" name="staffname" class="form-control">
 
-            <label for="bed">Work :</label>
-            <select name="staffwork" class="form-control">
-                <option value selected></option>
-                <option value="Manager">Manager</option>
-                <option value="Cook">Cook</option>
-                <option value="Helper">Helper</option>
-                <option value="cleaner">cleaner</option>
-                <option value="weighter">weighter</option>
-            </select>
+<body class="bg-gray-100 min-h-screen">
 
-            <button type="submit" class="btn btn-success" name="addstaff">Add Staff</button>
-        </form>
-    </div>
 
-    <div class="room">
-        @foreach ($staff as $row)
-            <div class="roombox">
-                <div class="text-center no-boder">
-                    <i class="fa fa-users fa-5x"></i>
-                    <h3>{{ $row->name }}</h3>
-                    <div class="mb-1">{{ $row->work }}</div>
-                    <a href="{{ route('admin.staff.delete', $row->id) }}"><button class="btn btn-danger">Delete</button></a>
-                </div>
+    <div class="max-w-7xl mx-auto px-6 py-10">
+
+
+        <!-- Header -->
+
+        <div class="flex items-center justify-between mb-8">
+
+            <div>
+
+                <h1 class="text-3xl font-bold text-gray-800">
+                    Staff Management
+                </h1>
+
+                <p class="text-gray-500 mt-1">
+                    Manage hotel employees and their positions
+                </p>
+
             </div>
-        @endforeach
+
+
+            <div class="bg-blue-600 text-white p-3 rounded-xl shadow">
+
+                <i data-lucide="users"></i>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- Add Button -->
+
+        <div class="flex justify-end mb-8">
+
+
+            <button type="button" onclick="openStaffModal()" class="bg-blue-600 hover:bg-blue-700 
+            text-white px-5 py-3 rounded-xl 
+            flex items-center gap-2 shadow">
+
+
+                <i data-lucide="user-plus" class="w-5"></i>
+
+                Add Staff
+
+
+            </button>
+
+
+        </div>
+
+
+
+
+
+        <!-- Modal -->
+
+        <div id="staffModal" class="hidden fixed inset-0 bg-black/50 
+        flex items-center justify-center z-50">
+
+
+            <div class="bg-white w-full max-w-md 
+            rounded-2xl shadow-xl p-6">
+
+
+                <!-- Modal Header -->
+
+
+                <div class="flex justify-between items-center mb-6">
+
+
+                    <h2 class="text-xl font-bold flex items-center gap-2">
+
+
+                        <i data-lucide="user-plus"></i>
+
+                        Add New Staff
+
+
+                    </h2>
+
+
+
+                    <button type="button" onclick="closeStaffModal()" class="text-gray-500 hover:text-red-500">
+
+
+                        <i data-lucide="x"></i>
+
+
+                    </button>
+
+
+                </div>
+
+
+
+
+                <!-- FORM -->
+
+                <form action="{{ route('admin.staff.store') }}" method="POST">
+
+
+                    @csrf
+
+
+
+                    <!-- Name -->
+
+
+                    <div class="mb-4">
+
+
+                        <label class="block text-sm font-medium mb-2">
+
+                            Staff Name
+
+                        </label>
+
+
+
+                        <input type="text" name="staffname" required placeholder="Enter staff name" class="w-full px-4 py-3 rounded-xl border
+                        focus:ring-2 focus:ring-blue-500 outline-none">
+
+
+                    </div>
+
+
+
+
+
+                    <!-- Work -->
+
+
+                    <div class="mb-6">
+
+
+                        <label class="block text-sm font-medium mb-2">
+
+                            Position
+
+                        </label>
+
+
+
+                        <select name="staffwork" required class="w-full px-4 py-3 rounded-xl border
+                        focus:ring-2 focus:ring-blue-500 outline-none">
+
+
+                            <option value="">
+                                Select Position
+                            </option>
+
+                            <option value="Manager">
+                                Manager
+                            </option>
+
+                            <option value="Cook">
+                                Cook
+                            </option>
+
+                            <option value="Helper">
+                                Helper
+                            </option>
+
+                            <option value="Cleaner">
+                                Cleaner
+                            </option>
+
+                            <option value="Waiter">
+                                Waiter
+                            </option>
+
+
+                        </select>
+
+
+                    </div>
+
+
+
+
+
+                    <!-- Buttons -->
+
+
+                    <div class="flex gap-3">
+
+
+                        <button type="button" onclick="closeStaffModal()" class="flex-1 bg-gray-200 
+                        hover:bg-gray-300 py-3 rounded-xl">
+
+
+                            Cancel
+
+
+                        </button>
+
+
+
+
+                        <button type="submit" class="flex-1 bg-blue-600 
+                        hover:bg-blue-700 text-white
+                        py-3 rounded-xl flex 
+                        justify-center items-center gap-2">
+
+
+                            <i data-lucide="save"></i>
+
+                            Save
+
+
+                        </button>
+
+
+
+                    </div>
+
+
+
+                </form>
+
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+        <!-- Staff Cards -->
+
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+
+            @foreach ($staff as $row)
+
+
+                <div class="bg-white rounded-2xl shadow-md p-6
+                hover:shadow-xl transition">
+
+
+                    <div class="flex justify-center mb-5">
+
+
+                        <div class="bg-blue-100 text-blue-600
+                        p-5 rounded-full">
+
+
+                            <i data-lucide="user-round" class="w-10 h-10"></i>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="text-center">
+
+
+                        <h3 class="text-xl font-bold text-gray-800">
+
+                            {{ $row->name }}
+
+                        </h3>
+
+
+
+                        <p class="text-gray-500 mt-1">
+
+                            {{ $row->work }}
+
+                        </p>
+
+
+
+                        <span class="inline-block mt-3 px-3 py-1
+                        bg-green-100 text-green-700
+                        text-sm rounded-full">
+
+                            Active
+
+                        </span>
+
+
+                    </div>
+
+
+
+
+                    <div class="mt-5">
+
+
+                        <a href="{{ route('admin.staff.delete', $row->id) }}" onclick="return confirm('Delete this staff?')">
+
+
+                            <button class="w-full bg-red-500 hover:bg-red-600
+                            text-white py-2 rounded-xl flex
+                            justify-center items-center gap-2">
+
+
+                                <i data-lucide="trash-2"></i>
+
+                                Delete
+
+
+                            </button>
+
+
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+            @endforeach
+
+
+        </div>
+
+
+
     </div>
+
+
+
+
+
+    <script>
+
+
+        function openStaffModal() {
+
+            document
+                .getElementById('staffModal')
+                .classList
+                .remove('hidden');
+
+        }
+
+
+
+        function closeStaffModal() {
+
+            document
+                .getElementById('staffModal')
+                .classList
+                .add('hidden');
+
+        }
+
+
+
+        lucide.createIcons();
+
+
+    </script>
+
+
 
 </body>
 

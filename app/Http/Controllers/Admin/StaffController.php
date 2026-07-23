@@ -11,23 +11,41 @@ class StaffController extends Controller
     /** List + add-staff form */
     public function index()
     {
-        return view('admin.staff', ['staff' => Staff::all()]);
+        return view('admin.staff', [
+            'staff' => Staff::all()
+        ]);
     }
+
 
     public function store(Request $request)
     {
-        Staff::create([
-            'name' => $request->input('staffname'),
-            'work' => $request->input('staffwork'),
+        // Check submitted data
+        // dd($request->all());
+
+        $request->validate([
+            'staffname' => 'required|string|max:255',
+            'staffwork' => 'required|string|max:255',
         ]);
 
-        return redirect()->route('admin.staff');
+
+        Staff::create([
+            'name' => $request->staffname,
+            'work' => $request->staffwork,
+        ]);
+
+
+        return redirect()
+            ->route('admin.staff')
+            ->with('success', 'Staff added successfully');
     }
+
 
     public function destroy($id)
     {
         Staff::where('id', $id)->delete();
 
-        return redirect()->route('admin.staff');
+        return redirect()
+            ->route('admin.staff')
+            ->with('success', 'Staff deleted successfully');
     }
 }

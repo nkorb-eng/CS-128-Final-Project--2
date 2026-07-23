@@ -19,9 +19,9 @@ class DatabaseSeeder extends Seeder
 
         // Sample registered user
         Signup::create([
-            'Username' => 'Tushar Pankhaniya',
-            'Email' => 'tusharpankhaniya2202@gmail.com',
-            'Password' => '123',
+            'Username' => 'Dara sok',
+            'Email' => 'DaraSok@gmail.com',
+            'Password' => '12345678',
         ]);
 
         // Room inventory
@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
             ['Superior Room', 'Single', 35, 'rooms/superior.jpg'],
             ['Guest House', 'Quad', 27, 'rooms/guest.jpg'],
             ['Deluxe Room', 'Triple', 32, 'rooms/deluxe.jpg'],
-             ['Single Room', 'Single', 10, 'rooms/single.jpg'],
+            ['Single Room', 'Single', 10, 'rooms/single.jpg'],
             ['Superior Room', 'Double', 40, 'rooms/superior.jpg'],
             ['Superior Room', 'Triple', 45, 'rooms/superior.jpg'],
             ['Superior Room', 'Quad', 50, 'rooms/superior.jpg'],
@@ -74,16 +74,16 @@ class DatabaseSeeder extends Seeder
 
         // Staff
         $staff = [
-            ['Tushar pankhaniya', 'Manager'],
-            ['rohit patel', 'Cook'],
-            ['Dipak', 'Cook'],
-            ['tirth', 'Helper'],
-            ['mohan', 'Helper'],
-            ['shyam', 'cleaner'],
-            ['rohan', 'weighter'],
-            ['hiren', 'weighter'],
-            ['nikunj', 'weighter'],
-            ['rekha', 'Cook'],
+            ['សុខា', 'Manager'],
+            ['វិសាល', 'Cook'],
+            ['ចាន់ដារា', 'Cook'],
+            ['សុភា', 'Helper'],
+            ['មករា', 'Helper'],
+            ['ស្រីនាង', 'Cleaner'],
+            ['ដារ៉ា', 'Waiter'],
+            ['វិចិត្រ', 'Waiter'],
+            ['រតនា', 'Waiter'],
+            ['សុវណ្ណា', 'Cook'],
         ];
         foreach ($staff as [$name, $work]) {
             Staff::create(['name' => $name, 'work' => $work]);
@@ -92,10 +92,10 @@ class DatabaseSeeder extends Seeder
         // Sample confirmed booking + its payment
         Roombook::create([
             'id' => 41,
-            'Name' => 'Tushar pankhaniya',
-            'Email' => 'pankhaniyatushar9@gmail.com',
-            'Country' => 'India',
-            'Phone' => '9313346569',
+            'Name' => 'Dara SOk',
+            'Email' => 'DaraSok@gmail.com',
+            'Country' => 'cambodia',
+            'Phone' => '097283174',
             'RoomType' => 'Single Room',
             'Bed' => 'Single',
             'Meal' => 'Room only',
@@ -108,8 +108,8 @@ class DatabaseSeeder extends Seeder
 
         Payment::create([
             'id' => 41,
-            'Name' => 'Tushar pankhaniya',
-            'Email' => 'pankhaniyatushar9@gmail.com',
+            'Name' => 'DaraSok',
+            'Email' => 'DaraSok@gmail.com',
             'RoomType' => 'Single Room',
             'Bed' => 'Single',
             'NoofRoom' => 1,

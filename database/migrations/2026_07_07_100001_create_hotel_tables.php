@@ -75,10 +75,16 @@ return new class extends Migration
 
         // Hotel staff
         Schema::create('staff', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name', 30);
-            $table->string('work', 30);
-        });
+
+    $table->id();
+
+    $table->string('name');
+
+    $table->string('work');
+
+    $table->timestamps();
+
+});
     }
 
     public function down(): void
