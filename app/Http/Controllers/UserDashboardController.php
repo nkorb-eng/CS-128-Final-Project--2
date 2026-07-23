@@ -71,6 +71,55 @@ class UserDashboardController extends Controller
 
         return view('user.userprofile', compact('user'));
     }
+    public function editProfile(Request $request)
+    {
+        $email = $request->session()->get('usermail');
+        $user = Signup::where('Email', $email)->firstOrFail();
+
+        return view('user.editprofile', compact('user'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $email = $request->session()->get('usermail');
+        $user = Signup::where('Email', $email)->firstOrFail();
+
+        $validated = $request->validate([
+            'Username' => 'required|string|max:50',
+            'Email'    => 'required|email|max:50|unique:signup,Email,' . $user->UserID . ',UserID',
+            'Phone'    => 'nullable|string|max:30',
+            'Country'  => 'nullable|string|max:100',
+        ]);
+
+        $user->update($validated);
+        $request->session()->put('usermail', $validated['Email']);
+
+        return redirect()->route('user.userprofile')->with('success', 'Profile updated successfully');
+    }
+
+    public function editPassword()
+    {
+        return view('user.changepassword');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $email = $request->session()->get('usermail');
+        $user = Signup::where('Email', $email)->firstOrFail();
+
+        $request->validate([
+            'current_password' => 'required',
+            'new_password'     => 'required|min:6|confirmed',
+        ]);
+
+        if ($request->input('current_password') !== $user->Password) {
+            return back()->with('error', 'Current password is incorrect');
+        }
+
+        $user->update(['Password' => $request->input('new_password')]);
+
+        return redirect()->route('user.userprofile')->with('success', 'Password changed successfully');
+    }
 
     /** Prints a specific invoice */
     public function invoice(Request $request, $id)

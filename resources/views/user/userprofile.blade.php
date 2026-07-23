@@ -19,7 +19,14 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card profile-card p-5 mt-4">
-                    
+
+                    @if (session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
+                    @if (session('error'))
+                        <div class="alert alert-danger">{{ session('error') }}</div>
+                    @endif
+
                     <div class="text-center mb-4">
                         <div class="avatar-circle">
                             <i class="fa-solid fa-user"></i>
@@ -36,15 +43,15 @@
                     <div class="row g-4">
                         <div class="col-md-6">
                             <label class="text-muted small fw-bold mb-1">Email Address</label>
-                            <div class="p-2 border rounded bg-light">{{ session('usermail') ?? 'guest@bluebird.com' }}</div>
+                            <div class="p-2 border rounded bg-light">{{ $user->Email ?? 'guest@bluebird.com' }}</div>
                         </div>
                         <div class="col-md-6">
                             <label class="text-muted small fw-bold mb-1">Phone Number</label>
-                            <div class="p-2 border rounded bg-light">+1 (234) 567-8900</div>
+                            <div class="p-2 border rounded bg-light">{{ $user->Phone ?? 'Not set' }}</div>
                         </div>
                         <div class="col-md-6">
                             <label class="text-muted small fw-bold mb-1">Country</label>
-                            <div class="p-2 border rounded bg-light">United States</div>
+                            <div class="p-2 border rounded bg-light">{{ $user->Country ?? 'Not set' }}</div>
                         </div>
                         <div class="col-md-6">
                             <label class="text-muted small fw-bold mb-1">Account Status</label>
@@ -53,8 +60,8 @@
                     </div>
 
                     <div class="text-center mt-5">
-                        <button class="btn btn-outline-primary px-4 me-2"><i class="fa-solid fa-pen-to-square me-2"></i>Edit Profile</button>
-                        <button class="btn btn-outline-danger px-4"><i class="fa-solid fa-key me-2"></i>Change Password</button>
+                        <a href="{{ route('user.profile.edit') }}" class="btn btn-outline-primary px-4 me-2"><i class="fa-solid fa-pen-to-square me-2"></i>Edit Profile</a>
+                        <a href="{{ route('user.password.edit') }}" class="btn btn-outline-danger px-4"><i class="fa-solid fa-key me-2"></i>Change Password</a>
                     </div>
 
                 </div>

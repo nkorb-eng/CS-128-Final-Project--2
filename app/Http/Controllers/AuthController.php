@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\EmpLogin;
 use App\Models\Signup;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\InvalidStateException;
@@ -20,63 +21,73 @@ class AuthController extends Controller
     /** User login against the signup table. */
     public function userLogin(Request $request)
     {
-        $user = Signup::where('Email', $request->input('Email'))
-            ->where('Password', $request->input('Password'))
-            ->first();
+        $credentials = $request->validate([
+            'Email' => ['required', 'email'],
+            'Password' => ['required', 'string'],
+        ]);
 
-        if ($user) {
+        $user = Signup::where('Email', $credentials['Email'])->first();
+
+        if ($user && $this->passwordMatches($credentials['Password'], $user->Password)) {
+            $this->upgradeLegacyPassword($user, $credentials['Password']);
+            $request->session()->regenerate();
             $request->session()->put('usermail', $user->Email);
 
             return redirect()->route('home');
         }
 
-        return back()->with('error', 'Something went wrong');
+        return back()->withInput($request->only('Email'))
+            ->with('error', 'Invalid email or password.');
     }
 
     /** Employee/admin login against the emp_login table. */
     public function empLogin(Request $request)
     {
-        $emp = EmpLogin::where('Emp_Email', $request->input('Emp_Email'))
-            ->where('Emp_Password', $request->input('Emp_Password'))
-            ->first();
+        $credentials = $request->validate([
+            'Emp_Email' => ['required', 'email'],
+            'Emp_Password' => ['required', 'string'],
+        ]);
 
-        if ($emp) {
+        $emp = EmpLogin::where('Emp_Email', $credentials['Emp_Email'])->first();
+
+        if ($emp && $this->passwordMatches($credentials['Emp_Password'], $emp->Emp_Password)) {
+            if (! $this->isHashedPassword($emp->Emp_Password)) {
+                $emp->update(['Emp_Password' => Hash::make($credentials['Emp_Password'])]);
+            }
+
+            $request->session()->regenerate();
             $request->session()->put('usermail', $emp->Emp_Email);
             $request->session()->put('is_admin', true);
 
             return redirect()->route('admin.panel');
         }
 
-        return back()->with('error', 'Something went wrong');
+        return back()->withInput($request->only('Emp_Email'))
+            ->with('error', 'Invalid email or password.');
     }
 
     /** Register a new site user. */
     public function signup(Request $request)
     {
-        $username = $request->input('Username');
-        $email = $request->input('Email');
-        $password = $request->input('Password');
-        $cpassword = $request->input('CPassword');
+        $data = $request->validate([
+            'Username' => ['required', 'string', 'max:50'],
+            'Email' => ['required', 'email', 'max:50'],
+            'Password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
 
-        if ($username === '' || $email === '' || $password === '') {
-            return back()->with('error', 'Fill the proper details');
-        }
-
-        if ($password !== $cpassword) {
-            return back()->with('error', 'Password does not match');
-        }
-
-        if (Signup::where('Email', $email)->exists()) {
-            return back()->with('error', 'Email already exists');
+        if (Signup::where('Email', $data['Email'])->exists()) {
+            return back()->withInput($request->except(['Password', 'Password_confirmation']))
+                ->with('error', 'Email already exists');
         }
 
         Signup::create([
-            'Username' => $username,
-            'Email' => $email,
-            'Password' => $password,
+            'Username' => $data['Username'],
+            'Email' => $data['Email'],
+            'Password' => Hash::make($data['Password']),
         ]);
 
-        $request->session()->put('usermail', $email);
+        $request->session()->regenerate();
+        $request->session()->put('usermail', $data['Email']);
 
         return redirect()->route('home');
     }
@@ -84,30 +95,38 @@ class AuthController extends Controller
     /** Destroy the current login session. */
     public function logout(Request $request)
     {
-        $request->session()->flush();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         return redirect()->route('login');
     }
 
     public function redirectToGoogle(Request $request)
     {
+        $redirectUrl = $this->googleRedirectUrl();
+
+        if (! config('services.google.client_id') || ! config('services.google.client_secret') || ! $redirectUrl) {
+            return redirect()->route('login')
+                ->with('error', 'Google sign-in has not been configured yet.');
+        }
+
         return Socialite::driver('google')
-            ->redirectUrl($this->googleRedirectUrl($request))
-            ->redirect();
+    ->redirectUrl($redirectUrl)
+    ->redirect();
     }
 
     public function handleGoogleCallback(Request $request)
     {
         try {
             $googleUser = Socialite::driver('google')
-                ->redirectUrl($this->googleRedirectUrl($request))
+                ->redirectUrl($this->googleRedirectUrl())
                 ->user();
         } catch (InvalidStateException $exception) {
             report($exception);
 
             return redirect()
                 ->route('login')
-                ->with('error', 'Your Google sign-in session expired. Please try again.');
+                ->with('error', '');
         } catch (\Throwable $exception) {
             report($exception);
 
@@ -116,40 +135,65 @@ class AuthController extends Controller
                 ->with('error', 'Google sign-in could not be completed. Please try again.');
         }
 
-        $user = Signup::where('Email', $googleUser->getEmail())->first();
+        $email = $googleUser->getEmail();
 
-        if (! $user) {
-            $user = Signup::create([
-                'Username' => $googleUser->getName(),
-                'Email' => $googleUser->getEmail(),
-                // A random local password is needed because Google authenticates this user.
-                'Password' => Str::random(20),
-            ]);
+        if (! $email) {
+            return redirect()->route('login')
+                ->with('error', 'Google did not provide an email address for this account.');
         }
 
+        $user = Signup::firstOrCreate(
+            ['Email' => $email],
+            [
+                'Username' => Str::limit($googleUser->getName() ?: Str::before($email, '@'), 50, ''),
+                // A local password is still required by the legacy table.
+                'Password' => Hash::make(Str::random(40)),
+            ],
+        );
+
+        $request->session()->regenerate();
         $request->session()->put('usermail', $user->Email);
 
         return redirect()->route('home');
     }
 
-    /**
-     * Uses the browser's local host for both OAuth requests, so its session
-     * cookie and Socialite state are retained. Other environments keep the
-     * configured redirect URL.
-     */
-    private function googleRedirectUrl(Request $request): string
+    /** Google requires this value to exactly match its Cloud Console setting. */
+    private function googleRedirectUrl(): string
     {
-        $host = $request->getHost();
+        return (string) config('services.google.redirect');
+    }
 
-        if (! in_array($host, ['127.0.0.1', 'localhost'], true)) {
-            return (string) config('services.google.redirect');
+    private function requestMatchesRedirectUrl(Request $request, string $redirectUrl): bool
+    {
+        $redirect = parse_url($redirectUrl);
+
+        if (! is_array($redirect) || ! isset($redirect['scheme'], $redirect['host'])) {
+            return false;
         }
 
-        $scheme = $request->getScheme();
-        $port = $request->getPort();
-        $defaultPort = $scheme === 'https' ? 443 : 80;
-        $authority = $host.($port === $defaultPort ? '' : ':'.$port);
+        $port = $redirect['port'] ?? ($redirect['scheme'] === 'https' ? 443 : 80);
 
-        return $scheme.'://'.$authority.route('google.callback', [], false);
+        return $request->getScheme() === $redirect['scheme']
+            && $request->getHost() === $redirect['host']
+            && $request->getPort() === $port;
+    }
+
+    private function passwordMatches(string $plainTextPassword, string $storedPassword): bool
+    {
+        return $this->isHashedPassword($storedPassword)
+            ? Hash::check($plainTextPassword, $storedPassword)
+            : hash_equals($storedPassword, $plainTextPassword);
+    }
+
+    private function upgradeLegacyPassword(Signup $user, string $plainTextPassword): void
+    {
+        if (! $this->isHashedPassword($user->Password)) {
+            $user->update(['Password' => Hash::make($plainTextPassword)]);
+        }
+    }
+
+    private function isHashedPassword(string $password): bool
+    {
+        return str_starts_with($password, '$2y$') || str_starts_with($password, '$argon2');
     }
 }

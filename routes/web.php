@@ -35,7 +35,11 @@ Route::middleware('auth.user')->group(function () {
     Route::get('/user-panel/dashboard', [UserDashboardController::class, 'dashboard'])->name('user.dashboard');
     Route::get('/user-panel/roombook', [UserDashboardController::class, 'roombook'])->name('user.roombook');
     Route::get('/user-panel/payment', [UserDashboardController::class, 'payment'])->name('user.payment');
-    Route::get('/user-panel/profile', [UserDashboardController::class, 'profile'])->name('user.userprofile');
+   Route::get('/user-panel/profile', [UserDashboardController::class, 'profile'])->name('user.userprofile');
+Route::get('/user-panel/profile/edit', [UserDashboardController::class, 'editProfile'])->name('user.profile.edit');
+Route::post('/user-panel/profile/edit', [UserDashboardController::class, 'updateProfile'])->name('user.profile.update');
+Route::get('/user-panel/profile/password', [UserDashboardController::class, 'editPassword'])->name('user.password.edit');
+Route::post('/user-panel/profile/password', [UserDashboardController::class, 'updatePassword'])->name('user.password.update');
     Route::get('/user-panel/invoice/{id}', [UserDashboardController::class, 'invoice'])->name('user.invoice');
 });
 

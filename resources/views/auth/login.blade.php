@@ -52,16 +52,16 @@
                         <label for="Username">Username</label>
                     </div>
                     <div class="form-floating">
-                        <input type="email" class="form-control" name="Email" placeholder=" ">
+                        <input type="email" class="form-control" name="Email" value="{{ old('Email') }}" placeholder=" " required>
                         <label for="Email">Email</label>
                     </div>
                     <div class="form-floating">
-                        <input type="password" class="form-control" name="Password" placeholder=" ">
+                        <input type="password" class="form-control" name="Password" placeholder=" " required>
                         <label for="Password">Password</label>
                     </div>
 
                     <button type="submit" name="user_login_submit" class="auth_btn">Log in</button>
-                    <a href="{{ route('google.redirect', [], false) }}" class="auth_btn" style="display:block; text-align:center; text-decoration:none;">
+                    <a href="{{ route('google.redirect') }}" class="auth_btn" style="display:block; text-align:center; text-decoration:none;">
                         Continue with Google
                     </a>
 
@@ -73,17 +73,14 @@
                 <form class="employee_login authsection" id="employeelogin" action="{{ route('login.employee') }}" method="POST">
                     @csrf
                     <div class="form-floating">
-                        <input type="email" class="form-control" name="Emp_Email" placeholder=" ">
+                        <input type="email" class="form-control" name="Emp_Email" value="{{ old('Emp_Email') }}" placeholder=" " required>
                         <label for="floatingInput">Email</label>
                     </div>
                     <div class="form-floating">
-                        <input type="password" class="form-control" name="Emp_Password" placeholder=" ">
+                        <input type="password" class="form-control" name="Emp_Password" placeholder=" " required>
                         <label for="floatingPassword">Password</label>
                     </div>
                     <button type="submit" name="Emp_login_submit" class="auth_btn">Log in</button>
-                    <a href="{{ route('google.redirect', [], false) }}" class="auth_btn" style="display:block; text-align:center; text-decoration:none;">
-                        Continue with Google
-                    </a>
                 </form>
             </div>
 
@@ -92,20 +89,20 @@
                 <form class="user_signup" id="usersignup" action="{{ route('signup') }}" method="POST">
                     @csrf
                     <div class="form-floating">
-                        <input type="text" class="form-control" name="Username" placeholder=" ">
+                        <input type="text" class="form-control" name="Username" value="{{ old('Username') }}" placeholder=" " required>
                         <label for="Username">Username</label>
                     </div>
                     <div class="form-floating">
-                        <input type="email" class="form-control" name="Email" placeholder=" ">
+                        <input type="email" class="form-control" name="Email" value="{{ old('Email') }}" placeholder=" " required>
                         <label for="Email">Email</label>
                     </div>
                     <div class="form-floating">
-                        <input type="password" class="form-control" name="Password" placeholder=" ">
+                        <input type="password" class="form-control" name="Password" placeholder=" " required minlength="8">
                         <label for="Password">Password</label>
                     </div>
                     <div class="form-floating">
-                        <input type="password" class="form-control" name="CPassword" placeholder=" ">
-                        <label for="CPassword">Confirm Password</label>
+                        <input type="password" class="form-control" name="Password_confirmation" placeholder=" " required minlength="8">
+                        <label for="Password_confirmation">Confirm Password</label>
                     </div>
                     <button type="submit" name="user_signup_submit" class="auth_btn">Sign up</button>
                     <div class="footer_line">
