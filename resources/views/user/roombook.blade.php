@@ -22,41 +22,57 @@
             </div>
         </div>
 
-        <div class="roombooktable table-responsive-xl">
-            <table class="table" id="table-data">
-                <thead>
-                    <tr>
-                        <th>Id</th><th>Room</th><th>Bed</th><th>Guests</th><th>Meal</th>
-                        <th>Check-In</th><th>Check-Out</th><th>Nights</th><th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @forelse ($bookings as $b)
-                    <tr>
-                        <td class="fw-semibold">#{{ $b->id }}</td>
-                        <td>{{ $b->RoomType }}</td>
-                        <td>{{ $b->Bed }}</td>
-                        <td>{{ $b->NoofRoom }}</td>
-                        <td>{{ $b->Meal }}</td>
-                        <td>{{ $b->cin }}</td>
-                        <td>{{ $b->cout }}</td>
-                        <td>{{ $b->nodays }}</td>
-                        <td><span class="pos-badge {{ $b->stat === 'Confirm' ? 'pos-badge-success' : 'pos-badge-warning' }}">{{ $b->stat === 'Confirm' ? 'Confirmed' : 'Pending' }}</span></td>
-                    </tr>
-                @empty
-                    <tr><td colspan="9" class="text-center text-muted py-4">You have no bookings yet.</td></tr>
-                @endforelse
-                </tbody>
-            </table>
-        </div>
+    <div class="roombooktable table-responsive-xl">
+        <table class="table table-bordered table-hover align-middle" id="table-data">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Type of Room</th>
+                    <th scope="col">Type of Bed</th>
+                    <th scope="col">Room Number</th>
+                    <th scope="col">Meal</th>
+                    <th scope="col">Check-In</th>
+                    <th scope="col">Check-Out</th>
+                    <th scope="col" class="text-center">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach ($bookings as $res)
+                <tr>
+                    <td>{{ $res->id }}</td>
+                    <td class="fw-bold">{{ $res->Name }}</td>
+                    <td>{{ $res->Email }}</td>
+                    <td>{{ $res->Country }}</td>
+                    <td>{{ $res->Phone }}</td>
+                    <td>{{ $res->RoomType }}</td>
+                    <td>{{ $res->Bed }}</td>
+                    
+                    <td>
+                        @if ($res->stat === 'Confirm')
+                            <span class="badge bg-dark px-2 py-1 fs-6">#{{ $res->NoofRoom }}</span>
+                        @else
+                            <span class="text-muted small italic">Pending</span>
+                        @endif
+                    </td>
+
+                    <td>{{ $res->Meal }}</td>
+                    <td>{{ $res->cin }}</td>
+                    <td>{{ $res->cout }}</td>
+                    <td class="text-center">
+                        @if ($res->stat === 'Confirm')
+                            <span class="badge bg-success px-3 py-1">Confirmed</span>
+                        @else
+                            <span class="badge bg-warning text-dark px-3 py-1">Pending</span>
+                        @endif
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
     </div>
 </body>
-<script>
-    const searchFun = () => {
-        let f = document.getElementById('search_bar').value.toUpperCase();
-        let tr = document.getElementById('table-data').getElementsByTagName('tr');
-        for (let i = 0; i < tr.length; i++) { let td = tr[i].getElementsByTagName('td')[1];
-            if (td) tr[i].style.display = (td.textContent||'').toUpperCase().indexOf(f) > -1 ? '' : 'none'; }
-    }
-</script>
 </html>

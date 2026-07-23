@@ -17,25 +17,70 @@
     </style>
 </head>
 <body>
-    <div class="receipt">
-        <h1>Hotel Bluebird</h1>
-        <div class="sub">RECEIPT · #{{ $payment->id }} · {{ optional($payment->paid_at)->format('d M Y') ?? $payment->cout }}</div>
+    <header>
+        <h1>Invoice</h1>
+        <address>
+            <p>HOTEL BLUE BIRD,</p>
+            <p>(+91) 9313346569</p>
+        </address>
+    </header>
+    <article>
+        <h1>Recipient</h1>
+        <address>
+            <p>Guest User<br></p>
+        </address>
+        <table class="meta">
+            <tr>
+                <th><span>Invoice #</span></th>
+                <td><span>INV-9982</span></td>
+            </tr>
+            <tr>
+                <th><span>Date</span></th>
+                <td><span>2026-07-20</span></td>
+            </tr>
+        </table>
+        <table class="inventory">
+            <thead>
+                <tr>
+                    <th><span>Item</span></th>
+                    <th><span>No of Days</span></th>
+                    <th><span>Rate</span></th>
+                    <th><span>Quantity</span></th>
+                    <th><span>Price</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span>Deluxe Room</span></td>
+                    <td><span>5</span></td>
+                    <td><span>600</span></td>
+                    <td><span>1</span></td>
+                    <td><span>3000</span></td>
+                </tr>
+                <tr>
+                    <td><span>Breakfast Meal Included</span></td>
+                    <td><span>5</span></td>
+                    <td><span>100</span></td>
+                    <td><span>1</span></td>
+                    <td><span>500</span></td>
+                </tr>
+            </tbody>
+        </table>
 
-        <div class="r-row"><span class="r-label">Guest</span><span>{{ $payment->Name }}</span></div>
-        <div class="r-row"><span class="r-label">Room</span><span>{{ $payment->RoomType }} · {{ $payment->Bed }}</span></div>
-        <div class="r-row"><span class="r-label">Stay</span><span>{{ $payment->cin }} → {{ $payment->cout }} ({{ $payment->noofdays }}n)</span></div>
-
-        <div class="r-row dashed"><span class="r-label">Room charge</span><span>₹{{ number_format($payment->roomtotal,2) }}</span></div>
-        <div class="r-row"><span class="r-label">Bed</span><span>₹{{ number_format($payment->bedtotal,2) }}</span></div>
-        <div class="r-row"><span class="r-label">Meal ({{ $payment->meal }})</span><span>₹{{ number_format($payment->mealtotal,2) }}</span></div>
-        <div class="r-row"><span class="r-label">Service Tax (10%)</span><span>₹{{ number_format($payment->tax_amount,2) }}</span></div>
-        <div class="r-row"><span class="r-label">Discount</span><span>− ₹{{ number_format($payment->discount,2) }}</span></div>
-
-        <div class="r-row grand"><span>Grand Total</span><span>₹{{ number_format($payment->grand_total,2) }}</span></div>
-        <div class="r-row"><span class="r-label">Paid ({{ $payment->method ?? '—' }})</span><span>₹{{ number_format($payment->amount_paid,2) }}</span></div>
-        <div class="r-row"><span class="r-label">Balance</span><span>₹{{ number_format(max(0,$payment->balance),2) }}</span></div>
-
-        <div class="r-status"><span class="pos-badge pos-badge-{{ $payment->status_color }}">{{ $payment->status }}</span></div>
-    </div>
+        <table class="balance">
+            <tr>
+                <th><span>Total</span></th>
+                <td><span>3500</span></td>
+            </tr>
+            <tr>
+                <th><span>Amount Paid</span></th>
+                <td><span>3500</span></td>
+            </tr>
+            <tr>
+                <th><span>Balance Due</span></th>
+                <td><span>0.00</span></td>
+            </tr>
+        </table>
+    </article>
 </body>
 </html>

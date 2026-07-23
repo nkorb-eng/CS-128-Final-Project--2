@@ -7,11 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <!-- Sweet Alert -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <!-- AOS Animation -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <!-- Loading Bar -->
     <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/flash.css') }}">
     <title>Hotel Blue Bird</title>
@@ -19,7 +16,6 @@
 </head>
 
 <body>
-    <!-- Carousel -->
     <section id="carouselExampleControls" class="carousel slide carousel_section" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
@@ -37,14 +33,12 @@
         </div>
     </section>
 
-    <!-- Main Section -->
     <section id="auth_section">
         <div class="logo">
             <img class="bluebirdlogo" src="{{ asset('image/bluebirdlogo.png') }}" alt="logo">
             <p>BLUEBIRD</p>
         </div>
         <div class="auth_container">
-            <!-- Login -->
             <div id="Log_in">
                 <h2>Log In</h2>
                 <div class="role_btn">
@@ -52,7 +46,6 @@
                     <div class="btns">Staff</div>
                 </div>
 
-                <!-- User Login -->
                 <form class="user_login authsection active" id="userlogin" action="{{ route('login.user') }}" method="POST">
                     @csrf
                     <div class="form-floating">
@@ -60,54 +53,57 @@
                         <label for="Username">Username</label>
                     </div>
                     <div class="form-floating">
-                        <input type="email" class="form-control" name="Email" placeholder=" ">
+                        <input type="email" class="form-control" name="Email" value="{{ old('Email') }}" placeholder=" " required>
                         <label for="Email">Email</label>
                     </div>
                     <div class="form-floating">
-                        <input type="password" class="form-control" name="Password" placeholder=" ">
+                        <input type="password" class="form-control" name="Password" placeholder=" " required>
                         <label for="Password">Password</label>
                     </div>
+
                     <button type="submit" name="user_login_submit" class="auth_btn">Log in</button>
+                    <a href="{{ route('google.redirect') }}" class="auth_btn" style="display:block; text-align:center; text-decoration:none;">
+                        Continue with Google
+                    </a>
+
                     <div class="footer_line">
                         <h6>Don't have an account? <span class="page_move_btn" onclick="signuppage()">sign up</span></h6>
                     </div>
                 </form>
 
-                <!-- Employee Login -->
                 <form class="employee_login authsection" id="employeelogin" action="{{ route('login.employee') }}" method="POST">
                     @csrf
                     <div class="form-floating">
-                        <input type="email" class="form-control" name="Emp_Email" placeholder=" ">
+                        <input type="email" class="form-control" name="Emp_Email" value="{{ old('Emp_Email') }}" placeholder=" " required>
                         <label for="floatingInput">Email</label>
                     </div>
                     <div class="form-floating">
-                        <input type="password" class="form-control" name="Emp_Password" placeholder=" ">
+                        <input type="password" class="form-control" name="Emp_Password" placeholder=" " required>
                         <label for="floatingPassword">Password</label>
                     </div>
                     <button type="submit" name="Emp_login_submit" class="auth_btn">Log in</button>
                 </form>
             </div>
 
-            <!-- Sign Up -->
             <div id="sign_up">
                 <h2>Sign Up</h2>
                 <form class="user_signup" id="usersignup" action="{{ route('signup') }}" method="POST">
                     @csrf
                     <div class="form-floating">
-                        <input type="text" class="form-control" name="Username" placeholder=" ">
+                        <input type="text" class="form-control" name="Username" value="{{ old('Username') }}" placeholder=" " required>
                         <label for="Username">Username</label>
                     </div>
                     <div class="form-floating">
-                        <input type="email" class="form-control" name="Email" placeholder=" ">
+                        <input type="email" class="form-control" name="Email" value="{{ old('Email') }}" placeholder=" " required>
                         <label for="Email">Email</label>
                     </div>
                     <div class="form-floating">
-                        <input type="password" class="form-control" name="Password" placeholder=" ">
+                        <input type="password" class="form-control" name="Password" placeholder=" " required minlength="3">
                         <label for="Password">Password</label>
                     </div>
                     <div class="form-floating">
-                        <input type="password" class="form-control" name="CPassword" placeholder=" ">
-                        <label for="CPassword">Confirm Password</label>
+                        <input type="password" class="form-control" name="Password_confirmation" placeholder=" " required minlength="3">
+                        <label for="Password_confirmation">Confirm Password</label>
                     </div>
                     <button type="submit" name="user_signup_submit" class="auth_btn">Sign up</button>
                     <div class="footer_line">
@@ -120,7 +116,6 @@
 
     <script src="{{ asset('javascript/index.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <!-- AOS Animation -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
         AOS.init();

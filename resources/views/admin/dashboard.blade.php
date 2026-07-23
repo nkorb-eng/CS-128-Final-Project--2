@@ -15,26 +15,18 @@
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
 </head>
 <body>
-    <div class="pos-wrap">
-        <h2 class="pos-title">Overview</h2>
-
-        <div class="stat-grid">
-            <div class="stat-card">
-                <div class="stat-ico ico-blue"><i class="fa-solid fa-indian-rupee-sign"></i></div>
-                <div><div class="stat-label">Revenue Collected</div><div class="stat-value">₹{{ number_format($revenue, 2) }}</div></div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-ico ico-red"><i class="fa-solid fa-hourglass-half"></i></div>
-                <div><div class="stat-label">Outstanding</div><div class="stat-value">₹{{ number_format($outstanding, 2) }}</div></div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-ico ico-green"><i class="fa-solid fa-bed"></i></div>
-                <div><div class="stat-label">Booked / Rooms</div><div class="stat-value">{{ $roombookrow }} / {{ $roomrow }}</div></div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-ico ico-navy"><i class="fa-solid fa-users"></i></div>
-                <div><div class="stat-label">Staff</div><div class="stat-value">{{ $staffrow }}</div></div>
-            </div>
+   <div class="databox">
+        <div class="box roombookbox">
+          <h2>Total Booked Room</h2>
+          <h1>{{ $roombookrow }} / {{ $roomrow }}</h1>
+        </div>
+        <div class="box guestbox">
+          <h2>Total Staff</h2>
+          <h1>{{ $staffrow }}</h1>
+        </div>
+        <div class="box profitbox">
+          <h2>Profit</h2>
+          <h1>{{ $tot }} <span>$</span></h1>
         </div>
 
         <div class="stat-grid stat-grid-3">

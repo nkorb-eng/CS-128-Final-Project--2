@@ -34,6 +34,20 @@ php artisan serve
 
 Then open http://127.0.0.1:8000.
 
+### Google sign-in
+
+Create a Google OAuth 2.0 Web application credential and put its client ID
+and secret in `.env`. In Google Cloud Console, add the exact value of
+`GOOGLE_REDIRECT_URI` as an authorized redirect URI. The included local
+configuration uses:
+
+```
+http://127.0.0.1:8000/auth/google/callback
+```
+
+For Google sign-in, start the app with `php artisan serve` and open
+`http://127.0.0.1:8000`. Google does not accept Herd's local `*.test` domain
+as a redirect URI; use a public HTTPS domain that you own for a deployed app.
 ## Demo logins (created by the seeder)
 
 | Role  | Email                            | Password |

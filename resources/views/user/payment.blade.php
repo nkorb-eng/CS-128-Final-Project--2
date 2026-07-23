@@ -19,35 +19,41 @@
             </div>
         </div>
 
-        <div class="roombooktable table-responsive-xl">
-            <table class="table" id="table-data">
-                <thead>
-                    <tr>
-                        <th>Invoice</th><th>Room</th><th>Check In</th><th>Check Out</th>
-                        <th>Grand Total</th><th>Paid</th><th>Balance</th><th>Status</th><th class="action">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @forelse ($payments as $p)
-                    <tr>
-                        <td class="fw-semibold">#{{ $p->id }}</td>
-                        <td>{{ $p->RoomType }}</td>
-                        <td>{{ $p->cin }}</td>
-                        <td>{{ $p->cout }}</td>
-                        <td class="fw-semibold">₹{{ number_format($p->grand_total, 2) }}</td>
-                        <td>₹{{ number_format($p->amount_paid, 2) }}</td>
-                        <td class="{{ $p->balance > 0 ? 'text-danger fw-semibold' : 'text-muted' }}">₹{{ number_format(max(0,$p->balance), 2) }}</td>
-                        <td><span class="pos-badge pos-badge-{{ $p->status_color }}">{{ $p->status }}</span></td>
-                        <td class="action">
-                            <a href="{{ route('user.invoice', $p->id) }}" target="_blank"><button class="btn btn-primary btn-sm"><i class="fa-solid fa-receipt"></i> Receipt</button></a>
-                        </td>
-                    </tr>
-                @empty
-                    <tr><td colspan="9" class="text-center text-muted py-4">No bills yet.</td></tr>
-                @endforelse
-                </tbody>
-            </table>
-        </div>
+    <div class="roombooktable table-responsive-xl">
+        <table class="table table-bordered table-hover" id="table-data">
+            <thead>
+                <tr>
+                    <th scope="col">Invoice Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Room Type</th>
+                    <th scope="col">Beds</th>
+                    <th scope="col">Meal Plan</th>
+                    <th scope="col">Check In</th>
+                    <th scope="col">Check Out</th>
+                    <th scope="col">Bill</th>
+                    <th scope="col" class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach ($payments as $res)
+                <tr>
+                    <td>{{ $res->id }}</td>
+                    <td>{{ $res->Name }}</td>
+                    <td>{{ $res->RoomType }}</td>
+                    <td>{{ $res->Bed }}</td>
+                    <td>{{ $res->meal }}</td>
+                    <td>{{ $res->cin }}</td>
+                    <td>{{ $res->cout }}</td>
+                    <td class="fw-bold text-success">${{ number_format($res->finaltotal, 2) }}</td>
+                    <td class="action text-center">
+                        <a href="{{ route('user.invoice', $res->id) }}" target="_blank" class="btn btn-primary btn-sm text-white text-decoration-none">
+                            <i class="fa-solid fa-print"></i> View Invoice
+                        </a>
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
     </div>
 </body>
 </html>

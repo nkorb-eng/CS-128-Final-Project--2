@@ -13,4 +13,5 @@ class Roombook extends Model
         'Name', 'Email', 'Country', 'Phone', 'RoomType', 'Bed',
         'Meal', 'NoofRoom', 'cin', 'cout', 'nodays', 'stat',
     ];
+    
 }

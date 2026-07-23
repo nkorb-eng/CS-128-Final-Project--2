@@ -16,25 +16,57 @@
     </style>
 </head>
 <body>
-    <div class="profile-card">
-        <div class="text-center mb-4">
-            <div class="avatar-circle">{{ strtoupper(substr($user->Username ?? 'G', 0, 1)) }}</div>
-            <h3 class="mb-1">{{ $user->Username ?? 'Guest' }}</h3>
-            <span class="pos-badge pos-badge-success">Active Member</span>
-        </div>
-        <hr class="text-muted mb-4">
-        <div class="row g-4">
-            <div class="col-md-6">
-                <label class="pos-label">Email Address</label>
-                <div class="pf-field">{{ $user->Email ?? session('usermail') }}</div>
-            </div>
-            <div class="col-md-6">
-                <label class="pos-label">Account ID</label>
-                <div class="pf-field">#{{ $user->UserID ?? '—' }}</div>
-            </div>
-            <div class="col-md-6">
-                <label class="pos-label">Total Bookings</label>
-                <div class="pf-field">{{ $bookingCount }}</div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card profile-card p-5 mt-4">
+
+                    @if (session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
+                    @if (session('error'))
+                        <div class="alert alert-danger">{{ session('error') }}</div>
+                    @endif
+
+                    <div class="text-center mb-4">
+                        <div class="avatar-circle">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <h3 class="fw-bold text-dark">{{ $user->Username ?? 'Guest' }}</h3>
+                        <div class="col-md-6">
+                            <label class="text-muted small fw-bold mb-1">Email Address</label>
+                            <div class="p-2 border rounded bg-light">{{ $user->Email }}</div>
+                        </div>
+                    </div>
+
+                    <hr class="text-muted mb-4">
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label class="text-muted small fw-bold mb-1">Email Address</label>
+                            <div class="p-2 border rounded bg-light">{{ $user->Email ?? 'guest@bluebird.com' }}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small fw-bold mb-1">Phone Number</label>
+                            <div class="p-2 border rounded bg-light">{{ $user->Phone ?? 'Not set' }}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small fw-bold mb-1">Country</label>
+                            <div class="p-2 border rounded bg-light">{{ $user->Country ?? 'Not set' }}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small fw-bold mb-1">Account Status</label>
+                            <div class="p-2 border rounded bg-light">Verified</div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-5">
+                        <a href="{{ route('user.profile.edit') }}" class="btn btn-outline-primary px-4 me-2"><i class="fa-solid fa-pen-to-square me-2"></i>Edit Profile</a>
+                        <a href="{{ route('user.password.edit') }}" class="btn btn-outline-danger px-4"><i class="fa-solid fa-key me-2"></i>Change Password</a>
+                    </div>
+
+                </div>
             </div>
             <div class="col-md-6">
                 <label class="pos-label">Account Status</label>

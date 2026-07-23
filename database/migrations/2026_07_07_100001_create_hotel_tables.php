@@ -31,8 +31,10 @@ return new class extends Migration
         // Room inventory
         Schema::create('room', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('room_no', 20)->unique(); // Added room_no
             $table->string('type', 50);
             $table->string('bedding', 50);
+            $table->decimal('price', 10, 2); // Added price
         });
 
         // Reservations

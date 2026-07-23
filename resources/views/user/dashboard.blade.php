@@ -15,26 +15,20 @@
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
 </head>
 <body>
-    <div class="pos-wrap">
-        <h2 class="pos-title">My Overview</h2>
-
-        <div class="stat-grid">
-            <div class="stat-card">
-                <div class="stat-ico ico-blue"><i class="fa-solid fa-calendar-check"></i></div>
-                <div><div class="stat-label">Active Bookings</div><div class="stat-value">{{ $activeBookings }} / {{ $totalBookings }}</div></div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-ico ico-green"><i class="fa-solid fa-indian-rupee-sign"></i></div>
-                <div><div class="stat-label">Total Spent</div><div class="stat-value">₹{{ number_format($totalSpent, 2) }}</div></div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-ico ico-red"><i class="fa-solid fa-hourglass-half"></i></div>
-                <div><div class="stat-label">Outstanding</div><div class="stat-value">₹{{ number_format($outstanding, 2) }}</div></div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-ico ico-navy"><i class="fa-solid fa-headset"></i></div>
-                <div><div class="stat-label">Staff On Duty</div><div class="stat-value">{{ $staffActive }}</div></div>
-            </div>
+   <div class="databox">
+      <div class="box roombookbox">
+          <h2>My Active Bookings</h2>
+          <h1>{{ $activeBookingsCount }} / {{ $totalBookingsCount }}</h1>
+      </div>
+      <div class="box profitbox">
+          <h2>Total Spent</h2>
+          <h1>{{ number_format($totalSpent, 2) }} <span>$</span></h1>
+      </div>
+    </div>
+    <div class="chartbox">
+        <div class="bookroomchart">
+            <canvas id="bookroomchart"></canvas>
+            <h3 style="text-align: center;margin:10px 0;">Booked Room Types</h3>
         </div>
 
         <div class="chart-grid">
@@ -51,29 +45,52 @@
 </body>
 
 <script>
-    new Chart(document.getElementById('bookroomchart'), {
-        type: 'doughnut',
-        data: {
-            labels: ['Superior Room', 'Deluxe Room', 'Guest House', 'Single Room'],
-            datasets: [{
-                data: [{{ $chart['Superior Room'] }}, {{ $chart['Deluxe Room'] }}, {{ $chart['Guest House'] }}, {{ $chart['Single Room'] }}],
-                backgroundColor: ['#2563eb', '#60a5fa', '#1e40af', '#93c5fd'],
-                borderColor: '#fff', borderWidth: 2,
-            }]
-        },
-        options: { plugins: { legend: { position: 'bottom' } } }
-    });
+    // DYNAMIC DOUGHNUT CHART
+    const labels = ['Superior Room', 'Deluxe Room', 'Guest House', 'Single Room'];
+    const data = {
+        labels: labels,
+        datasets: [{
+        label: 'My Rooms',
+        backgroundColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(153, 102, 255, 1)',
+        ],
+        borderColor: 'black',
+        // Injects the data from the controller, defaulting to 0 if empty
+        data: [
+            {{ $chart['Superior Room'] ?? 0 }}, 
+            {{ $chart['Deluxe Room'] ?? 0 }}, 
+            {{ $chart['Guest House'] ?? 0 }}, 
+            {{ $chart['Single Room'] ?? 0 }}
+        ],
+        }]
+    };
 
-    const spendData = @json($spendData);
-    Morris.Bar({
-        element: 'spendchart',
-        data: spendData.length ? spendData : [{date:'—', spent:0}],
-        xkey: 'date',
-        ykeys: ['spent'],
-        labels: ['Spent'],
-        barColors: ['#2563eb'],
-        hideHover: 'auto',
-        gridTextColor: '#8a97ab'
-    });
+    const doughnutchart = { type: 'doughnut', data: data, options: {} };
+    const myChart = new Chart(document.getElementById('bookroomchart'), doughnutchart);
+</script>
+
+<script>
+    // MORRIS BAR CHART
+    const expenseData = @json($expenseData);
+
+    // Only try to draw the chart if the user actually has payment data
+    if (expenseData && expenseData.length > 0) {
+        Morris.Bar({
+            element : 'profitchart',
+            data: expenseData,
+            xkey:'date',
+            ykeys:['spent'],
+            labels:['Spent ($)'],
+            hideHover:'auto',
+            stacked:true,
+            barColors:['rgba(153, 102, 255, 1)']
+        });
+    } else {
+        document.getElementById('profitchart').innerHTML = 
+            "<div style='display: flex; justify-content: center; align-items: center; height: 100%; color: #6c757d; font-weight: bold;'>No expenses recorded yet.</div>";
+    }
 </script>
 </html>

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     protected $table = 'payment';
-    public $incrementing = false; // id mirrors the roombook id, not auto-generated
+    public $incrementing = false; 
     public $timestamps = false;
 
     protected $fillable = [
@@ -58,40 +58,23 @@ class Payment extends Model
     }
 
     /**
-     * Reproduce the exact billing maths from the original PHP
-     * (roomconfirm.php / roombookedit.php).
-     *
-     * Returns [roomtotal, bedtotal, mealtotal, finaltotal].
+     * Centralized Booking Pricing Calculator
      */
-    public static function calculate(string $roomType, string $bed, string $meal, int $noofday, int $noofRoom): array
+    public static function calculate(string $roomType, string $bed, string $meal, int $noofday, int $noofRoom = 1): array
     {
-        $roomRate = match ($roomType) {
-            'Superior Room' => 3000,
-            'Deluxe Room'   => 2000,
-            'Guest House'   => 1500,
-            'Single Room'   => 1000,
-            default         => 0,
-        };
-
-        $bedRate = match ($bed) {
-            'Single' => $roomRate * 1 / 100,
-            'Double' => $roomRate * 2 / 100,
-            'Triple' => $roomRate * 3 / 100,
-            'Quad'   => $roomRate * 4 / 100,
-            default  => 0, // None
-        };
+        $roomAndBedRate = Room::calculatePrice($roomType, $bed);
 
         $mealRate = match ($meal) {
-            'Breakfast'  => $bedRate * 2,
-            'Half Board' => $bedRate * 3,
-            'Full Board' => $bedRate * 4,
-            default      => 0, // Room only
+            'Breakfast'  => 5.00,
+            'Half Board' => 10.00,
+            'Full Board' => 15.00,
+            default      => 0.00,
         };
 
-        $roomtotal = $roomRate * $noofday * $noofRoom;
-        $bedtotal  = $bedRate * $noofday;
-        $mealtotal = $mealRate * $noofday;
-        $finaltotal = $roomtotal + $mealtotal + $bedtotal;
+        $roomtotal  = $roomAndBedRate * $noofday;
+        $bedtotal   = 0; 
+        $mealtotal  = $mealRate * $noofday;
+        $finaltotal = $roomtotal + $mealtotal;
 
         return [$roomtotal, $bedtotal, $mealtotal, $finaltotal];
     }

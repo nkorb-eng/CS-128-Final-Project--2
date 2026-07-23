@@ -10,5 +10,5 @@ class Signup extends Model
     protected $primaryKey = 'UserID';
     public $timestamps = false;
 
-    protected $fillable = ['Username', 'Email', 'Password'];
+    protected $fillable = ['Username', 'Email', 'Password', 'Phone', 'Country'];
 }

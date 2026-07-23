@@ -1,17 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Anton&family=Cookie&family=Poppins:wght@600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Anton&family=Cookie&family=Poppins:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400&display=swap");
 
 :root {
-    --bg-text-shadow: 0 2px 4px rgb(13 0 77 / 8%), 0 3px 6px rgb(13 0 77 / 8%), 0 8px 16px rgb(13 0 77 / 8%);
+    --bg-text-shadow:
+        0 2px 4px rgb(13 0 77 / 8%), 0 3px 6px rgb(13 0 77 / 8%),
+        0 8px 16px rgb(13 0 77 / 8%);
     --bg-box-shadow: 0px 0px 20px 6px rgba(26, 30, 164, 0.31);
 }
-*::-webkit-scrollbar{
-    width: .4rem;
+*::-webkit-scrollbar {
+    width: 0.4rem;
 }
-*::-webkit-scrollbar-track{
+*::-webkit-scrollbar-track {
     background: rgb(6, 6, 44);
 }
-*::-webkit-scrollbar-thumb{
+*::-webkit-scrollbar-thumb {
     background: #0040ff;
 }
 
@@ -22,26 +24,26 @@ body {
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     /* text-shadow: var(--bg-text-shadow); */
 }
 
-i{
+i {
     font-size: 20px;
 }
 
-.searchsection{
+.searchsection {
     height: 80px;
     width: 100%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    background-color:  #0a0d2d;
+    background-color: #0a0d2d;
     position: fixed;
     z-index: 500;
 }
 
-#search_bar{
+#search_bar {
     height: 40px;
     width: 80%;
     border: none;
@@ -49,7 +51,7 @@ i{
     padding-left: 20px;
     border-radius: 30px;
 }
-#adduser{
+#adduser {
     /* color: white; */
     height: 40px;
     background-color: rgb(0, 59, 254);
@@ -57,11 +59,11 @@ i{
     border-radius: 30px;
     padding: 0 50px;
 }
-#adduser:hover{
+#adduser:hover {
     background-color: rgba(0, 17, 255, 0.733);
 }
 
-.exportexcel{
+.exportexcel {
     height: 40px;
     width: 40px;
     background-color: rgb(47, 255, 47);
@@ -72,8 +74,8 @@ i{
 
 /* guest panel */
 
-#guestdetailpanel{
-    position : fixed;
+#guestdetailpanel {
+    position: fixed;
     z-index: 1000;
     height: 100%;
     width: 100%;
@@ -84,27 +86,27 @@ i{
     background-color: #00000079;
 }
 
-#guestdetailpanel .guestdetailpanelform{
+#guestdetailpanel .guestdetailpanelform {
     height: 620px;
     width: 1170px;
     background-color: #ccdff4;
-    border-radius: 10px;  
+    border-radius: 10px;
     /* temp */
     position: relative;
     top: 20px;
-    animation: guestinfoform .3s ease;
+    animation: guestinfoform 0.3s ease;
 }
-a{
+a {
     color: black;
 }
 
-@keyframes guestinfoform{
-    0%{
+@keyframes guestinfoform {
+    0% {
         transform: translateY(50px);
     }
 }
 
-.guestdetailpanelform .head{
+.guestdetailpanelform .head {
     /* width: 100%; */
     padding: 0 10px;
     height: 40px;
@@ -113,25 +115,25 @@ a{
     justify-content: space-between;
 }
 
-.guestdetailpanelform .head h3{
+.guestdetailpanelform .head h3 {
     color: #111f49;
     position: relative;
     left: 40%;
     margin-top: 10px;
 }
-.guestdetailpanelform .head i{
+.guestdetailpanelform .head i {
     font-size: 25px;
     cursor: pointer;
 }
 
-.guestdetailpanelform .middle{
+.guestdetailpanelform .middle {
     width: 100%;
     height: 500px;
     margin: 10px 0 0 0;
     display: flex;
 }
 
-.guestdetailpanelform .middle .guestinfo{
+.guestdetailpanelform .middle .guestinfo {
     width: 100%;
     background-color: rgba(155, 187, 255, 0.752);
     padding: 20px;
@@ -139,8 +141,7 @@ a{
     flex-direction: column;
     align-items: center;
 }
-.guestdetailpanelform .middle .reservationinfo{
-    
+.guestdetailpanelform .middle .reservationinfo {
     width: 100%;
     background-color: rgba(155, 187, 255, 0.752);
     padding: 20px;
@@ -149,19 +150,20 @@ a{
     align-items: center;
 }
 
-.line{
+.line {
     width: 10px;
-    height: 100%
+    height: 100%;
 }
 
-.guestdetailpanelform .footer{
+.guestdetailpanelform .footer {
     height: 50px;
     display: flex;
     justify-content: center;
     margin: 10px;
 }
 
-.middle input,.selectinput{
+.middle input,
+.selectinput {
     width: 100%;
     border: none;
     background-color: #d1d7ff;
@@ -170,16 +172,16 @@ a{
     border-radius: 20px;
 }
 
-.datesection{
+.datesection {
     display: flex;
 }
 
-.datesection span{
+.datesection span {
     margin: 5px;
 }
 
 /* room book table */
-.roombooktable{
+.roombooktable {
     position: absolute;
     color: #0a0d2d;
     margin-top: 80px;
@@ -189,20 +191,20 @@ a{
     /* padding bottom to add space */
     padding-bottom: 900px;
 }
-.roombooktable thead{
-    background-color:  #0a0d2d;
+.roombooktable thead {
+    background-color: #0a0d2d;
     color: white;
     text-align: center;
 }
-.roombooktable tbody{
+.roombooktable tbody {
     text-align: center;
 }
 
-.action a{
+.action a {
     text-decoration: none;
 }
 
-.action button{
+.action button {
     display: flex;
     flex-wrap: wrap;
     margin: 5px;
