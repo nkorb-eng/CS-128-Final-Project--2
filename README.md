@@ -34,24 +34,19 @@ php artisan serve
 
 Then open http://127.0.0.1:8000.
 
-<<<<<<< HEAD
 ### Google sign-in
 
 Create a Google OAuth 2.0 Web application credential and put its client ID
-and secret in `.env`. In Google Cloud Console, add this exact authorized
-redirect URI:
+and secret in `.env`. In Google Cloud Console, add both authorized redirect
+URIs:
 
 ```
 http://127.0.0.1:8000/auth/google/callback
+http://localhost:8000/auth/google/callback
 ```
 
-`APP_URL` and `GOOGLE_REDIRECT_URI` must use the same host. In particular,
-do not start the login flow on `localhost` and return to `127.0.0.1` (or the
-reverse): browsers keep their session cookies separate, and Socialite will
-reject the callback state.
-
-=======
->>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
+The application retains the host that started the login flow, so use either
+`localhost` or `127.0.0.1` consistently for that individual sign-in.
 ## Demo logins (created by the seeder)
 
 | Role  | Email                            | Password |

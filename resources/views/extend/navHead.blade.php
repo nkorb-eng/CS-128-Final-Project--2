@@ -5,17 +5,10 @@
   </a>
 
   <ul class="d-flex align-items-center list-unstyled mb-0 gap-2 gap-md-3">
-<<<<<<< HEAD
-    <li><a href="{{ route('home') }}" class="text-dark text-decoration-none px-1 text-nowrap">Home</a></li>
-    <li><a href="#secondsection" class="text-dark text-decoration-none px-1 text-nowrap">Rooms</a></li>
-    <li><a href="#thirdsection" class="text-dark text-decoration-none px-1 text-nowrap">Facilities</a></li>
-    <li><a href="#contactus" class="text-dark text-decoration-none px-1 text-nowrap">Contact Us</a></li>
-=======
     <li><a href="{{ route('home') }}" class="text-dark text-decoration-none px-1 text-nowrap firstsection">Home</a></li>
     <li><a href="#secondsection" class="text-dark text-decoration-none px-1 text-nowrap">Rooms</a></li>
     <li><a href="#thirdsection" class="text-dark text-decoration-none px-1 text-nowrap">Facilities</a></li>
     <li><a href="{{ route('contact') }}" class="text-dark text-decoration-none px-1 text-nowrap">Contact Us</a></li>
->>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
 
     @if(session()->has('usermail'))
       <li class="ms-1 ms-md-2">

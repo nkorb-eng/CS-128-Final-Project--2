@@ -53,27 +53,16 @@ class RoombookController extends Controller
         return back()->with('success', 'Reservation successful');
     }
 
-<<<<<<< HEAD
-    /** ✅ UPDATED: Find valid, vacant rooms matching this exact reservation spec */
-/** ✅ FIXED: Scans full inventory to build a real-time reactive availability map */
-=======
->>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
+    /** Build a map of currently available rooms for the booking being edited. */
     public function edit($id)
     {
         $booking = Roombook::where('id', $id)->firstOrFail();
         $countries = HomeController::countries();
 
-<<<<<<< HEAD
-        // 1. Fetch all rooms registered in the system
-        $allRooms = Room::all();
-        
-        // 2. Build a mapped dictionary grouped by "RoomType_Bedding"
-=======
         // Fetch all rooms registered in the system
         $allRooms = Room::all();
         
         // Build a mapped dictionary grouped by "RoomType_Bedding"
->>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
         $roomsMap = [];
         
         foreach ($allRooms as $room) {
@@ -102,11 +91,7 @@ class RoombookController extends Controller
         return view('admin.roombookedit', compact('booking', 'countries', 'roomsMap'));
     }
 
-<<<<<<< HEAD
-    /** ✅ UPDATED: Save edits with strict server-side fallback validation checks */
-=======
-    // Save edits with validation checks 
->>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
+    /** Save booking edits with inventory and availability validation. */
     public function update(Request $request, $id)
     {
         $booking = Roombook::where('id', $id)->firstOrFail();
@@ -124,29 +109,17 @@ class RoombookController extends Controller
             // Find the room in the inventory database
             $room = Room::where('room_no', $roomNo)->first();
             
-<<<<<<< HEAD
-            // Validation Check A: Verify existence
-=======
-            // Validation Check existence
->>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
+            // Verify that the selected room exists.
             if (!$room) {
                 return back()->with('error', "Room #{$roomNo} does not exist in your inventory!");
             }
 
-<<<<<<< HEAD
-            // Validation Check B: Verify that Room Type and Bed layout match the inventory parameters
-=======
-            // Validation Check Verify that Room Type and Bed layout match
->>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
+            // Verify that the room type and bedding match the inventory entry.
             if ($room->type !== $roomType || $room->bedding !== $bed) {
                 return back()->with('error', "Invalid configuration! Room #{$roomNo} is registered as a {$room->type} with a {$room->bedding} Bed layout.");
             }
 
-<<<<<<< HEAD
-            // Validation Check C: Verify calendar overlap schedule availability
-=======
-            // Validation Check calendar overlap schedule availability
->>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
+            // Verify that the selected room is not occupied during this stay.
             $isOccupied = Roombook::where('id', '!=', $id)
                 ->where('NoofRoom', $roomNo)
                 ->where('stat', 'Confirm')

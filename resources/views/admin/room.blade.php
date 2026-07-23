@@ -11,10 +11,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" href="{{ asset('adminassets/css/room.css') }}">
     
-<<<<<<< HEAD
     <!-- RESTORED STYLES -->
-=======
->>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
     <style>
         .overlay-panel {
             display: none;

@@ -15,24 +15,15 @@
           <li class="mb-2"><a href="#firstsection" class="text-white-50 text-decoration-none hover-link">Home</a></li>
           <li class="mb-2"><a href="#secondsection" class="text-white-50 text-decoration-none hover-link">Rooms</a></li>
           <li class="mb-2"><a href="#thirdsection" class="text-white-50 text-decoration-none hover-link">Facilities</a></li>
-<<<<<<< HEAD
-          <li class="mb-2"><a href="#contactus" class="text-white-50 text-decoration-none hover-link">Contact Us</a></li>
-=======
           <li class="mb-2"><a href="{{ route('contact') }}" class="text-white-50 text-decoration-none hover-link">Contact Us</a></li>
->>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
         </ul>
       </div>
 
       <div class="col-lg-3 col-md-6">
         <h5 class="text-white mb-3">Contact Info</h5>
         <ul class="list-unstyled text-white-50 small">
-<<<<<<< HEAD
-          <li class="mb-2 text-white-50">123 Paradise Beach Road, Coastline</li>
-          <li class="mb-2 text-white-50">+1 (234) 567-890</li>
-=======
           <li class="mb-2 text-white-50">somewhere</li>
           <li class="mb-2 text-white-50">+855 987 654 321</li>
->>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
           <li class="mb-2 text-white-50">info@bluebirdhotel.com</li>
         </ul>
       </div>

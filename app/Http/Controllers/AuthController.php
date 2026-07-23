@@ -5,26 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\EmpLogin;
 use App\Models\Signup;
 use Illuminate\Http\Request;
-
-<<<<<<< HEAD
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\InvalidStateException;
 
 class AuthController extends Controller
 {
-    /** Show the combined login / signup page (was index.php). */
-=======
-class AuthController extends Controller
-{
-    /** Show the combined login / signup page*/
->>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
+    /** Show the combined login / signup page. */
     public function showLogin()
     {
         return view('auth.login');
     }
 
-    /** User login against the signup table (case-sensitive password). */
+    /** User login against the signup table. */
     public function userLogin(Request $request)
     {
         $user = Signup::where('Email', $request->input('Email'))
@@ -33,6 +26,7 @@ class AuthController extends Controller
 
         if ($user) {
             $request->session()->put('usermail', $user->Email);
+
             return redirect()->route('home');
         }
 
@@ -49,17 +43,14 @@ class AuthController extends Controller
         if ($emp) {
             $request->session()->put('usermail', $emp->Emp_Email);
             $request->session()->put('is_admin', true);
+
             return redirect()->route('admin.panel');
         }
 
         return back()->with('error', 'Something went wrong');
     }
 
-<<<<<<< HEAD
-    /** Register a new site user (was the signup block in index.php). */
-=======
-    /** Register a new site user */
->>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
+    /** Register a new site user. */
     public function signup(Request $request)
     {
         $username = $request->input('Username');
@@ -67,7 +58,7 @@ class AuthController extends Controller
         $password = $request->input('Password');
         $cpassword = $request->input('CPassword');
 
-        if ($username == '' || $email == '' || $password == '') {
+        if ($username === '' || $email === '' || $password === '') {
             return back()->with('error', 'Fill the proper details');
         }
 
@@ -90,28 +81,27 @@ class AuthController extends Controller
         return redirect()->route('home');
     }
 
-<<<<<<< HEAD
-    /** Destroy the session (was logout.php). */
-=======
-    /** Destroy the session meaning logout */
->>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
+    /** Destroy the current login session. */
     public function logout(Request $request)
     {
         $request->session()->flush();
 
         return redirect()->route('login');
     }
-<<<<<<< HEAD
 
-    public function redirectToGoogle()
+    public function redirectToGoogle(Request $request)
     {
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')
+            ->redirectUrl($this->googleRedirectUrl($request))
+            ->redirect();
     }
 
     public function handleGoogleCallback(Request $request)
     {
         try {
-            $googleUser = Socialite::driver('google')->user();
+            $googleUser = Socialite::driver('google')
+                ->redirectUrl($this->googleRedirectUrl($request))
+                ->user();
         } catch (InvalidStateException $exception) {
             report($exception);
 
@@ -125,6 +115,7 @@ class AuthController extends Controller
                 ->route('login')
                 ->with('error', 'Google sign-in could not be completed. Please try again.');
         }
+
         $user = Signup::where('Email', $googleUser->getEmail())->first();
 
         if (! $user) {
@@ -140,6 +131,25 @@ class AuthController extends Controller
 
         return redirect()->route('home');
     }
-=======
->>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
+
+    /**
+     * Uses the browser's local host for both OAuth requests, so its session
+     * cookie and Socialite state are retained. Other environments keep the
+     * configured redirect URL.
+     */
+    private function googleRedirectUrl(Request $request): string
+    {
+        $host = $request->getHost();
+
+        if (! in_array($host, ['127.0.0.1', 'localhost'], true)) {
+            return (string) config('services.google.redirect');
+        }
+
+        $scheme = $request->getScheme();
+        $port = $request->getPort();
+        $defaultPort = $scheme === 'https' ? 443 : 80;
+        $authority = $host.($port === $defaultPort ? '' : ':'.$port);
+
+        return $scheme.'://'.$authority.route('google.callback', [], false);
+    }
 }

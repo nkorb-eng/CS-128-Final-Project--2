@@ -11,14 +11,11 @@ use App\Http\Controllers\UserDashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-<<<<<<< HEAD
 
 Route::get('/auth/google/redirect', [AuthController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('google.callback');
-=======
 Route::get('/contact-us', function () {return view('contact');}) ->name('contact');
 
->>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
 
 // ---- Authentication ----
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -42,11 +39,7 @@ Route::middleware('auth.user')->group(function () {
     Route::get('/user-panel/invoice/{id}', [UserDashboardController::class, 'invoice'])->name('user.invoice');
 });
 
-<<<<<<< HEAD
-// ---- Admin area (was admin/*.php) ----
-=======
 // ---- Admin area ----
->>>>>>> c0e3a935b43eba1b3dc9f1bdad6c523fe64f921a
 Route::middleware('auth.admin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'panel'])->name('panel');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
