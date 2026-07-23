@@ -1,19 +1,28 @@
 <nav class="d-flex flex-row glassnav">
   <a class="navbar-brand d-flex align-items-center text-decoration-none text-dark user-select-none" href="{{ route('home') }}">
-    <img class="bluebirdlogo" src="{{ asset('image/bluebirdlogo.png') }}" alt="logo" style="height: 40px; width: auto;">
+    <img class="bluebirdlogo" src="{{ asset('image/bluebirdlogo.png') }}" alt="logo" style="height: 40px; width: auto;" onerror="this.style.display='none'">
     <span class="ms-2 fw-bold">BLUEBIRD</span>
   </a>
 
   <ul class="d-flex align-items-center list-unstyled mb-0 gap-2 gap-md-3">
-    <li><a href="{{ route('home') }}" class="text-dark text-decoration-none px-1 text-nowrap firstsection">Home</a></li>
-    <li><a href="#secondsection" class="text-dark text-decoration-none px-1 text-nowrap">Rooms</a></li>
-    <li><a href="#thirdsection" class="text-dark text-decoration-none px-1 text-nowrap">Facilities</a></li>
-    <li><a href="{{ route('contact') }}" class="text-dark text-decoration-none px-1 text-nowrap">Contact Us</a></li>
+    <li class="nav-item-link"><a href="{{ route('home') }}" class="text-dark text-decoration-none px-1 text-nowrap firstsection">Home</a></li>
+    <li class="nav-item-link"><a href="#secondsection" class="text-dark text-decoration-none px-1 text-nowrap">Rooms</a></li>
+    <li class="nav-item-link"><a href="#thirdsection" class="text-dark text-decoration-none px-1 text-nowrap">Facilities</a></li>
+    <li class="nav-item-link"><a href="{{ route('contact') }}" class="text-dark text-decoration-none px-1 text-nowrap">Contact Us</a></li>
 
     @if(session()->has('usermail'))
       <li class="ms-1 ms-md-2">
-        <a href="{{ route('user_panel') }}" class="btn btn-primary btn-sm text-nowrap">My Dashboard</a>
+        @if(session('is_admin'))
+          <a href="{{ route('admin.panel') }}" class="btn btn-warning btn-sm text-nowrap fw-bold">
+             Admin Dashboard
+          </a>
+        @else
+          <a href="{{ route('user_panel') }}" class="btn btn-primary btn-sm text-nowrap">
+             My Dashboard
+          </a>
+        @endif
       </li>
+
       <li>
         <form action="{{ route('logout') }}" method="POST" class="m-0" style="display: inline;">
           @csrf
@@ -29,7 +38,6 @@
 </nav>
 
 <style>
-
 .glassnav {
     position: fixed;
     top: 0;
@@ -68,7 +76,7 @@
     cursor: pointer;
 }
 
-.glassnav ul li:hover::after {
+.glassnav ul li.nav-item-link:hover::after {
     content: "";
     position: absolute;
     bottom: -4px;

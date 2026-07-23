@@ -10,6 +10,7 @@
     <style>
         body { background-color: #f4f6f9; padding: 30px; }
         .profile-card { border: none; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .avatar-preview { width: 120px; height: 120px; object-fit: cover; border-radius: 50%; border: 3px solid #0d6efd; }
     </style>
 </head>
 <body>
@@ -31,8 +32,24 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('user.profile.update') }}">
+                    <form method="POST" action="{{ route('user.profile.update') }}" enctype="multipart/form-data">
                         @csrf
+
+                        <div class="text-center mb-4">
+                            <div class="mb-3">
+                                @if (!empty($user->avater))
+                                    <img src="{{ asset('storage/' . $user->avater) }}" id="avatarPreview" class="avatar-preview shadow-sm" alt="Avatar">
+                                @else
+                                    <img src="https://via.placeholder.com/120?text=User" id="avatarPreview" class="avatar-preview shadow-sm" alt="Avatar">
+                                @endif
+                            </div>
+                            <div class="col-md-6 mx-auto">
+                                <label for="avaterInput" class="form-label fw-bold text-muted small">Change Profile Picture</label>
+                                <input type="file" name="avater" id="avaterInput" class="form-control" accept="image/*" onchange="previewImage(event)">
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
 
                         <div class="row g-4">
                             <div class="col-md-6">
@@ -64,5 +81,18 @@
         </div>
     </div>
 
+    <!-- Live Preview Script -->
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('avatarPreview');
+                output.src = reader.result;
+            };
+            if(event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        }
+    </script>
 </body>
 </html>

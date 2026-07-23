@@ -5,13 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BlueBird - Admin Room Inventory</title>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
     <link rel="stylesheet" href="{{ asset('adminassets/css/room.css') }}">
     
-    <!-- RESTORED STYLES -->
     <style>
         .overlay-panel {
             display: none;
@@ -38,7 +39,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .top-action-bar {
-            padding: 20px;
+            padding: 15px 20px;
             display: flex;
             justify-content: flex-end;
             align-items: center;
@@ -50,6 +51,7 @@
 </head>
 
 <body>
+    <!-- ADD ROOM PANEL MODAL -->
     <div id="roomdetailpanel" class="overlay-panel">
         <form action="{{ route('admin.room.store') }}" method="POST" class="room-form-card">
             @csrf
@@ -90,6 +92,7 @@
         </form>
     </div>
 
+    <!-- BULK UPDATE PANEL MODAL -->
     <div id="bulkupdatepanel" class="overlay-panel">
         <form action="{{ route('admin.room.bulk_update') }}" method="POST" class="room-form-card border-top border-primary border-5">
             @csrf
@@ -117,7 +120,6 @@
                     <option value="Double">Double Only</option>
                     <option value="Triple">Triple Only</option>
                     <option value="Quad">Quad Only</option>
-                    <option value="None">None Only</option>
                 </select>
             </div>
 
@@ -125,13 +127,14 @@
 
             <div class="mb-4">
                 <label class="form-label fw-bold text-success">New Price ($):</label>
-                <input type="number" name="price" class="form-control border-success" placeholder="e.g., 12" required>
+                <input type="number" step="0.01" name="price" class="form-control border-success" placeholder="e.g., 120" required>
             </div>
 
             <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">Update Prices</button>
         </form>
     </div>
 
+    <!-- TOP ACTION BAR -->
     <div class="top-action-bar">
         <form action="{{ route('admin.room') }}" method="GET" class="me-auto mb-0 d-flex align-items-center">
             <label for="sort" class="fw-bold me-2 text-nowrap">Sort By:</label>
@@ -150,6 +153,7 @@
         </button>
     </div>
 
+    <!-- ROOM GRID -->
     <div class="room mt-4">
         @foreach ($rooms as $row)
             @php
@@ -168,27 +172,18 @@
                     <i class="fa-solid fa-bed fa-4x mb-2"></i>
                     <h3>{{ $row->type }}</h3>
                     <div class="mb-1 fw-bold">{{ $row->bedding }} Bed</div>
-                    <div class="mb-3 text-dark fw-bold bg-light rounded mx-4 py-1">${{ $row->price }} / night</div>
-                    <a href="{{ route('admin.room.delete', $row->id) }}" class="btn btn-danger px-4">Delete</a>
+                    <div class="mb-3 text-dark fw-bold bg-light rounded mx-4 py-1">${{ number_format($row->price, 2) }} / night</div>
+                    <a href="{{ route('admin.room.delete', $row->id) }}" class="btn btn-danger px-4" onclick="return confirm('Delete Room #{{ $row->room_no }}?')">Delete</a>
                 </div>
             </div>
         @endforeach
     </div>
 
     <script>
-        function openroompanel() {
-            document.getElementById('roomdetailpanel').style.display = 'flex';
-        }
-        function closeroompanel() {
-            document.getElementById('roomdetailpanel').style.display = 'none';
-        }
-
-        function openbulkpanel() {
-            document.getElementById('bulkupdatepanel').style.display = 'flex';
-        }
-        function closebulkpanel() {
-            document.getElementById('bulkupdatepanel').style.display = 'none';
-        }
+        function openroompanel() { document.getElementById('roomdetailpanel').style.display = 'flex'; }
+        function closeroompanel() { document.getElementById('roomdetailpanel').style.display = 'none'; }
+        function openbulkpanel() { document.getElementById('bulkupdatepanel').style.display = 'flex'; }
+        function closebulkpanel() { document.getElementById('bulkupdatepanel').style.display = 'none'; }
 
         const priceMap = @json($priceMap);
 
@@ -221,14 +216,7 @@
         }
     </script>
 
-    @if (session('success'))
-        <script>swal({ title: @json(session('success')), icon: 'success' });</script>
-    @endif
-    @if (session('error'))
-        <script>swal({ title: @json(session('error')), icon: 'error' });</script>
-    @endif
-    @if ($errors->any())
-        <script>swal({ title: "{{ $errors->first() }}", icon: 'error' });</script>
-    @endif
+    @if (session('success')) <script>swal({ title: @json(session('success')), icon: 'success' });</script> @endif
+    @if (session('error')) <script>swal({ title: @json(session('error')), icon: 'error' });</script> @endif
 </body>
 </html>

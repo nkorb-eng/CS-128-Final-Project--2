@@ -146,8 +146,8 @@ class AuthController extends Controller
             ['Email' => $email],
             [
                 'Username' => Str::limit($googleUser->getName() ?: Str::before($email, '@'), 50, ''),
-                // A local password is still required by the legacy table.
                 'Password' => Hash::make(Str::random(40)),
+                'avater'   => $googleUser->getAvatar(),
             ],
         );
 
@@ -163,20 +163,6 @@ class AuthController extends Controller
         return (string) config('services.google.redirect');
     }
 
-    private function requestMatchesRedirectUrl(Request $request, string $redirectUrl): bool
-    {
-        $redirect = parse_url($redirectUrl);
-
-        if (! is_array($redirect) || ! isset($redirect['scheme'], $redirect['host'])) {
-            return false;
-        }
-
-        $port = $redirect['port'] ?? ($redirect['scheme'] === 'https' ? 443 : 80);
-
-        return $request->getScheme() === $redirect['scheme']
-            && $request->getHost() === $redirect['host']
-            && $request->getPort() === $port;
-    }
 
     private function passwordMatches(string $plainTextPassword, string $storedPassword): bool
     {

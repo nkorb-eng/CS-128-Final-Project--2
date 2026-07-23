@@ -11,6 +11,8 @@ use App\Http\Controllers\UserDashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/rooms/{slug}', [HomeController::class, 'showRoomDetail'])->name('room.detail');
+Route::get('/facilities/{slug}', [HomeController::class, 'showFacilityDetail'])->name('facility.detail');
 
 Route::get('/auth/google/redirect', [AuthController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('google.callback');
@@ -26,7 +28,6 @@ Route::match(['get', 'post'], '/logout', [AuthController::class, 'logout'])->nam
 
 // ---- User area ----
 Route::middleware('auth.user')->group(function () {
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
     
     Route::get('/book', [HomeController::class, 'showBookForm'])->name('room.book');
     Route::post('/book', [HomeController::class, 'book'])->name('room.book.submit');
@@ -73,4 +74,7 @@ Route::middleware('auth.admin')->prefix('admin')->name('admin.')->group(function
     Route::get('/staff', [StaffController::class, 'index'])->name('staff');
     Route::post('/staff', [StaffController::class, 'store'])->name('staff.store');
     Route::get('/staff/{id}/delete', [StaffController::class, 'destroy'])->name('staff.delete');
+
+
+    Route::post('/details/{id}/update', [HomeController::class, 'updateDetail'])->name('detail.update');
 });
