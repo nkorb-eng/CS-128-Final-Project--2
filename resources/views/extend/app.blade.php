@@ -15,6 +15,7 @@
       #guestdetailpanel{ display: none; }
       #guestdetailpanel .middle{ height: 450px; }
     </style>
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
 </head>
 <body>
   

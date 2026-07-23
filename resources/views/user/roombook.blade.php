@@ -1,18 +1,26 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlueBird - User Bookings</title>
+    <title>BlueBird - My Bookings</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
     <link rel="stylesheet" href="{{ asset('adminassets/css/roombook.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
 </head>
 <body>
-    <div class="searchsection">
-        <input type="text" name="search_bar" id="search_bar" placeholder="search...">
-    </div>
+    <div class="pos-wrap">
+        <div class="pos-head">
+            <div>
+                <h2 class="pos-title">My Bookings</h2>
+                <p class="pos-sub">All reservations linked to your account.</p>
+            </div>
+            <div class="searchsection m-0">
+                <input type="text" id="search_bar" placeholder="Search..." onkeyup="searchFun()">
+            </div>
+        </div>
 
     <div class="roombooktable table-responsive-xl">
         <table class="table table-bordered table-hover align-middle" id="table-data">

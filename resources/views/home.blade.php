@@ -109,4 +109,4 @@
 @if (session('error'))
     <script>swal({ title: @json(session('error')), icon: 'error' });</script>
 @endif
-</html>
+@endsection

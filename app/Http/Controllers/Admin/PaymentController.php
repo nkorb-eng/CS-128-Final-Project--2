@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Payment;
+use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
     /** Payments table. */
     public function index()
     {
-        return view('admin.payment', ['payments' => Payment::all()]);
+        return view('admin.payment', ['payments' => Payment::orderByDesc('id')->get()]);
     }
 
     public function destroy($id)
@@ -33,7 +34,6 @@ class PaymentController extends Controller
             'Single Room'   => 150,
             default         => 0,
         };
-
         $bedRate = match ($payment->Bed) {
             'Single' => $roomRate * 1 / 100,
             'Double' => $roomRate * 2 / 100,
@@ -41,7 +41,6 @@ class PaymentController extends Controller
             'Quad'   => $roomRate * 4 / 100,
             default  => 0,
         };
-
         $mealRate = match ($payment->meal) {
             'Breakfast'  => $bedRate * 2,
             'Half Board' => $bedRate * 3,

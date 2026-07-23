@@ -1,18 +1,18 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('adminassets/css/dashboard.css') }}">
-    <!-- chart.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- morris bar -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-    <title>BlueBird - Admin </title>
+    <title>BlueBird - Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
 </head>
 <body>
    <div class="databox">
@@ -28,53 +28,50 @@
           <h2>Profit</h2>
           <h1>{{ $tot }} <span>$</span></h1>
         </div>
-    </div>
-    <div class="chartbox">
-        <div class="bookroomchart">
-            <canvas id="bookroomchart"></canvas>
-            <h3 style="text-align: center;margin:10px 0;">Booked Room</h3>
+
+        <div class="stat-grid stat-grid-3">
+            <div class="stat-card mini"><div class="stat-label">Paid Bills</div><div class="stat-value text-success">{{ $paidCount }}</div></div>
+            <div class="stat-card mini"><div class="stat-label">Partial</div><div class="stat-value" style="color:#c98a00">{{ $partialCount }}</div></div>
+            <div class="stat-card mini"><div class="stat-label">Unpaid</div><div class="stat-value text-danger">{{ $unpaidCount }}</div></div>
         </div>
-        <div class="profitchart">
-            <div id="profitchart"></div>
-            <h3 style="text-align: center;margin:10px 0;">Profit</h3>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <h3 class="chart-title">Booked Room Types</h3>
+                <canvas id="bookroomchart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3 class="chart-title">Revenue Collected</h3>
+                <div id="revenuechart"></div>
+            </div>
         </div>
     </div>
 </body>
 
 <script>
-        const labels = ['Superior Room', 'Deluxe Room', 'Guest House', 'Single Room'];
+    new Chart(document.getElementById('bookroomchart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Superior Room', 'Deluxe Room', 'Guest House', 'Single Room'],
+            datasets: [{
+                data: [{{ $chart['Superior Room'] }}, {{ $chart['Deluxe Room'] }}, {{ $chart['Guest House'] }}, {{ $chart['Single Room'] }}],
+                backgroundColor: ['#2563eb', '#60a5fa', '#1e40af', '#93c5fd'],
+                borderColor: '#fff', borderWidth: 2,
+            }]
+        },
+        options: { plugins: { legend: { position: 'bottom' } } }
+    });
 
-        const data = {
-          labels: labels,
-          datasets: [{
-            label: 'My First dataset',
-            backgroundColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(255, 159, 64, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(153, 102, 255, 1)',
-            ],
-            borderColor: 'black',
-            data: [{{ $chart['Superior Room'] }}, {{ $chart['Deluxe Room'] }}, {{ $chart['Guest House'] }}, {{ $chart['Single Room'] }}],
-          }]
-        };
-
-        const doughnutchart = { type: 'doughnut', data: data, options: {} };
-
-      const myChart = new Chart(document.getElementById('bookroomchart'), doughnutchart);
+    const revData = @json($revenueData);
+    Morris.Bar({
+        element: 'revenuechart',
+        data: revData.length ? revData : [{date:'—', revenue:0}],
+        xkey: 'date',
+        ykeys: ['revenue'],
+        labels: ['Revenue'],
+        barColors: ['#2563eb'],
+        hideHover: 'auto',
+        gridTextColor: '#8a97ab'
+    });
 </script>
-
-<script>
-Morris.Bar({
- element : 'profitchart',
- data: @json($profitData),
- xkey:'date',
- ykeys:['profit'],
- labels:['Profit'],
- hideHover:'auto',
- stacked:true,
- barColors:['rgba(153, 102, 255, 1)']
-});
-</script>
-
 </html>

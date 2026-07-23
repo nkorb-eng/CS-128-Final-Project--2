@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
     <link rel="stylesheet" href="{{ asset('adminassets/css/roombook.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
 </head>
 <body>
     <div class="searchsection d-flex align-items-center p-3">
@@ -55,18 +56,13 @@
         </table>
     </div>
 </body>
-
 <script>
     const searchFun = () => {
         let filter = document.getElementById('search_bar').value.toUpperCase();
-        let myTable = document.getElementById("table-data");
-        let tr = myTable.getElementsByTagName('tr');
-        for (var i = 0; i < tr.length; i++) {
+        let tr = document.getElementById("table-data").getElementsByTagName('tr');
+        for (let i = 0; i < tr.length; i++) {
             let td = tr[i].getElementsByTagName('td')[1];
-            if (td) {
-                let textvalue = td.textContent || td.innerHTML;
-                tr[i].style.display = textvalue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
-            }
+            if (td) tr[i].style.display = (td.textContent || td.innerText).toUpperCase().indexOf(filter) > -1 ? "" : "none";
         }
     }
 </script>

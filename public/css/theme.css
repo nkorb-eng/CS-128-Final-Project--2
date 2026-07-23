@@ -1,0 +1,285 @@
+/* ============================================================
+   Bluebird — clean, minimal theme
+   Inspiration: airy hotel templates (Mellow / Sona / Sogo).
+   Elegant serif headings, generous whitespace, thin borders,
+   soft floating cards, blue as the single accent.
+   Loaded last on each page; restyles look, not layout.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --bb-bg:        #f7f9fc;   /* airy near-white page bg   */
+    --bb-surface:   #ffffff;   /* cards / blocks            */
+    --bb-primary:   #2563eb;   /* blue accent               */
+    --bb-primary-d: #1d4ed8;
+    --bb-primary-l: #eaf1ff;
+    --bb-navy:      #16233d;   /* headings                  */
+    --bb-text:      #3a4658;   /* body text                 */
+    --bb-muted:     #8a97ab;   /* labels / secondary        */
+    --bb-border:    #ecf0f5;   /* very light clean border   */
+    --bb-border-2:  #dbe3ee;   /* slightly stronger border  */
+    --bb-shadow:    0 12px 40px rgba(20, 35, 80, .07);
+    --bb-shadow-sm: 0 4px 18px rgba(20, 35, 80, .05);
+    --bb-radius:    14px;
+    --bb-radius-sm: 9px;
+    --bb-serif:     "Playfair Display", Georgia, "Times New Roman", serif;
+    --bb-sans:      "Inter", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+}
+
+/* ---------- base ---------- */
+body {
+    font-family: var(--bb-sans);
+    color: var(--bb-text);
+    background: var(--bb-bg);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, h5 {
+    font-family: var(--bb-serif);
+    color: var(--bb-navy);
+    font-weight: 600;
+    letter-spacing: .2px;
+    line-height: 1.25;
+}
+
+/* small, quiet, uppercase labels — the template look */
+label,
+.guestinfo h4, .reservationinfo h4,
+.addroomsection label,
+.datesection label {
+    font-family: var(--bb-sans);
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    font-size: .72rem;
+    font-weight: 600;
+    color: var(--bb-muted);
+}
+
+/* ---------- buttons ---------- */
+.btn {
+    border-radius: 999px !important;
+    font-family: var(--bb-sans);
+    font-weight: 500;
+    letter-spacing: .3px;
+    padding: 9px 22px;
+    border: none !important;
+    box-shadow: none !important;
+    transition: transform .12s ease, background-color .15s ease, opacity .15s ease;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn-primary, .auth_btn, .adduser {
+    background: var(--bb-primary) !important;
+    color: #fff !important;
+}
+.btn-primary:hover, .auth_btn:hover, .adduser:hover { background: var(--bb-primary-d) !important; }
+.btn-success { background: #2e9e6b !important; color: #fff !important; }
+.btn-success:hover { background: #268358 !important; }
+.btn-danger  { background: #e2687a !important; color: #fff !important; }
+.btn-danger:hover  { background: #d24d61 !important; }
+/* a clean full-width primary action, like "Check Availability" */
+.auth_btn { width: 100%; padding: 12px; border-radius: 10px !important; }
+
+/* ---------- floating cards / blocks ---------- */
+.box,
+.roombox,
+.databox .box,
+.roombooktable,
+.addroomsection,
+.auth_container,
+.guestdetailpanelform,
+.chartbox .bookroomchart,
+.chartbox .profitchart {
+    background: var(--bb-surface);
+    border: 1px solid var(--bb-border);
+    border-radius: var(--bb-radius);
+    box-shadow: var(--bb-shadow);
+}
+
+/* ---------- top nav bars (panels) ---------- */
+.uppernav, nav.uppernav {
+    background: var(--bb-surface) !important;
+    border-bottom: 1px solid var(--bb-border) !important;
+    box-shadow: var(--bb-shadow-sm);
+}
+.uppernav .logo p, .uppernav p { color: var(--bb-navy) !important; font-family: var(--bb-serif); }
+
+/* ---------- side nav ---------- */
+.sidenav {
+    background: var(--bb-surface) !important;
+    border-right: 1px solid var(--bb-border) !important;
+}
+.sidenav ul li, .pagebtn, .user-pagebtn {
+    color: var(--bb-text) !important;
+    font-weight: 500;
+    border-radius: var(--bb-radius-sm);
+    margin: 5px 12px;
+    transition: background .15s ease, color .15s ease;
+}
+.sidenav ul li:hover, .pagebtn:hover, .user-pagebtn:hover {
+    background: var(--bb-primary-l) !important; color: var(--bb-primary-d) !important;
+}
+.pagebtn.active, .user-pagebtn.active {
+    background: var(--bb-primary) !important; color: #fff !important;
+}
+
+/* ---------- dashboard stat blocks ---------- */
+.databox .box { border: 1px solid var(--bb-border); padding: 26px 28px; }
+.databox .box h2 {
+    font-family: var(--bb-sans); text-transform: uppercase; letter-spacing: .12em;
+    font-size: .76rem; font-weight: 600; color: var(--bb-muted);
+}
+.databox .box h1 { font-family: var(--bb-serif); color: var(--bb-navy); font-weight: 700; }
+
+/* ---------- tables ---------- */
+.table { background: var(--bb-surface); border-radius: var(--bb-radius); overflow: hidden; margin: 0; }
+.table thead th {
+    background: #fbfcfe !important;
+    color: var(--bb-muted) !important;
+    text-transform: uppercase;
+    font-size: .72rem;
+    letter-spacing: .08em;
+    font-weight: 600;
+    border-bottom: 1px solid var(--bb-border-2) !important;
+    border-top: none !important;
+    padding: 14px 12px;
+}
+.table td {
+    color: var(--bb-text);
+    border-color: var(--bb-border) !important;
+    padding: 13px 12px;
+    vertical-align: middle;
+}
+.table tbody tr:hover { background: #f9fbff; }
+
+/* ---------- room / staff cards ---------- */
+.room .roombox { padding: 22px; transition: transform .15s ease, box-shadow .15s ease; }
+.room .roombox:hover { transform: translateY(-3px); box-shadow: var(--bb-shadow); }
+.room .roombox h3 { font-family: var(--bb-serif); }
+.roombox i { color: var(--bb-primary); }
+
+/* ---------- inputs / forms ---------- */
+.searchsection input,
+.form-control,
+.selectinput,
+.guestinfo input, .reservationinfo select, .reservationinfo input,
+.datesection input {
+    border: 1px solid var(--bb-border-2) !important;
+    border-radius: var(--bb-radius-sm) !important;
+    background: #fff !important;
+    padding: 11px 14px;
+    color: var(--bb-text);
+    outline: none;
+    box-shadow: none !important;
+}
+.form-control::placeholder, input::placeholder { color: #b6c0cf; }
+.form-control:focus, .searchsection input:focus, .selectinput:focus,
+.guestinfo input:focus, .reservationinfo select:focus {
+    border-color: var(--bb-primary) !important;
+    box-shadow: 0 0 0 3px var(--bb-primary-l) !important;
+}
+
+/* ---------- auth / login ---------- */
+#auth_section .auth_container { padding: 34px; border-radius: 18px; }
+#auth_section h2 { font-family: var(--bb-serif); }
+.role_btn { background: #f1f5fb; border-radius: 999px; padding: 4px; }
+.role_btn .btns { border-radius: 999px; font-weight: 500; }
+.role_btn .btns.active { background: var(--bb-primary); color: #fff; }
+.logo p { color: var(--bb-navy); font-family: var(--bb-serif); }
+
+/* ---------- home sections ---------- */
+.welcometag,
+.welcomeline h1,
+.welcomeline .welcometag { font-family: var(--bb-serif) !important; font-weight: 700; letter-spacing: .5px; }
+.head { font-family: var(--bb-serif); color: var(--bb-navy); }
+.ourroom .roombox {
+    background: var(--bb-surface);
+    border: 1px solid var(--bb-border);
+    border-radius: var(--bb-radius);
+    box-shadow: var(--bb-shadow);
+    overflow: hidden;
+}
+.ourroom .roomdata h2 { font-family: var(--bb-serif); }
+.services i { color: var(--bb-primary); }
+.facility .box { border: 1px solid var(--bb-border); }
+.facility .box h2 { font-family: var(--bb-serif); }
+
+/* ---------- glass nav (teammate home nav) ---------- */
+.glassnav {
+    background: rgba(255,255,255,.85) !important;
+    border-bottom: 1px solid var(--bb-border) !important;
+    backdrop-filter: blur(12px);
+}
+.glassnav .navbar-brand span { color: var(--bb-navy) !important; font-family: var(--bb-serif); letter-spacing: 1px; }
+.glassnav ul li a { font-weight: 500; }
+
+/* ============================================================
+   POS components (dashboard, bills, checkout, receipt)
+   ============================================================ */
+.pos-wrap { padding: 26px 30px; }
+.pos-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 18px; flex-wrap: wrap; }
+.pos-title { font-family: var(--bb-serif); color: var(--bb-navy); margin: 0; font-size: 1.6rem; }
+.pos-sub { color: var(--bb-muted); margin: 2px 0 0; font-size: .9rem; }
+
+/* stat cards */
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 18px; }
+.stat-grid-3 { grid-template-columns: repeat(3, 1fr); max-width: 560px; }
+.stat-card {
+    background: var(--bb-surface); border: 1px solid var(--bb-border);
+    border-radius: var(--bb-radius); box-shadow: var(--bb-shadow-sm);
+    padding: 20px 22px; display: flex; align-items: center; gap: 16px;
+}
+.stat-card.mini { display: block; text-align: center; }
+.stat-ico { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #fff; flex: none; }
+.ico-blue { background: #2563eb; } .ico-green { background: #2e9e6b; } .ico-red { background: #e2687a; } .ico-navy { background: #16233d; }
+.stat-label { text-transform: uppercase; letter-spacing: .1em; font-size: .7rem; font-weight: 600; color: var(--bb-muted); }
+.stat-value { font-family: var(--bb-serif); font-size: 1.5rem; color: var(--bb-navy); font-weight: 700; line-height: 1.2; }
+
+/* charts */
+.chart-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 16px; }
+.chart-card { background: var(--bb-surface); border: 1px solid var(--bb-border); border-radius: var(--bb-radius); box-shadow: var(--bb-shadow-sm); padding: 20px; }
+.chart-card canvas { max-height: 260px; }
+.chart-title { font-family: var(--bb-serif); font-size: 1.05rem; margin-bottom: 14px; color: var(--bb-navy); }
+
+/* status badges */
+.pos-badge { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: .72rem; font-weight: 600; letter-spacing: .03em; }
+.pos-badge-success { background: #e3f6ec; color: #1c8b57; }
+.pos-badge-warning { background: #fdf1dc; color: #b9820c; }
+.pos-badge-danger  { background: #fde7ec; color: #d23f5b; }
+
+/* ---- checkout / register ---- */
+.pos-checkout { padding: 24px 28px; max-width: 1100px; margin: 0 auto; }
+.pos-checkout-head { margin-bottom: 18px; }
+.pos-back { color: var(--bb-primary); text-decoration: none; font-size: .85rem; font-weight: 500; }
+.pos-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 20px; align-items: start; }
+.pos-card { background: var(--bb-surface); border: 1px solid var(--bb-border); border-radius: var(--bb-radius); box-shadow: var(--bb-shadow); padding: 24px; }
+.pos-guest { display: flex; align-items: center; gap: 14px; padding-bottom: 16px; border-bottom: 1px solid var(--bb-border); margin-bottom: 16px; }
+.pos-avatar { width: 46px; height: 46px; border-radius: 50%; background: var(--bb-primary); color: #fff; display: flex; align-items: center; justify-content: center; font-family: var(--bb-serif); font-size: 1.2rem; }
+.pos-guest-name { font-weight: 600; color: var(--bb-navy); }
+.pos-guest-sub { font-size: .8rem; color: var(--bb-muted); }
+.pos-lines { list-style: none; padding: 0; margin: 0 0 14px; }
+.pos-lines li { display: flex; justify-content: space-between; padding: 8px 0; color: var(--bb-text); border-bottom: 1px dashed var(--bb-border); }
+.pos-totals { margin-top: 6px; }
+.pos-total-row { display: flex; justify-content: space-between; padding: 6px 0; color: var(--bb-text); }
+.pos-total-row.pos-grand { font-family: var(--bb-serif); font-size: 1.2rem; color: var(--bb-navy); border-top: 2px solid var(--bb-navy); margin-top: 8px; padding-top: 12px; }
+.pos-total-row.pos-due { color: #d23f5b; font-weight: 600; }
+.pos-pay-title { font-family: var(--bb-serif); color: var(--bb-navy); margin-bottom: 18px; }
+.pos-label { display: block; text-transform: uppercase; letter-spacing: .1em; font-size: .68rem; font-weight: 600; color: var(--bb-muted); margin: 16px 0 6px; }
+.pos-input { width: 100%; border: 1px solid var(--bb-border-2); border-radius: var(--bb-radius-sm); padding: 11px 14px; font-size: 1rem; outline: none; }
+.pos-input:focus { border-color: var(--bb-primary); box-shadow: 0 0 0 3px var(--bb-primary-l); }
+.pos-amount { font-size: 1.5rem; font-weight: 700; font-family: var(--bb-serif); color: var(--bb-navy); }
+.pos-methods { display: flex; gap: 8px; }
+.pos-method { flex: 1; border: 1px solid var(--bb-border-2); border-radius: var(--bb-radius-sm); padding: 10px; text-align: center; cursor: pointer; font-size: .85rem; color: var(--bb-text); transition: all .15s ease; }
+.pos-method:has(input:checked) { border-color: var(--bb-primary); background: var(--bb-primary-l); color: var(--bb-primary-d); font-weight: 600; }
+.pos-method input { display: none; }
+.pos-quick { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.pos-chip { border: 1px solid var(--bb-border-2); background: #fff; border-radius: 999px; padding: 7px 14px; font-size: .82rem; cursor: pointer; color: var(--bb-text); }
+.pos-chip:hover { border-color: var(--bb-primary); color: var(--bb-primary-d); }
+.pos-chip-exact { background: var(--bb-primary-l); border-color: transparent; color: var(--bb-primary-d); font-weight: 600; }
+.pos-change { display: flex; justify-content: space-between; align-items: center; margin: 18px 0; padding: 14px 16px; background: #f0f6ff; border-radius: var(--bb-radius-sm); font-family: var(--bb-serif); color: var(--bb-navy); font-size: 1.1rem; }
+.pos-confirm { width: 100%; padding: 13px; font-size: 1rem; }
+
+@media (max-width: 900px) {
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .chart-grid, .pos-grid { grid-template-columns: 1fr; }
+}

@@ -56,8 +56,10 @@ Route::middleware('auth.admin')->prefix('admin')->name('admin.')->group(function
     Route::get('/roombook/{id}/delete', [RoombookController::class, 'destroy'])->name('roombook.delete');
     Route::post('/roombook/export', [RoombookController::class, 'export'])->name('roombook.export');
 
-    // Payment / invoice
+    // Payment / POS checkout / invoice
     Route::get('/payment', [PaymentController::class, 'index'])->name('payment');
+    Route::get('/payment/{id}/settle', [PaymentController::class, 'settleForm'])->name('payment.settle');
+    Route::post('/payment/{id}/settle', [PaymentController::class, 'settle'])->name('payment.settle.store');
     Route::get('/payment/{id}/delete', [PaymentController::class, 'destroy'])->name('payment.delete');
     Route::get('/payment/{id}/invoice', [PaymentController::class, 'invoice'])->name('payment.invoice');
 
