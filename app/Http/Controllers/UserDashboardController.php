@@ -71,6 +71,8 @@ class UserDashboardController extends Controller
 
         return view('user.userprofile', compact('user'));
     }
+
+    /** Shows the edit-profile form */
     public function editProfile(Request $request)
     {
         $email = $request->session()->get('usermail');
@@ -79,6 +81,7 @@ class UserDashboardController extends Controller
         return view('user.editprofile', compact('user'));
     }
 
+    /** Saves changes from the edit-profile form */
     public function updateProfile(Request $request)
     {
         $email = $request->session()->get('usermail');
@@ -92,16 +95,20 @@ class UserDashboardController extends Controller
         ]);
 
         $user->update($validated);
+
+        // Keep the session in sync if the email itself changed
         $request->session()->put('usermail', $validated['Email']);
 
         return redirect()->route('user.userprofile')->with('success', 'Profile updated successfully');
     }
 
+    /** Shows the change-password form */
     public function editPassword()
     {
         return view('user.changepassword');
     }
 
+    /** Saves a new password */
     public function updatePassword(Request $request)
     {
         $email = $request->session()->get('usermail');

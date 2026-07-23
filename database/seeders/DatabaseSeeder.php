@@ -33,12 +33,8 @@ class DatabaseSeeder extends Seeder
             ['Superior Room', 'Single'], ['Deluxe Room', 'Single'], ['Deluxe Room', 'Triple'],
             ['Guest House', 'Double'], ['Deluxe Room', 'Single'],
         ];
-        $roomIndex = 100;
         foreach ($rooms as [$type, $bedding]) {
-            $roomIndex++;
-            $roomNo = (string) $roomIndex; // simple incremental room numbers
-            $price = Room::calculatePrice($type, $bedding);
-            Room::create(['room_no' => $roomNo, 'type' => $type, 'bedding' => $bedding, 'price' => $price]);
+            Room::create(['type' => $type, 'bedding' => $bedding]);
         }
 
         // Staff
