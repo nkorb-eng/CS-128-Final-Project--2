@@ -20,18 +20,20 @@
         </div>
 
         <div class="welcomeline">
-          <h1 class="welcometag">Welcome to heaven on earth</h1>
+          <h1 class="welcometag">Welcome to Heaven on Earth</h1>
         </div>
     </div>
   </section>
 
+  <!-- ROOMS SECTION -->
   <section id="secondsection">
     <img src="{{ asset('image/homeanimatebg.svg') }}">
     <div class="ourroom">
-      <h1 class="head">≼ Our room ≽</h1>
+      <h1 class="head">≼ Our Room ≽</h1>
       <div class="roomselect">
         
-        <div class="roombox">
+        <!-- SUPERIOR ROOM -->
+        <div class="roombox" style="cursor: pointer;" onclick="window.location.href='{{ route('room.detail', 'superior-room') }}'">
           <div class="hotelphoto h1"></div>
           <div class="roomdata">
             <h2>Superior Room</h2>
@@ -42,25 +44,27 @@
               <i class="fa-solid fa-dumbbell"></i>
               <i class="fa-solid fa-person-swimming"></i>
             </div>
-            <a href="{{ route('room.book', ['type' => 'Superior Room']) }}" class="btn btn-primary bookbtn">Book</a>
+            <a href="{{ route('room.book', ['type' => 'Superior Room']) }}" class="btn btn-primary bookbtn" onclick="event.stopPropagation();">Book</a>
           </div>
         </div>
 
-        <div class="roombox">
+        <!-- DELUXE ROOM -->
+        <div class="roombox" style="cursor: pointer;" onclick="window.location.href='{{ route('room.detail', 'deluxe-room') }}'">
           <div class="hotelphoto h2"></div>
           <div class="roomdata">
-            <h2>Delux Room</h2>
+            <h2>Deluxe Room</h2>
             <div class="services">
               <i class="fa-solid fa-wifi"></i>
               <i class="fa-solid fa-burger"></i>
               <i class="fa-solid fa-spa"></i>
               <i class="fa-solid fa-dumbbell"></i>
             </div>
-            <a href="{{ route('room.book', ['type' => 'Deluxe Room']) }}" class="btn btn-primary bookbtn">Book</a>
+            <a href="{{ route('room.book', ['type' => 'Deluxe Room']) }}" class="btn btn-primary bookbtn" onclick="event.stopPropagation();">Book</a>
           </div>
         </div>
 
-        <div class="roombox">
+        <!-- GUEST ROOM -->
+        <div class="roombox" style="cursor: pointer;" onclick="window.location.href='{{ route('room.detail', 'guest-room') }}'">
           <div class="hotelphoto h3"></div>
           <div class="roomdata">
             <h2>Guest Room</h2>
@@ -69,11 +73,12 @@
               <i class="fa-solid fa-burger"></i>
               <i class="fa-solid fa-spa"></i>
             </div>
-            <a href="{{ route('room.book', ['type' => 'Guest House']) }}" class="btn btn-primary bookbtn">Book</a>
+            <a href="{{ route('room.book', ['type' => 'Guest House']) }}" class="btn btn-primary bookbtn" onclick="event.stopPropagation();">Book</a>
           </div>
         </div>
 
-        <div class="roombox">
+        <!-- SINGLE ROOM -->
+        <div class="roombox" style="cursor: pointer;" onclick="window.location.href='{{ route('room.detail', 'single-room') }}'">
           <div class="hotelphoto h4"></div>
           <div class="roomdata">
             <h2>Single Room</h2>
@@ -81,7 +86,7 @@
               <i class="fa-solid fa-wifi"></i>
               <i class="fa-solid fa-burger"></i>
             </div>
-            <a href="{{ route('room.book', ['type' => 'Single Room']) }}" class="btn btn-primary bookbtn">Book</a>
+            <a href="{{ route('room.book', ['type' => 'Single Room']) }}" class="btn btn-primary bookbtn" onclick="event.stopPropagation();">Book</a>
           </div>
         </div>
 
@@ -89,14 +94,15 @@
     </div>
   </section>
 
-  <section id="thirdsection" style="height: 800px;margin-top: 120px; padding-top: 120px;">
+  <!-- FACILITIES SECTION -->
+  <section id="thirdsection" style="height: 800px; margin-top: 120px; padding-top: 120px;">
     <h1 class="head">≼ Facilities ≽</h1>
     <div class="facility">
-      <div class="box"><h2>Swiming pool</h2></div>
-      <div class="box"><h2>Spa</h2></div>
-      <div class="box"><h2>24*7 Restaurants</h2></div>
-      <div class="box"><h2>24*7 Gym</h2></div>
-      <div class="box"><h2>Heli service</h2></div>
+      <a href="{{ route('facility.detail', 'swimming-pool') }}" class="box text-decoration-none"><h2>Swimming Pool</h2></a>
+      <a href="{{ route('facility.detail', 'spa') }}" class="box text-decoration-none"><h2>Spa</h2></a>
+      <a href="{{ route('facility.detail', 'restaurants') }}" class="box text-decoration-none"><h2>24*7 Restaurants</h2></a>
+      <a href="{{ route('facility.detail', 'gym') }}" class="box text-decoration-none"><h2>24*7 Gym</h2></a>
+      <a href="{{ route('facility.detail', 'heli-service') }}" class="box text-decoration-none"><h2>Heli Service</h2></a>
     </div>
   </section>
 </div>
@@ -109,4 +115,3 @@
 @if (session('error'))
     <script>swal({ title: @json(session('error')), icon: 'error' });</script>
 @endif
-@endsection

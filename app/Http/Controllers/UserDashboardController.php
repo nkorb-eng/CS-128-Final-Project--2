@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Payment;
 use App\Models\Roombook;
-use App\Models\Signup;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserDashboardController extends Controller
 {
@@ -35,7 +37,7 @@ class UserDashboardController extends Controller
             'Single Room'   => Roombook::where('Email', $email)->where('RoomType', 'Single Room')->count(),
         ];
 
-        // Expenses history for the Morris chart
+        // Expenses history for the Morris chart *might need to delete this*
         $payments = Payment::where('Email', $email)->orderBy('cout', 'asc')->get();
         $expenseData = [];
         foreach ($payments as $p) {
@@ -67,7 +69,7 @@ class UserDashboardController extends Controller
     public function profile(Request $request)
     {
         $email = $request->session()->get('usermail');
-        $user = Signup::where('Email', $email)->first();
+        $user = User::where('Email', $email)->first();
 
         return view('user.userprofile', compact('user'));
     }
@@ -76,23 +78,36 @@ class UserDashboardController extends Controller
     public function editProfile(Request $request)
     {
         $email = $request->session()->get('usermail');
-        $user = Signup::where('Email', $email)->firstOrFail();
+        $user = User::where('Email', $email)->firstOrFail();
 
         return view('user.editprofile', compact('user'));
     }
 
-    /** Saves changes from the edit-profile form */
+
     public function updateProfile(Request $request)
     {
         $email = $request->session()->get('usermail');
-        $user = Signup::where('Email', $email)->firstOrFail();
+        $user = User::where('Email', $email)->firstOrFail();
 
         $validated = $request->validate([
             'Username' => 'required|string|max:50',
-            'Email'    => 'required|email|max:50|unique:signup,Email,' . $user->UserID . ',UserID',
+            'Email'    => 'required|email|max:50|unique:users,Email,' . $user->UserID . ',UserID',
             'Phone'    => 'nullable|string|max:30',
             'Country'  => 'nullable|string|max:100',
+            'avater'   => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
+
+        // Process avatar file upload if a new image was chosen
+        if ($request->hasFile('avater')) {
+            // Delete old avatar from storage if present
+            if ($user->avater && Storage::disk('public')->exists($user->avater)) {
+                Storage::disk('public')->delete($user->avater);
+            }
+
+            // Store new image in storage/app/public/avatars
+            $path = $request->file('avater')->store('avatars', 'public');
+            $validated['avater'] = $path;
+        }
 
         $user->update($validated);
 
@@ -109,24 +124,31 @@ class UserDashboardController extends Controller
     }
 
     /** Saves a new password */
-    public function updatePassword(Request $request)
-    {
-        $email = $request->session()->get('usermail');
-        $user = Signup::where('Email', $email)->firstOrFail();
+public function updatePassword(Request $request)
+{
+    $email = $request->session()->get('usermail');
+    $user = User::where('Email', $email)->firstOrFail();
 
-        $request->validate([
-            'current_password' => 'required',
-            'new_password'     => 'required|min:3|confirmed',
-        ]);
+    $request->validate([
+        'current_password' => 'required',
+        'new_password'     => 'required|min:3|confirmed',
+    ]);
 
-        if ($request->input('current_password') !== $user->Password) {
-            return back()->with('error', 'Current password is incorrect');
-        }
+    $passwordMatches = str_starts_with($user->Password, '$2y$')
+        ? Hash::check($request->input('current_password'), $user->Password)
+        : hash_equals($user->Password, $request->input('current_password'));
 
-        $user->update(['Password' => $request->input('new_password')]);
-
-        return redirect()->route('user.userprofile')->with('success', 'Password changed successfully');
+    if (!$passwordMatches) {
+        return back()->with('error', 'Current password is incorrect');
     }
+
+    // Always hash the new password before saving to DB
+    $user->update([
+        'Password' => Hash::make($request->input('new_password'))
+    ]);
+
+    return redirect()->route('user.userprofile')->with('success', 'Password changed successfully!');
+}
 
     /** Prints a specific invoice */
     public function invoice(Request $request, $id)
@@ -134,7 +156,6 @@ class UserDashboardController extends Controller
         $email = $request->session()->get('usermail');
         $payment = Payment::where('id', $id)->where('Email', $email)->firstOrFail();
 
-        // Same calculation as admin invoice
         $roomRate = match ($payment->RoomType) {
             'Superior Room' => 320,
             'Deluxe Room'   => 220,

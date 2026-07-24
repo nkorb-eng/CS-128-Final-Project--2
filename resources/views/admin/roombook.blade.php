@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
     <link rel="stylesheet" href="{{ asset('adminassets/css/roombook.css') }}">
     <title>BlueBird - Admin Reservations</title>
 </head>
@@ -18,12 +19,12 @@
         <input type="text" name="search_bar" id="search_bar" placeholder="Search by name..." onkeyup="searchFun()" class="form-control w-25">
         <form action="{{ route('admin.roombook.export') }}" method="post" class="m-0">
             @csrf
-            <button class="btn btn-success" id="exportexcel" name="exportexcel" type="submit"><i class="fa-solid fa-file-excel"></i> Export to Excel</button>
+            <button class="btn btn-success" id="exportexcel" name="exportexcel" type="submit"><i class="fa-solid fa-file-excel me-1"></i> Export to Excel</button>
         </form>
     </div>
 
     <div class="roombooktable table-responsive-xl">
-        <table class="table table-bordered table-hover" id="table-data">
+        <table class="table table-bordered table-hover align-middle" id="table-data">
             <thead>
                 <tr>
                     <th scope="col">Id</th>
@@ -47,13 +48,13 @@
             @foreach ($bookings as $res)
                 <tr>
                     <td>{{ $res->id }}</td>
-                    <td>{{ $res->Name }}</td>
+                    <td class="fw-bold">{{ $res->Name }}</td>
                     <td>{{ $res->Email }}</td>
                     <td>{{ $res->Country }}</td>
                     <td>{{ $res->Phone }}</td>
                     <td>{{ $res->RoomType }}</td>
                     <td>{{ $res->Bed }}</td>
-                    <td>{{ $res->NoofRoom }}</td>
+                    <td><span class="badge bg-secondary">{{ $res->NoofRoom }}</span></td>
                     <td>{{ $res->Meal }}</td>
                     <td>{{ $res->cin }}</td>
                     <td>{{ $res->cout }}</td>
@@ -67,37 +68,30 @@
                     </td>
                     <td class="action text-nowrap">
                         @if ($res->stat !== 'Confirm')
-                            <a href="{{ route('admin.roombook.confirm', $res->id) }}" class='btn btn-success btn-sm'>Confirm</a>
+                            <a href="{{ route('admin.roombook.confirm', $res->id) }}" class='btn btn-success btn-sm me-1'>Confirm</a>
                         @endif
-                        <a href="{{ route('admin.roombook.edit', $res->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                        <a href="{{ route('admin.roombook.delete', $res->id) }}" class='btn btn-danger btn-sm'>Delete</a>
+                        <a href="{{ route('admin.roombook.edit', $res->id) }}" class="btn btn-primary btn-sm me-1" target="_parent">Edit</a>
+                        <a href="{{ route('admin.roombook.delete', $res->id) }}" class='btn btn-danger btn-sm' onclick="return confirm('Delete reservation?')">Delete</a>
                     </td>
                 </tr>
             @endforeach
             </tbody>
         </table>
     </div>
-</body>
 
-<script>
-    const searchFun = () => {
-        let filter = document.getElementById('search_bar').value.toUpperCase();
-        let myTable = document.getElementById("table-data");
-        let tr = myTable.getElementsByTagName('tr');
-        for (var i = 0; i < tr.length; i++) {
-            let td = tr[i].getElementsByTagName('td')[1]; // Search by Name column
-            if (td) {
-                let textvalue = td.textContent || td.innerHTML;
-                tr[i].style.display = textvalue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+    <script src="{{ asset('adminassets/javascript/roombook.js') }}"></script>
+    <script>
+        const searchFun = () => {
+            let filter = document.getElementById('search_bar').value.toUpperCase();
+            let tr = document.getElementById("table-data").getElementsByTagName('tr');
+            for (let i = 1; i < tr.length; i++) {
+                let td = tr[i].getElementsByTagName('td')[1];
+                if (td) tr[i].style.display = (td.textContent || td.innerText).toUpperCase().indexOf(filter) > -1 ? "" : "none";
             }
         }
-    }
-</script>
+    </script>
 
-@if (session('success'))
-    <script>swal({ title: @json(session('success')), icon: 'success' });</script>
-@endif
-@if (session('error'))
-    <script>swal({ title: @json(session('error')), icon: 'error' });</script>
-@endif
+    @if (session('success')) <script>swal({ title: @json(session('success')), icon: 'success' });</script> @endif
+    @if (session('error')) <script>swal({ title: @json(session('error')), icon: 'error' });</script> @endif
+</body>
 </html>

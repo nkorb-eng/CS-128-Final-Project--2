@@ -11,16 +11,9 @@
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
 </head>
 <body>
-    <div class="pos-wrap">
-        <div class="pos-head">
-            <div>
-                <h2 class="pos-title">My Bookings</h2>
-                <p class="pos-sub">All reservations linked to your account.</p>
-            </div>
-            <div class="searchsection m-0">
-                <input type="text" id="search_bar" placeholder="Search..." onkeyup="searchFun()">
-            </div>
-        </div>
+    <div class="searchsection d-flex align-items-center justify-content-between p-3">
+        <input class="form-control w-25" type="text" id="search_bar" placeholder="Search..." onkeyup="searchFun()">
+    </div>
 
     <div class="roombooktable table-responsive-xl">
         <table class="table table-bordered table-hover align-middle" id="table-data">
