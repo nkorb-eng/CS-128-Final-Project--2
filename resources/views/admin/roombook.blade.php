@@ -70,7 +70,7 @@
                         @if ($res->stat !== 'Confirm')
                             <a href="{{ route('admin.roombook.confirm', $res->id) }}" class='btn btn-success btn-sm me-1'>Confirm</a>
                         @endif
-                        <a href="{{ route('admin.roombook.edit', $res->id) }}" class="btn btn-primary btn-sm me-1" target="_parent">Edit</a>
+                        <a href="{{ route('admin.roombook.edit', $res->id) }}" class="btn btn-primary btn-sm me-1">Edit</a>
                         <a href="{{ route('admin.roombook.delete', $res->id) }}" class='btn btn-danger btn-sm' onclick="return confirm('Delete reservation?')">Delete</a>
                     </td>
                 </tr>

@@ -10,23 +10,28 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" href="{{ asset('adminassets/css/roombook.css') }}">
     <style>
-        #editpanel{
+        #editpanel {
             position: fixed;
+            top: 0;
+            left: 0;
             z-index: 1000;
-            height: 100%;
-            width: 100%;
+            height: 100vh;
+            width: 100vw;
             display: flex;
             justify-content: center;
-            background-color: #00000079;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.6);
         }
-        #editpanel .guestdetailpanelform{
-            height: 620px;
-            width: 1170px;
+        #editpanel .guestdetailpanelform {
+            height: auto;
+            max-height: 90vh;
+            width: 90%;
+            max-width: 1100px;
             background-color: #ccdff4;
             border-radius: 10px;
-            position: relative;
-            top: 20px;
-            animation: guestinfoform .3s ease;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            overflow-y: auto;
         }
     </style>
     <title>Edit Reservation</title>
@@ -35,9 +40,9 @@
     <div id="editpanel">
         <form method="POST" action="{{ route('admin.roombook.update', $booking->id) }}" class="guestdetailpanelform">
             @csrf
-            <div class="head">
-                <h3>EDIT RESERVATION & ASSIGN ROOM</h3>
-                <a href="{{ route('admin.roombook') }}"><i class="fa-solid fa-circle-xmark"></i></a>
+            <div class="head d-flex justify-content-between align-items-center mb-3">
+                <h3 class="m-0 fw-bold">EDIT RESERVATION & ASSIGN ROOM</h3>
+                <a href="{{ route('admin.roombook') }}" class="text-dark"><i class="fa-solid fa-circle-xmark fs-3"></i></a>
             </div>
             <div class="middle">
                 <div class="guestinfo">
@@ -74,11 +79,11 @@
                         <option value="Quad" @selected($booking->Bed === 'Quad')>Quad</option>
                     </select>
                     
-                    <div class="mb-2 px-2">
+                    <div class="mb-2 px-2 w-100">
                         <label class="small fw-bold text-dark d-block mb-1">Select Available Room Number:</label>
                         <select name="NoofRoom" id="roomNoSelect" class="form-select border-primary fw-bold text-dark" style="height: 40px; border-radius: 5px;" required>
                             <option value="Pending">Pending Assignment</option>
-                            </select>
+                        </select>
                     </div>
 
                     <select name="Meal" class="selectinput" required>
@@ -100,14 +105,13 @@
                     </div>
                 </div>
             </div>
-            <div class="footer">
-                <button type="submit" class="btn btn-success" name="guestdetailedit">Save & Verify Assignment</button>
+            <div class="footer mt-3">
+                <button type="submit" class="btn btn-success px-4" name="guestdetailedit">Save & Verify Assignment</button>
             </div>
         </form>
     </div>
 
     <script>
-        // Injects the multi-dimensional map built by the controller
         const roomsMap = @json($roomsMap);
         const originallyAssignedRoom = "{{ $booking->NoofRoom }}";
 
@@ -116,30 +120,24 @@
             const selectedBed = document.getElementById('bedSelect').value;
             const roomNoDropdown = document.getElementById('roomNoSelect');
 
-            // Reset dropdown options, keeping only the Pending assignment fallback
             roomNoDropdown.innerHTML = '<option value="Pending">Pending Assignment</option>';
 
             if (selectedType && selectedBed) {
-                // Build search array key matching controller mapping metrics
                 const lookupKey = selectedType + '_' + selectedBed;
                 const matches = roomsMap[lookupKey] || [];
 
-                // Populate matching options
                 matches.forEach(roomNo => {
                     const opt = document.createElement('option');
                     opt.value = roomNo;
                     opt.textContent = 'Room #' + roomNo;
                     
-                    // Keep selected state if matches original assignment configuration
                     if (roomNo === originallyAssignedRoom) {
                         opt.selected = true;
                     }
                     roomNoDropdown.appendChild(opt);
                 });
 
-                // Safety fallback: if an assigned room exists but was filtered out, keep it visible
                 if (originallyAssignedRoom !== 'Pending' && !matches.includes(originallyAssignedRoom)) {
-                    // Check if current form selections match the original room state parameters
                     if (selectedType === "{{ $booking->RoomType }}" && selectedBed === "{{ $booking->Bed }}") {
                         const savedOpt = document.createElement('option');
                         savedOpt.value = originallyAssignedRoom;
@@ -151,15 +149,10 @@
             }
         }
 
-        // Initialize immediately upon document ready state to render original metrics setup
         document.addEventListener('DOMContentLoaded', updateAvailableRooms);
     </script>
 
-    @if (session('error'))
-        <script>swal({ title: @json(session('error')), icon: 'error' });</script>
-    @endif
-    @if ($errors->any())
-        <script>swal({ title: "{{ $errors->first() }}", icon: 'error' });</script>
-    @endif
+    @if (session('error')) <script>swal({ title: @json(session('error')), icon: 'error' });</script> @endif
+    @if ($errors->any()) <script>swal({ title: "{{ $errors->first() }}", icon: 'error' });</script> @endif
 </body>
 </html>
