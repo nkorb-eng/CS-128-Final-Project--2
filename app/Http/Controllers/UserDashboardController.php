@@ -37,7 +37,7 @@ class UserDashboardController extends Controller
             'Single Room'   => Roombook::where('Email', $email)->where('RoomType', 'Single Room')->count(),
         ];
 
-        // Expenses history for the Morris chart
+        // Expenses history for the Morris chart *might need to delete this*
         $payments = Payment::where('Email', $email)->orderBy('cout', 'asc')->get();
         $expenseData = [];
         foreach ($payments as $p) {

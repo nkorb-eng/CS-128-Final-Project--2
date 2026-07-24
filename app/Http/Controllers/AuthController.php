@@ -40,7 +40,7 @@ class AuthController extends Controller
             ->with('error', 'Invalid email or password.');
     }
 
-    /** Employee/admin login against the emp_login table. */
+    /** Employee/admin login */
     public function empLogin(Request $request)
     {
         $credentials = $request->validate([

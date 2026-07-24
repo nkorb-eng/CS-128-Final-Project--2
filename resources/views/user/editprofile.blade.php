@@ -81,7 +81,6 @@
         </div>
     </div>
 
-    <!-- Live Preview Script -->
     <script>
         function previewImage(event) {
             const reader = new FileReader();

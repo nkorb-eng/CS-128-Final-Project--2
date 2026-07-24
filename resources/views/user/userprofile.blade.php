@@ -26,7 +26,6 @@
                         <div class="alert alert-danger">{{ session('error') }}</div>
                     @endif
 
-                    <!-- USER HEADER & AVATAR DISPLAY -->
                     <div class="text-center mb-4">
                         <div class="mb-3">
                             @if (!empty($user->avater))

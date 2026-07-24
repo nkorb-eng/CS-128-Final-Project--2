@@ -13,7 +13,20 @@
     
     <link rel="stylesheet" href="{{ asset('adminassets/css/room.css') }}">
     <style>
-        .staff-card { background-color: #ccdff4; padding: 20px; border-radius: 10px; width: 220px; margin: 15px; text-align: center; }
+        .room {
+            align-items: flex-start;
+        }
+
+        .staff-card { 
+            background-color: #ccdff4; 
+            padding: 25px 20px; 
+            border-radius: 12px; 
+            width: 220px; 
+            height: fit-content;
+            margin: 15px; 
+            text-align: center; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
     </style>
 </head>
 
@@ -42,7 +55,7 @@
         @foreach ($staff as $row)
             <div class="staff-card">
                 <i class="fa fa-users fa-4x text-primary mb-3"></i>
-                <h4 class="fw-bold">{{ $row->name }}</h4>
+                <h4 class="fw-bold text-dark mb-1">{{ $row->name }}</h4>
                 <div class="badge bg-secondary mb-3 fs-6">{{ $row->work }}</div>
                 <div>
                     <a href="{{ route('admin.staff.delete', $row->id) }}" class="btn btn-danger btn-sm px-4" onclick="return confirm('Remove staff member?')">Delete</a>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Detail;
+use App\Models\Room;
 use App\Models\Roombook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -16,31 +17,35 @@ class HomeController extends Controller
         return view('home');
     }
 
-    /** Show Room Detail Page with auto-default fallback */
+    /** Show Room Detail Page with inventory bed types and pricing */
     public function showRoomDetail($slug)
     {
-        $defaultTitles = [
+        $defaultTypes = [
             'superior-room' => 'Superior Room',
             'deluxe-room'   => 'Deluxe Room',
-            'guest-room'    => 'Guest Room',
+            'guest-room'    => 'Guest House',
             'single-room'   => 'Single Room',
         ];
 
-        $title = $defaultTitles[$slug] ?? Str::headline($slug);
+        $roomType = $defaultTypes[$slug] ?? Str::headline($slug);
 
         $detail = Detail::firstOrCreate(
             ['slug' => $slug],
             [
                 'category'    => 'room',
-                'title'       => $title,
-                'description' => "<p>Welcome to the <strong>{$title}</strong>. Enjoy luxury amenities, comfortable bedding, high-speed Wi-Fi, and 24/7 room service during your stay.</p>",
+                'title'       => $roomType,
+                'description' => "<p>Welcome to the <strong>{$roomType}</strong>. Enjoy luxury amenities, comfortable bedding, high-speed Wi-Fi, and 24/7 room service during your stay.</p>",
             ]
         );
 
-        return view('details.show', compact('detail'));
+        // Fetch unique bed types and starting price registered in inventory for this room type
+        $bedTypes = Room::where('type', $roomType)->pluck('bedding')->unique()->values();
+        $startingPrice = Room::where('type', $roomType)->min('price');
+
+        return view('details.show', compact('detail', 'roomType', 'bedTypes', 'startingPrice'));
     }
 
-    /** Show Facility Detail Page with auto-default fallback */
+    /** Show Facility Detail Page */
     public function showFacilityDetail($slug)
     {
         $defaultTitles = [
@@ -85,7 +90,7 @@ class HomeController extends Controller
 
         $detail->update($validated);
 
-        return back()->with('success', 'Detail page updated successfully!');
+        return back()->with('success', 'Page updated successfully!');
     }
 
     public function showBookForm(Request $request)

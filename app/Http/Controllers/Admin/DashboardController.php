@@ -26,9 +26,9 @@ class DashboardController extends Controller
         $payments = Payment::all();
 
         // ---- POS money figures ----
-        $revenue     = round($payments->sum('amount_paid'), 2);               // collected
-        $tot         = $revenue;                                              // ✅ Alias for $tot expected in Blade view
-        $outstanding = round($payments->sum(fn ($p) => max(0, $p->balance)), 2); // still owed
+        $revenue     = round($payments->sum('amount_paid'), 2);
+        $tot         = $revenue;
+        $outstanding = round($payments->sum(fn ($p) => max(0, $p->balance)), 2);
         $paidCount    = $payments->where('status', 'Paid')->count();
         $partialCount = $payments->where('status', 'Partial')->count();
         $unpaidCount  = $payments->where('status', 'Unpaid')->count();

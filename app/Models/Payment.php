@@ -20,34 +20,34 @@ class Payment extends Model
         'paid_at' => 'datetime',
     ];
 
-    /** Service tax rate applied to every bill (10%). */
+    /** Service tax rate applied to every bill*/
     public const TAX_RATE = 0.10;
 
-    /** Subtotal = room + bed + meal (the original computed bill). */
+    /** Subtotal = room + bed + meal (the original computed bill)*/
     public function getSubtotalAttribute(): float
     {
         return round((float) $this->finaltotal, 2);
     }
 
-    /** Service tax charged on the subtotal. */
+    /** Service tax charged on the subtotal*/
     public function getTaxAmountAttribute(): float
     {
         return round($this->subtotal * self::TAX_RATE, 2);
     }
 
-    /** Grand total the guest owes: subtotal + tax − discount. */
+    /** Grand total the guest owes: subtotal + tax − discount*/
     public function getGrandTotalAttribute(): float
     {
         return round($this->subtotal + $this->tax_amount - (float) $this->discount, 2);
     }
 
-    /** Outstanding balance (0 once fully paid). */
+    /** Outstanding balance (0 once fully paid)*/
     public function getBalanceAttribute(): float
     {
         return round($this->grand_total - (float) $this->amount_paid, 2);
     }
 
-    /** Bootstrap colour for the payment status badge. */
+    /** Bootstrap colour for the payment status badge*/
     public function getStatusColorAttribute(): string
     {
         return match ($this->status) {

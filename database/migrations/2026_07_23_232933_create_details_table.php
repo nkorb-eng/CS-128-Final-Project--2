@@ -10,11 +10,11 @@ return new class extends Migration
     {
         Schema::create('details', function (Blueprint $table) {
             $table->id();
-            $table->string('category'); // 'room' or 'facility'
-            $table->string('slug')->unique(); // e.g. 'superior-room', 'swimming-pool'
+            $table->string('category');
+            $table->string('slug')->unique();
             $table->string('title');
             $table->string('image')->nullable();
-            $table->longText('description')->nullable(); // Rich Text HTML content
+            $table->longText('description')->nullable();
             $table->timestamps();
         });
     }
