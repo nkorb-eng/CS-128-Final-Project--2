@@ -45,14 +45,17 @@
                     <td>{{ $res->cout }}</td>
                     <td class="fw-bold text-success">${{ number_format($res->finaltotal, 2) }}</td>
                     <td>
-                        <span class="badge bg-{{ $res->status_color ?? ($res->status === 'Paid' ? 'success' : ($res->status === 'Partial' ? 'warning' : 'danger')) }}">
+                        <span class="badge bg-{{ $res->status_color }}">
                             {{ $res->status ?? 'Unpaid' }}
                         </span>
                     </td>
                     <td class="action text-nowrap text-center">
-                        <a href="{{ route('admin.payment.settle', $res->id) }}" target="_parent" class="btn btn-success btn-sm me-1">
-                            <i class="fa-solid fa-cash-register me-1"></i> Checkout
-                        </a>
+                        @if (strtolower(trim($res->status ?? '')) !== 'paid' && $res->balance > 0)
+                            <a href="{{ route('admin.payment.settle', $res->id) }}" class="btn btn-success btn-sm me-1">
+                                <i class="fa-solid fa-cash-register me-1"></i> Checkout
+                            </a>
+                        @endif
+
                         <a href="{{ route('admin.payment.invoice', $res->id) }}" target="_blank" class="btn btn-primary btn-sm me-1">
                             <i class="fa-solid fa-print"></i> Print
                         </a>
